@@ -1,5 +1,5 @@
 import { useState } from "react";
-import  Select  from "react-select";
+import Select from "react-select";
 // import * as XLSX from 'xlsx';
 import * as ExcelJS from 'exceljs';
 import { generateParkingOptions, generateStaffExposureOptions, generateStaffUsageFactor, generateVehicleTypeFactor, getElementStringValue, getElementValue, percentageOptions } from "./Extra ";
@@ -90,32 +90,33 @@ const CalculationTable = () => {
         const sheet = workbook.addWorksheet("My sheet");
         sheet.properties.defaultRowHeight = 20;
 
-        const fixedHeaders = ['Variables', getElementStringValue("h1"), getElementStringValue("h2"), getElementStringValue("h3"), getElementStringValue("h4"), getElementStringValue("h5")];
+        const projectName = [getElementStringValue("pr1"), ' ', ' ', ' ', ' ', ' ', ' '];
         const data = [
-            ["n1", getElementValue("n1z"), getElementValue("n1a"), getElementValue("n1b"), getElementValue("n1c"), getElementValue("n1d")],
-            ["n2", getElementValue("n2z"), getElementValue("n2a"), getElementValue("n2b"), getElementValue("n2c"), getElementValue("n2d")],
-            ["P", parseInt(inputValuePz), parseInt(inputValuePa), parseInt(inputValuePb), parseInt(inputValuePc), parseInt(inputValuePd)],
-            ["d1", getElementValue("d1z"), getElementValue("d1a"), getElementValue("d1b"), getElementValue("d1c"), getElementValue("d1d")],
-            ["d2", getElementValue("d2z"), getElementValue("d2a"), getElementValue("d2b"), getElementValue("d2c"), getElementValue("d2d")],
-            ["E", parseInt(inputStaffEz), parseInt(inputStaffEa), parseInt(inputStaffEb), parseInt(inputStaffEc), parseInt(inputStaffEd)],
-            ["T", parseInt(inputVTypeTz), parseInt(inputVTypeTa), parseInt(inputVTypeTb), parseInt(inputVTypeTc), parseInt(inputVTypeTd)],
-            ["F", parseFloat(inputFactorFz), parseFloat(inputFactorFa), parseFloat(inputFactorFb), parseFloat(inputFactorFc), parseFloat(inputFactorFd)],
-            ["A", getElementValue("A1z"), getElementValue("A1a"), getElementValue("A1b"), getElementValue("A1c"), getElementValue("A1d")],
+            ['Interpretation', 'Variables', getElementStringValue("h1"), getElementStringValue("h2"), getElementStringValue("h3"), getElementStringValue("h4"), getElementStringValue("h5")],
+            ["No of parking spaces in the zone of level under consideration", "n1", getElementValue("n1z"), getElementValue("n1a"), getElementValue("n1b"), getElementValue("n1c"), getElementValue("n1d")],
+            ["No of parking spaces situated in other parts of the car park, having exit routes passing through the zone or level under consideration", "n2", getElementValue("n2z"), getElementValue("n2a"), getElementValue("n2b"), getElementValue("n2c"), getElementValue("n2d")],
+            ["Parking usage factor", "P", parseFloat(inputValuePz), parseFloat(inputValuePa), parseFloat(inputValuePb), parseFloat(inputValuePc), parseFloat(inputValuePd)],
+            ["Average driving distance, in meters, within the zone or level under consideration for the exit of a car parked there", "d1", getElementValue("d1z"), getElementValue("d1a"), getElementValue("d1b"), getElementValue("d1c"), getElementValue("d1d")],
+            ["The average driving distance, in mtrs, within the zone or level under consideration for the exit of a car whose exit routes passes through the zone or level under consideration", "d2", getElementValue("d2z"), getElementValue("d2a"), getElementValue("d2b"), getElementValue("d2c"), getElementValue("d2d")],
+            ["The Staff Exposure Factor", "E", parseFloat(inputStaffEz), parseFloat(inputStaffEa), parseFloat(inputStaffEb), parseFloat(inputStaffEc), parseFloat(inputStaffEd)],
+            ["The Vehicle Type Factor", "T", parseFloat(inputVTypeTz), parseFloat(inputVTypeTa), parseFloat(inputVTypeTb), parseFloat(inputVTypeTc), parseFloat(inputVTypeTd)],
+            ["The Staff Usage Factor", "F", parseFloat(inputFactorFz), parseFloat(inputFactorFa), parseFloat(inputFactorFb), parseFloat(inputFactorFc), parseFloat(inputFactorFd)],
+            ["Area", "A", getElementValue("A1z"), getElementValue("A1a"), getElementValue("A1b"), getElementValue("A1c"), getElementValue("A1d")],
             [],
             ["Unit of Measurement (L/s)"],
-            ["C (Contaminant Generation Rate)", parseInt(calculatedValue), parseInt(calculatedValueCa), parseInt(calculatedValueCb), parseInt(calculatedValueCc), parseInt(calculatedValueCd)],
-            ["(a) 0.85 x C x E x T", parseInt(calculatedValueAz), parseInt(calculatedValueAa), parseInt(calculatedValueAb), parseInt(calculatedValueAc), parseInt(calculatedValueAd)],
-            ["(b) 2000 x F x T", parseInt(calculatedValueBz), parseInt(calculatedValueBa), parseInt(calculatedValueBb), parseInt(calculatedValueBc), parseInt(calculatedValueBd)],
-            ["(c) 2.5 x A", parseInt(calculatedValueC1z), parseInt(calculatedValueC1a), parseInt(calculatedValueC1b), parseInt(calculatedValueC1c), parseInt(calculatedValueC1d)],
+            ["C (Contaminant Generation Rate)", , parseInt(calculatedValue), parseInt(calculatedValueCa), parseInt(calculatedValueCb), parseInt(calculatedValueCc), parseInt(calculatedValueCd)],
+            ["(a) 0.85 x C x E x T", , parseInt(calculatedValueAz), parseInt(calculatedValueAa), parseInt(calculatedValueAb), parseInt(calculatedValueAc), parseInt(calculatedValueAd)],
+            ["(b) 2000 x F x T", , parseInt(calculatedValueBz), parseInt(calculatedValueBa), parseInt(calculatedValueBb), parseInt(calculatedValueBc), parseInt(calculatedValueBd)],
+            ["(c) 2.5 x A", , parseInt(calculatedValueC1z), parseInt(calculatedValueC1a), parseInt(calculatedValueC1b), parseInt(calculatedValueC1c), parseInt(calculatedValueC1d)],
             [],
-            ["Suggested Value", greatestValueCol1, greatestValueCol2, greatestValueCol3, greatestValueCol4, greatestValueCol5],
+            ["Suggested Value", , greatestValueCol1, greatestValueCol2, greatestValueCol3, greatestValueCol4, greatestValueCol5],
             ["Total Air Exhaust", combinedGreatestValue],
             [],
             ["Air Supply Percentage(%)", (parseFloat(percentValue) * 100)],
             ["Total Air Supply", calculateAirSupply]
-          ];
+        ];
 
-        sheet.columns = fixedHeaders.map(header => ({
+        sheet.columns = projectName.map(header => ({
             header,
             key: header,
             width: 30,
@@ -142,7 +143,7 @@ const CalculationTable = () => {
     const factorOptions = generateStaffUsageFactor();
     const percentOptions = percentageOptions();
 
- 
+
     const calculateValues = (): Record<string, number> => {
         const inputKeys: string[] = ['z', 'a', 'b', 'c', 'd'];
         const stateSetters: Record<string, React.Dispatch<React.SetStateAction<string>>> = {
@@ -282,16 +283,32 @@ const CalculationTable = () => {
         setCalculateTotalAirSupply(totalAirSupply);
     };
 
+    const maxC1z = Math.max(parseInt(calculatedValueAz), parseInt(calculatedValueBz), parseInt(calculatedValueC1z));
+    const maxC2z = Math.max(parseInt(calculatedValueAa), parseInt(calculatedValueBa), parseInt(calculatedValueC1a));
+    const maxC3z = Math.max(parseInt(calculatedValueAb), parseInt(calculatedValueBb), parseInt(calculatedValueC1b));
+    const maxC4z = Math.max(parseInt(calculatedValueAc), parseInt(calculatedValueBc), parseInt(calculatedValueC1c));
+    const maxC5z = Math.max(parseInt(calculatedValueAd), parseInt(calculatedValueBd), parseInt(calculatedValueC1d));
+
+
+
     return (
         <div>
-            <div className="text-lg font-bold text-center pt-[1000px]">
+            <div className="text-lg font-bold text-center pt-6">
                 Car Park Ventilation Calculation
             </div>
             <div className="text-sm font-bold text-center ">
                 Based On AS 1668.2 - 2012
             </div>
+            <div className="pl-16">
+                <input
+                    type='text'
+                    id='pr1'
+                    placeholder='Enter project name'
+                    className="border rounded h-10 text-center border-gray-400 w-72"
+                />
+            </div>
             <div className="content-center">
-                <table className="border border-collapse mt-[500px] text-sm w-11/12 mx-auto ">
+                <table className="border border-collapse mt-4 text-sm w-11/12 mx-auto ">
                     <tr>
                         <th className="border py-3">
                             Interpretation
@@ -300,8 +317,6 @@ const CalculationTable = () => {
                             Variable
                         </th>
                         <th className="border px-4">
-                            <div>
-                            </div>
                             <input
                                 type="text"
                                 id="h1"
@@ -1027,106 +1042,106 @@ const CalculationTable = () => {
                         <td className=" border border-r-0 p-2">(a) 0.85 x C x E x T</td>
                         <td className="border border-l-0 pl-2">
                         </td>
-                        <td className="border pl-16 text-gray-600">{isNaN(parseInt(calculatedValueAz)) ? "Result" : `${parseInt(calculatedValueAz)} L/s`}</td>
-                        <td className="border pl-16 text-gray-600">{isNaN(parseInt(calculatedValueAa)) ? "Result" : `${parseInt(calculatedValueAa)} L/s`}</td>
-                        <td className="border pl-16 text-gray-600">{isNaN(parseInt(calculatedValueAb)) ? "Result" : `${parseInt(calculatedValueAb)} L/s`}</td>
-                        <td className="border pl-16 text-gray-600">{isNaN(parseInt(calculatedValueAc)) ? "Result" : `${parseInt(calculatedValueAc)} L/s`}</td>
-                        <td className="border pl-16 text-gray-600">{isNaN(parseInt(calculatedValueAd)) ? "Result" : `${parseInt(calculatedValueAd)} L/s`}</td>
+                        <td className={`border pl-16 text-gray-600 ${parseInt(calculatedValueAz) === maxC1z ? 'bg-green-200' : ''}`}>{isNaN(parseInt(calculatedValueAz)) ? "Result" : `${parseInt(calculatedValueAz)} L/s`}</td>
+                        <td className={`border pl-16 text-gray-600 ${parseInt(calculatedValueAa) === maxC2z ? 'bg-green-200' : ''}`}>{isNaN(parseInt(calculatedValueAa)) ? "Result" : `${parseInt(calculatedValueAa)} L/s`}</td>
+                        <td className={`border pl-16 text-gray-600 ${parseInt(calculatedValueAb) === maxC3z ? 'bg-green-200' : ''}`}>{isNaN(parseInt(calculatedValueAb)) ? "Result" : `${parseInt(calculatedValueAb)} L/s`}</td>
+                        <td className={`border pl-16 text-gray-600 ${parseInt(calculatedValueAc) === maxC4z ? 'bg-green-200' : ''}`}>{isNaN(parseInt(calculatedValueAc)) ? "Result" : `${parseInt(calculatedValueAc)} L/s`}</td>
+                        <td className={`border pl-16 text-gray-600 ${parseInt(calculatedValueAd) === maxC5z ? 'bg-green-200' : ''}`}>{isNaN(parseInt(calculatedValueAd)) ? "Result" : `${parseInt(calculatedValueAd)} L/s`}</td>
                         <td className="border"><button onClick={calculateAValues} className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">Calculate</button></td>
                     </tr>
                     <tr>
                         <td className="border border-r-0 p-2">(b) 2000 x F x T</td>
                         <td className="border border-l-0 pl-2">
                         </td>
-                        <td className="border pl-16 text-gray-600">{isNaN(parseInt(calculatedValueBz)) ? "Result" : `${parseInt(calculatedValueBz)} L/s`}</td>
-                        <td className="border pl-16 text-gray-600">{isNaN(parseInt(calculatedValueBa)) ? "Result" : `${parseInt(calculatedValueBa)} L/s`}</td>
-                        <td className="border pl-16 text-gray-600">{isNaN(parseInt(calculatedValueBb)) ? "Result" : `${parseInt(calculatedValueBb)} L/s`}</td>
-                        <td className="border pl-16 text-gray-600">{isNaN(parseInt(calculatedValueBc)) ? "Result" : `${parseInt(calculatedValueBc)} L/s`}</td>
-                        <td className="border pl-16 text-gray-600">{isNaN(parseInt(calculatedValueBd)) ? "Result" : `${parseInt(calculatedValueBd)} L/s`}</td>
+                        <td className={`border pl-16 text-gray-600 ${parseInt(calculatedValueBz) === maxC1z ? 'bg-green-200' : ''}`}>{isNaN(parseInt(calculatedValueBz)) ? "Result" : `${parseInt(calculatedValueBz)} L/s`}</td>
+                        <td className={`border pl-16 text-gray-600 ${parseInt(calculatedValueBa) === maxC2z ? 'bg-green-200' : ''}`}>{isNaN(parseInt(calculatedValueBa)) ? "Result" : `${parseInt(calculatedValueBa)} L/s`}</td>
+                        <td className={`border pl-16 text-gray-600 ${parseInt(calculatedValueBb) === maxC3z ? 'bg-green-200' : ''}`}>{isNaN(parseInt(calculatedValueBb)) ? "Result" : `${parseInt(calculatedValueBb)} L/s`}</td>
+                        <td className={`border pl-16 text-gray-600 ${parseInt(calculatedValueBc) === maxC4z ? 'bg-green-200' : ''}`}>{isNaN(parseInt(calculatedValueBc)) ? "Result" : `${parseInt(calculatedValueBc)} L/s`}</td>
+                        <td className={`border pl-16 text-gray-600 ${parseInt(calculatedValueBd) === maxC5z ? 'bg-green-200' : ''}`}>{isNaN(parseInt(calculatedValueBd)) ? "Result" : `${parseInt(calculatedValueBd)} L/s`}</td>
                         <td className="border"><button onClick={calculateBValues} className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">Calculate</button></td>
                     </tr>
                     <tr>
                         <td className="border border-r-0 p-2">(c) 2.5 x A</td>
                         <td className="pl-2">
                         </td>
-                        <td className="border pl-16 text-gray-600">{isNaN(parseInt(calculatedValueC1z)) ? "Result" : `${parseInt(calculatedValueC1z)} L/s`}</td>
-                        <td className="border pl-16 text-gray-600">{isNaN(parseInt(calculatedValueC1a)) ? "Result" : `${parseInt(calculatedValueC1a)} L/s`}</td>
-                        <td className="border pl-16 text-gray-600">{isNaN(parseInt(calculatedValueC1b)) ? "Result" : `${parseInt(calculatedValueC1b)} L/s`}</td>
-                        <td className="border pl-16 text-gray-600">{isNaN(parseInt(calculatedValueC1c)) ? "Result" : `${parseInt(calculatedValueC1c)} L/s`}</td>
-                        <td className="border pl-16 text-gray-600">{isNaN(parseInt(calculatedValueC1d)) ? "Result" : `${parseInt(calculatedValueC1d)} L/s`}</td>
-                        <td className="border"><button onClick={calculateCValues} className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">Calculate</button></td>
-                    </tr>
-                </table>
-            </div>
-            <div className="flex gap-36">
-                <div className="pt-10">
-                    <button onClick={calculategreatesValue} className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">Click to Show Greatest Value</button>
-                    <p className="pt-2">
-                        Design should be based on{' '}
-                        {greatestValueCol1 === null || isNaN(greatestValueCol1)
-                            ? 'Result'
-                            : `${greatestValueCol1} L/s for column 1`}
-                    </p>
-                    <p className="pt-2">
-                        Design should be based on{' '}
-                        {greatestValueCol2 === null || isNaN(greatestValueCol2)
-                            ? 'Result'
-                            : `${greatestValueCol2} L/s for column 2`}
-                    </p>
-                    <p className="pt-2">
-                        Design should be based on{' '}
-                        {greatestValueCol3 === null || isNaN(greatestValueCol3)
-                            ? 'Result'
-                            : `${greatestValueCol3} L/s for column 3`}
-                    </p>
-                    <p className="pt-2">
-                        Design should be based on{' '}
-                        {greatestValueCol4 === null || isNaN(greatestValueCol4)
-                            ? 'Result'
-                            : `${greatestValueCol4} L/s for column 4`}
-                    </p>
-                    <p className="pt-2">
-                        Design should be based on{' '}
-                        {greatestValueCol5 === null || isNaN(greatestValueCol5)
-                            ? 'Result'
-                            : `${greatestValueCol5} L/s for column 5`}
-                    </p>
-                </div>
-                <div className="pt-10">
-                    <button onClick={calculateCombinedGreatestValue} className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">Calculate Total Air Exhaust</button>
-                    <p className="pt-4">Total Air Exhaust : {combinedGreatestValue === null || isNaN(combinedGreatestValue) ? "Result" : `${combinedGreatestValue} L/s`}</p>
-                </div>
-                <div className="pt-10">
-                    <button onClick={calculateTotalAirSupply} className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">Calculate Total Air Supply </button>
-                    <div className="pt-4">
-                        <Select
-                            options={percentOptions}
-                            placeholder="Enter the percentage"
-                            styles={{
-                                control: (provided) => ({
-                                    ...provided,
-                                    backgroundColor: ' rgb(248 250 260 / var(--tw-bg-opacity))',
-                                    alignContent: 'center',
-                                }),
-                            }}
-                            value={percentOptions.find(option => option.label === percentValue)}
-                            onChange={(selectedOption) => setpercentValue(selectedOption ? selectedOption.value : '')}
-                            formatOptionLabel={(option, { context }) => (
-                                <div>
-                                    {context === 'menu' ? option.label : option.label}
-                                </div>
-                            )}
-                        />
-                    </div>
-                    <p className="pt-4">
-                        Total Air Supply : {calculateAirSupply === null || isNaN(calculateAirSupply) ? 'Result' : `${calculateAirSupply} L/s`}
-                    </p>
-                </div>
-                <div className="pt-10">
-                    <button onClick={downloadTableData} className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-700 focus:outline-none focus:shadow-outline-blue">Download Excel File </button>
-                </div>
-            </div>
+                        <td className={`border pl-16 text-gray-600 ${parseInt(calculatedValueC1z) === maxC1z ? 'bg-green-200' : ''}`}>{isNaN(parseInt(calculatedValueC1z)) ? "Result" : `${parseInt(calculatedValueC1z)} L/s`}</td>
+                        <td className={`border pl-16 text-gray-600 ${parseInt(calculatedValueC1a) === maxC2z ? 'bg-green-200' : ''}`}>{isNaN(parseInt(calculatedValueC1a)) ? "Result" : `${parseInt(calculatedValueC1a)} L/s`}</td>
+                        <td className={`border pl-16 text-gray-600 ${parseInt(calculatedValueC1b) === maxC3z ? 'bg-green-200' : ''}`}>{isNaN(parseInt(calculatedValueC1b)) ? "Result" : `${parseInt(calculatedValueC1b)} L/s`}</td>
+                        <td className={`border pl-16 text-gray-600 ${parseInt(calculatedValueC1c) === maxC4z ? 'bg-green-200' : ''}`}>{isNaN(parseInt(calculatedValueC1c)) ? "Result" : `${parseInt(calculatedValueC1c)} L/s`}</td>
+                        <td className={`border pl-16 text-gray-600 ${parseInt(calculatedValueC1d) === maxC5z ? 'bg-green-200' : ''}`}>{isNaN(parseInt(calculatedValueC1d)) ? "Result" : `${parseInt(calculatedValueC1d)} L/s`}</td>
+                <td className="border"><button onClick={calculateCValues} className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">Calculate</button></td>
+            </tr>
+        </table>
+            </div >
+    <div className="flex gap-36">
+        <div className="pt-10">
+            <button onClick={calculategreatesValue} className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">Click to Show Greatest Value</button>
+            <p className="pt-2">
+                Design should be based on{' '}
+                {greatestValueCol1 === null || isNaN(greatestValueCol1)
+                    ? 'Result'
+                    : `${greatestValueCol1} L/s for column 1`}
+            </p>
+            <p className="pt-2">
+                Design should be based on{' '}
+                {greatestValueCol2 === null || isNaN(greatestValueCol2)
+                    ? 'Result'
+                    : `${greatestValueCol2} L/s for column 2`}
+            </p>
+            <p className="pt-2">
+                Design should be based on{' '}
+                {greatestValueCol3 === null || isNaN(greatestValueCol3)
+                    ? 'Result'
+                    : `${greatestValueCol3} L/s for column 3`}
+            </p>
+            <p className="pt-2">
+                Design should be based on{' '}
+                {greatestValueCol4 === null || isNaN(greatestValueCol4)
+                    ? 'Result'
+                    : `${greatestValueCol4} L/s for column 4`}
+            </p>
+            <p className="pt-2">
+                Design should be based on{' '}
+                {greatestValueCol5 === null || isNaN(greatestValueCol5)
+                    ? 'Result'
+                    : `${greatestValueCol5} L/s for column 5`}
+            </p>
         </div>
+        <div className="pt-10">
+            <button onClick={calculateCombinedGreatestValue} className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">Calculate Total Air Exhaust</button>
+            <p className="pt-4">Total Air Exhaust : {combinedGreatestValue === null || isNaN(combinedGreatestValue) ? "Result" : `${combinedGreatestValue} L/s`}</p>
+        </div>
+        <div className="pt-10">
+            <button onClick={calculateTotalAirSupply} className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">Calculate Total Air Supply </button>
+            <div className="pt-4">
+                <Select
+                    options={percentOptions}
+                    placeholder="Enter the percentage"
+                    styles={{
+                        control: (provided) => ({
+                            ...provided,
+                            backgroundColor: ' rgb(248 250 260 / var(--tw-bg-opacity))',
+                            alignContent: 'center',
+                        }),
+                    }}
+                    value={percentOptions.find(option => option.label === percentValue)}
+                    onChange={(selectedOption) => setpercentValue(selectedOption ? selectedOption.value : '')}
+                    formatOptionLabel={(option, { context }) => (
+                        <div>
+                            {context === 'menu' ? option.label : option.label}
+                        </div>
+                    )}
+                />
+            </div>
+            <p className="pt-4">
+                Total Air Supply : {calculateAirSupply === null || isNaN(calculateAirSupply) ? 'Result' : `${calculateAirSupply} L/s`}
+            </p>
+        </div>
+        <div className="pt-10">
+            <button onClick={downloadTableData} className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-700 focus:outline-none focus:shadow-outline-blue">Download Excel File </button>
+        </div>
+    </div>
+        </div >
     )
 }
 
