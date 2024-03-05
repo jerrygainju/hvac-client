@@ -75,7 +75,7 @@ const Duct = () => {
   }, [selectedUnit]);
 
   return (
-    <div>
+    
       <DuctForm
         selectedUnit={selectedUnit}
         inputValue={inputValue}
@@ -91,7 +91,8 @@ const Duct = () => {
         handleAirFlowChange={handleAirFlowChange}
         handleVelocityChange={handleVelocityChange}
       />
-    </div>
+    
+        
   );
 };
 

@@ -33,12 +33,12 @@ const DuctForm: React.FC<DuctFormProps> = ({
     handleVelocityChange
 }) => {
     return (
-        <div className="flex flex-wrap pt-20 justify-center pb-36 bg-cover bg-slate-300" >
-            <div className='flex flex-col w-auto lg:w-[50%] sm:w-[90%] items-center'>
-                <div className='text-3xl font-bold pb-4 font-serif text-gray-600'>
+        <div className="flex h-screen pt-20 pb-[10rem] max-w-screen justify-center bg-slate-300 w-screen max-w-screen overflow-x-hidden " >
+            <div className='flex flex-col mb-[850px]  xl:w-1/2 lg:w-[50%] sm:w-[90%] items-center'>
+                <div className='flex justify-center w-full text-3xl font-bold mb-4 font-serif text-gray-600'>
                     Duct Size Calculation
                 </div>
-                <div className="bg-slate-400 w-full lg:w-[70%] lg:h-auto pb-6 rounded">
+                <div className="bg-slate-400 xl:h-max w-full lg:w-[70%] lg:h-auto pb-6 rounded">
                     <div className='flex flex-row flex-wrap gap-4 pt-4 pl-6'>
                         <div className='w-full sm:w-1/2 lg:w-1/3 '>
                             <b>Units</b>
