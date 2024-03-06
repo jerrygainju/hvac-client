@@ -11,6 +11,8 @@ const Duct = () => {
   const [equivalentDiameter, setEquivalentDiameter] = useState<number | null>(null);
   const [airflowInputValue, setAirflowInputValue] = useState('');
   const [velocityInputValue, setVelocityInputValue] = useState('');
+  console.log(airflowInputValue);
+  console.log(velocityInputValue);
 
   const handleOptionChange = (option: any) => {
     setSelectedOption(option);
