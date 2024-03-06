@@ -3,7 +3,6 @@ import Table from "./Table";
 import { useRef } from 'react';
 import table1 from '../../public/table1.png';
 import table2 from '../../public/table-2.png';
-import { useNavigate } from 'react-router-dom';
 
 const Car = () => {
   const tableRef = useRef<HTMLDivElement>(null);
@@ -13,11 +12,6 @@ const Car = () => {
       window.scrollTo({ top: tableRef.current.offsetTop, behavior: 'smooth' });
     }
   };
-  const navigate = useNavigate();
-
-  const hanldeNavigate = () => {
-    navigate('/duct-size')
-  }
 
   return (
     <div className="bg-slate-50 pl-10 pt-20">
@@ -26,9 +20,6 @@ const Car = () => {
         <div className="flex gap-10">
           <button className="text-sm border rounded p-2 bg-blue-500 text-white hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800" onClick={scrollHandler}>
             Click for Information
-          </button>
-          <button className="text-sm border rounded p-2 bg-blue-500 text-white hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800" onClick={hanldeNavigate}>
-            Duct Size Calculation
           </button>
         </div>
       </div>

@@ -7,10 +7,11 @@ import Header from '../../components/Header';
 import { EyeOutlined, EyeInvisibleOutlined, MailOutlined, UserOutlined, LockOutlined  } from '@ant-design/icons'; 
 import { Input } from 'antd';
 import { fixedInputStyles, iconColorStyle, signInStyles } from './style/userStyle';
+import config from '../../config/config';
 
 
 const Signup: React.FC = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const [username, setUsername] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
@@ -21,14 +22,14 @@ const Signup: React.FC = () => {
 
 const handleRegister = async () => {
     try {
-      await axios.post('http://localhost:3000/user/signup', {
+    await axios.post(`${config.BASE_URL}/user/signup`, {
         username,
         email,
         password,
         confirmPassword
       });
       console.log('User registered successfully!');
-      navigate('/');
+      navigate('/signin');
     } catch (error: any) {
       if (error.response && error.response.data) {
         const errorMessage = error.response.data.message || 'An unexpected error occurred.';
@@ -62,7 +63,7 @@ return (
       heading="Signup to create an account"
       paragraph="Already have an account? "
       linkName="Signin"
-      linkUrl="/"
+      linkUrl="/signin"
     />
     <div>
       <Input
