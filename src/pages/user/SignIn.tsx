@@ -9,6 +9,7 @@ import { Input } from 'antd';
 import { EyeOutlined, EyeInvisibleOutlined, MailOutlined, LockOutlined } from '@ant-design/icons'; 
 import { fixedInputStyles, iconColorStyle, signInStyles } from './style/userStyle';
 import '../user/style/user.css'
+import config from '../../config/config';
 
 
 const Signin = () => {
@@ -23,7 +24,7 @@ const Signin = () => {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post('http://localhost:3000/user/signin', {
+      const response = await axios.post(`${config.BASE_URL}/user/signin`, {
         email,
         password,
       });
