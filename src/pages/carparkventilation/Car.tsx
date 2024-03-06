@@ -15,7 +15,7 @@ const Car = () => {
   };
 
   return (
-    <div className="bg-slate-50 pl-10 mt-[2490px]  ">
+    <div className="bg-slate-50 pl-10 mt-[2680px]  ">
       <div className="pl-60">   
       <Layout>
         {' '}
