@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 // import './index.css';
-import { MailOutlined, CarOutlined, InfoCircleOutlined, HomeOutlined } from '@ant-design/icons';
+import { MailOutlined, CarOutlined, InfoCircleOutlined, HomeOutlined, CodeSandboxOutlined, CloudServerOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
 import { useNavigate } from 'react-router-dom';
@@ -11,18 +11,21 @@ const items: MenuProps['items'] = [
     key: 'home',
     icon: <HomeOutlined />,
   },
+  
   {
     label: 'Services',
     key: 'services',
-    icon: <CarOutlined />,
+    icon: <CloudServerOutlined />,
     children: [
       {
         label: 'Car Park Ventilation',
         key: 'car',
+        icon: <CarOutlined />,
       },
       {
         label: 'Duct Size Calculation',
         key: 'duct',
+        icon: <CodeSandboxOutlined/>
       },
     ],
   },
@@ -57,11 +60,9 @@ const Navigation: React.FC = () => {
     
   };
 
-  
-
   return (
-    <div className='flex mt-[-350px]'>
-      <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} className='flex flex-row gap-8 bg-gray-200 rounded ' />
+    <div className='flex mt-[-390px]'>
+      <Menu onClick={onClick} selectedKeys={[current]} mode="vertical" items={items}  className='flex gap-32 bg-gray-200 rounded ' />
     </div>
   );
 };

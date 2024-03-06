@@ -3,6 +3,7 @@ import Table from "./Table";
 import { useRef } from 'react';
 import table1 from '../../public/table1.png';
 import table2 from '../../public/table-2.png';
+import Layout from "../homepage/layout";
 
 const Car = () => {
   const tableRef = useRef<HTMLDivElement>(null);
@@ -14,8 +15,13 @@ const Car = () => {
   };
 
   return (
-    <div className="bg-slate-50 pl-10 pt-60">
-      <div className="flex flex-row gap-14 text-3xl content-center text-center pt-[2000px] pl-16 font-bold">
+    <div className="bg-slate-50 pl-10 mt-[2490px]  ">
+      <div className="pl-60">   
+      <Layout>
+        {' '}
+      </Layout>
+      </div>
+      <div className="flex flex-row gap-14 pt-6 text-3xl content-center text-center pl-16 font-bold">
         Car Park Ventilation
         <div className="flex gap-10">
           <button className="text-sm border rounded p-2 bg-blue-500 text-white hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800" onClick={scrollHandler}>
