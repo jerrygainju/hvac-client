@@ -14,8 +14,8 @@ const Car = () => {
   };
 
   return (
-    <div className="bg-slate-50 pl-10 pt-20">
-      <div className="flex flex-row gap-14 text-3xl content-center text-center pt-[2000px] font-bold">
+    <div className="bg-slate-50 pl-10 pt-60">
+      <div className="flex flex-row gap-14 text-3xl content-center text-center pt-[2000px] pl-16 font-bold">
         Car Park Ventilation
         <div className="flex gap-10">
           <button className="text-sm border rounded p-2 bg-blue-500 text-white hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800" onClick={scrollHandler}>
