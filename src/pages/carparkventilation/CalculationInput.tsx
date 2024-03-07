@@ -1092,78 +1092,78 @@ const CalculationTable = () => {
                         <td className={`border pl-16 text-gray-600 ${parseInt(calculatedValueC1b) === maxC3z ? 'bg-green-200' : ''}`}>{isNaN(parseInt(calculatedValueC1b)) ? "Result" : `${parseInt(calculatedValueC1b)} L/s`}</td>
                         <td className={`border pl-16 text-gray-600 ${parseInt(calculatedValueC1c) === maxC4z ? 'bg-green-200' : ''}`}>{isNaN(parseInt(calculatedValueC1c)) ? "Result" : `${parseInt(calculatedValueC1c)} L/s`}</td>
                         <td className={`border pl-16 text-gray-600 ${parseInt(calculatedValueC1d) === maxC5z ? 'bg-green-200' : ''}`}>{isNaN(parseInt(calculatedValueC1d)) ? "Result" : `${parseInt(calculatedValueC1d)} L/s`}</td>
-                <td className="border"><button onClick={calculateCValues} className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">Calculate</button></td>
-            </tr>
-        </table>
+                        <td className="border"><button onClick={calculateCValues} className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">Calculate</button></td>
+                    </tr>
+                </table>
             </div >
-    <div className="flex gap-36 pb-12 pl-16">
-        <div className="pt-10">
-            <button onClick={calculategreatesValue} className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">Click to Show Greatest Value</button>
-            <p className="pt-2">
-                Design should be based on{' '}
-                {greatestValueCol1 === null || isNaN(greatestValueCol1)
-                    ? 'Result'
-                    : `${greatestValueCol1} L/s for column 1`}
-            </p>
-            <p className="pt-2">
-                Design should be based on{' '}
-                {greatestValueCol2 === null || isNaN(greatestValueCol2)
-                    ? 'Result'
-                    : `${greatestValueCol2} L/s for column 2`}
-            </p>
-            <p className="pt-2">
-                Design should be based on{' '}
-                {greatestValueCol3 === null || isNaN(greatestValueCol3)
-                    ? 'Result'
-                    : `${greatestValueCol3} L/s for column 3`}
-            </p>
-            <p className="pt-2">
-                Design should be based on{' '}
-                {greatestValueCol4 === null || isNaN(greatestValueCol4)
-                    ? 'Result'
-                    : `${greatestValueCol4} L/s for column 4`}
-            </p>
-            <p className="pt-2">
-                Design should be based on{' '}
-                {greatestValueCol5 === null || isNaN(greatestValueCol5)
-                    ? 'Result'
-                    : `${greatestValueCol5} L/s for column 5`}
-            </p>
-        </div>
-        <div className="pt-10">
-            <button onClick={calculateCombinedGreatestValue} className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">Calculate Total Air Exhaust</button>
-            <p className="pt-4">Total Air Exhaust : {combinedGreatestValue === null || isNaN(combinedGreatestValue) ? "Result" : `${combinedGreatestValue} L/s`}</p>
-        </div>
-        <div className="pt-10">
-            <button onClick={calculateTotalAirSupply} className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">Calculate Total Air Supply </button>
-            <div className="pt-4">
-                <Select
-                    options={percentOptions}
-                    placeholder="Enter the percentage"
-                    styles={{
-                        control: (provided) => ({
-                            ...provided,
-                            backgroundColor: ' rgb(248 250 260 / var(--tw-bg-opacity))',
-                            alignContent: 'center',
-                        }),
-                    }}
-                    value={percentOptions.find(option => option.label === percentValue)}
-                    onChange={(selectedOption) => setpercentValue(selectedOption ? selectedOption.value : '')}
-                    formatOptionLabel={(option, { context }) => (
-                        <div>
-                            {context === 'menu' ? option.label : option.label}
-                        </div>
-                    )}
-                />
+            <div className="flex gap-36 pb-12 pl-16">
+                <div className="pt-10">
+                    <button onClick={calculategreatesValue} className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">Click to Show Greatest Value</button>
+                    <p className="pt-2">
+                        Design should be based on{' '}
+                        {greatestValueCol1 === null || isNaN(greatestValueCol1)
+                            ? 'Result'
+                            : `${greatestValueCol1} L/s for column 1`}
+                    </p>
+                    <p className="pt-2">
+                        Design should be based on{' '}
+                        {greatestValueCol2 === null || isNaN(greatestValueCol2)
+                            ? 'Result'
+                            : `${greatestValueCol2} L/s for column 2`}
+                    </p>
+                    <p className="pt-2">
+                        Design should be based on{' '}
+                        {greatestValueCol3 === null || isNaN(greatestValueCol3)
+                            ? 'Result'
+                            : `${greatestValueCol3} L/s for column 3`}
+                    </p>
+                    <p className="pt-2">
+                        Design should be based on{' '}
+                        {greatestValueCol4 === null || isNaN(greatestValueCol4)
+                            ? 'Result'
+                            : `${greatestValueCol4} L/s for column 4`}
+                    </p>
+                    <p className="pt-2">
+                        Design should be based on{' '}
+                        {greatestValueCol5 === null || isNaN(greatestValueCol5)
+                            ? 'Result'
+                            : `${greatestValueCol5} L/s for column 5`}
+                    </p>
+                </div>
+                <div className="pt-10">
+                    <button onClick={calculateCombinedGreatestValue} className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">Calculate Total Air Exhaust</button>
+                    <p className="pt-4">Total Air Exhaust : {combinedGreatestValue === null || isNaN(combinedGreatestValue) ? "Result" : `${combinedGreatestValue} L/s`}</p>
+                </div>
+                <div className="pt-10">
+                    <button onClick={calculateTotalAirSupply} className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">Calculate Total Air Supply </button>
+                    <div className="pt-4">
+                        <Select
+                            options={percentOptions}
+                            placeholder="Enter the percentage"
+                            styles={{
+                                control: (provided) => ({
+                                    ...provided,
+                                    backgroundColor: ' rgb(248 250 260 / var(--tw-bg-opacity))',
+                                    alignContent: 'center',
+                                }),
+                            }}
+                            value={percentOptions.find(option => option.label === percentValue)}
+                            onChange={(selectedOption) => setpercentValue(selectedOption ? selectedOption.value : '')}
+                            formatOptionLabel={(option, { context }) => (
+                                <div>
+                                    {context === 'menu' ? option.label : option.label}
+                                </div>
+                            )}
+                        />
+                    </div>
+                    <p className="pt-4">
+                        Total Air Supply : {calculateAirSupply === null || isNaN(calculateAirSupply) ? 'Result' : `${calculateAirSupply} L/s`}
+                    </p>
+                </div>
+                <div className="pt-10">
+                    <button onClick={downloadTableData} className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-700 focus:outline-none focus:shadow-outline-blue">Download Excel File </button>
+                </div>
             </div>
-            <p className="pt-4">
-                Total Air Supply : {calculateAirSupply === null || isNaN(calculateAirSupply) ? 'Result' : `${calculateAirSupply} L/s`}
-            </p>
-        </div>
-        <div className="pt-10">
-            <button onClick={downloadTableData} className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-700 focus:outline-none focus:shadow-outline-blue">Download Excel File </button>
-        </div>
-    </div>
         </div >
     )
 }

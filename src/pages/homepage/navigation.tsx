@@ -1,6 +1,15 @@
 import React, { useState } from 'react';
-// import './index.css';
-import { MailOutlined, CarOutlined, InfoCircleOutlined, HomeOutlined, CodeSandboxOutlined, CloudServerOutlined, UserOutlined, UserAddOutlined, UserSwitchOutlined } from '@ant-design/icons';
+import {
+  MailOutlined,
+  CarOutlined,
+  InfoCircleOutlined,
+  HomeOutlined,
+  CodeSandboxOutlined,
+  CloudServerOutlined,
+  UserOutlined,
+  UserAddOutlined,
+  UserSwitchOutlined
+} from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
 import { useNavigate } from 'react-router-dom';
@@ -23,7 +32,7 @@ const items: MenuProps['items'] = [
     key: 'home',
     icon: <HomeOutlined />,
   },
-  
+
   {
     label: 'Services',
     key: 'services',
@@ -37,7 +46,7 @@ const items: MenuProps['items'] = [
       {
         label: 'Duct Size Calculation',
         key: 'duct',
-        icon: <CodeSandboxOutlined/>
+        icon: <CodeSandboxOutlined />
       },
     ],
   },
@@ -65,7 +74,7 @@ const items: MenuProps['items'] = [
       {
         label: 'Sign Up',
         key: 'signup',
-        icon: <UserAddOutlined/>
+        icon: <UserAddOutlined />
       },
     ],
   },
@@ -73,7 +82,7 @@ const items: MenuProps['items'] = [
 
 const Navigation: React.FC = () => {
   const [current, setCurrent] = useState(' ');
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const onClick = (e: any) => {
     setCurrent(e.key);
@@ -90,12 +99,17 @@ const Navigation: React.FC = () => {
     if (e.key === 'aboutus') {
       navigate('/about-us');
     }
-    
+    if (e.key === 'signup') {
+      navigate('/signup');
+    }
+    if (e.key === 'signin') {
+      navigate('/signin');
+    }
   };
 
   return (
     <div className='flex mt-[-390px]'>
-      <Menu onClick={onClick} selectedKeys={[current]} mode="vertical" items={items}  className='flex gap-24 lg:w-[1500px] bg-gray-200 rounded ' />
+      <Menu onClick={onClick} selectedKeys={[current]} mode="vertical" items={items} className='flex gap-24 lg:w-[1500px] bg-gray-200 rounded ' />
     </div>
   );
 };
