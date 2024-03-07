@@ -162,7 +162,7 @@ const CalculationTable = () => {
             const d2 = getElementValue(`d2${suffix}`);
 
             const result = P * (100 * n1 + n1 * d1 + n2 * d2);
-            const roundedResult = Math.round(result); // Round off the value
+            const roundedResult = Math.round(result);
             stateSetters[suffix](roundedResult.toString());
             return roundedResult;
         });
@@ -289,8 +289,6 @@ const CalculationTable = () => {
     const maxC4z = Math.max(parseInt(calculatedValueAc), parseInt(calculatedValueBc), parseInt(calculatedValueC1c));
     const maxC5z = Math.max(parseInt(calculatedValueAd), parseInt(calculatedValueBd), parseInt(calculatedValueC1d));
 
-
-
     return (
         <div>
             <div className="text-lg font-bold text-center pt-6">
@@ -321,7 +319,7 @@ const CalculationTable = () => {
                                 type="text"
                                 id="h1"
                                 placeholder="Enter Basement"
-                                className="w-32 py-2 bg-slate-50"
+                                className="w-32 py-2 "
                             />
                         </th>
                         <th className="border px-4">
@@ -329,7 +327,7 @@ const CalculationTable = () => {
                                 type="text"
                                 id="h2"
                                 placeholder="Enter Basement"
-                                className="w-32 py-2 bg-slate-50"
+                                className="w-32 py-2 "
                             />
                         </th>
                         <th className="border px-4">
@@ -337,7 +335,7 @@ const CalculationTable = () => {
                                 type="text"
                                 id="h3"
                                 placeholder="Enter Basement"
-                                className="w-32 py-2 bg-slate-50"
+                                className="w-32 py-2 "
                             />
                         </th>
                         <th className="border px-4">
@@ -345,7 +343,7 @@ const CalculationTable = () => {
                                 type="text"
                                 id="h4"
                                 placeholder="Enter Basement"
-                                className="w-32 py-2 bg-slate-50"
+                                className="w-32 py-2 "
                             />
                         </th>
                         <th className="border px-4">
@@ -353,7 +351,7 @@ const CalculationTable = () => {
                                 type="text"
                                 id="h5"
                                 placeholder="Enter Basement"
-                                className="w-32 py-2 bg-slate-50"
+                                className="w-32 py-2 "
                             />
                         </th>
                         <th className="border px-4">
@@ -367,12 +365,12 @@ const CalculationTable = () => {
                         <td className="border pl-16">
                             n1
                         </td>
-                        <td className="border">
+                        <td className="border ">
                             <input
                                 type="number"
                                 id="n1z"
                                 placeholder="Enter value n1(z)"
-                                className="w-full py-2 pl-6 bg-slate-50"
+                                className="w-full py-2 pl-6 "
                             />
                         </td>
                         <td className="border">
@@ -380,7 +378,7 @@ const CalculationTable = () => {
                                 type="number"
                                 id="n1a"
                                 placeholder="Enter value n1(a)"
-                                className="w-full py-2 pl-6 bg-slate-50"
+                                className="w-full py-2 pl-6 "
                             />
                         </td>
                         <td className="border">
@@ -388,7 +386,7 @@ const CalculationTable = () => {
                                 type="number"
                                 id="n1b"
                                 placeholder="Enter value n1(b)"
-                                className="w-full py-2 pl-6 bg-slate-50"
+                                className="w-full py-2 pl-6 "
                             />
                         </td>
                         <td className="border">
@@ -396,7 +394,7 @@ const CalculationTable = () => {
                                 type="number"
                                 id="n1c"
                                 placeholder="Enter value n1(c)"
-                                className="w-full py-2 pl-6 bg-slate-50"
+                                className="w-full py-2 pl-6 "
                             />
                         </td>
                         <td className="border">
@@ -404,7 +402,7 @@ const CalculationTable = () => {
                                 type="number"
                                 id="n1d"
                                 placeholder="Enter value n1(d)"
-                                className="w-full py-2 pl-6 bg-slate-50"
+                                className="w-full py-2 pl-6 "
                             />
                         </td>
                     </tr>
@@ -421,7 +419,7 @@ const CalculationTable = () => {
                                 type="number"
                                 id="n2z"
                                 placeholder="Enter value n2(z)"
-                                className="w-full py-2 pl-6 bg-slate-50"
+                                className="w-full py-2 pl-6 "
                             />
                         </td>
                         <td className="border">
@@ -429,7 +427,7 @@ const CalculationTable = () => {
                                 type="number"
                                 id="n2a"
                                 placeholder="Enter value n2(a)"
-                                className="w-full py-2 pl-6 bg-slate-50"
+                                className="w-full py-2 pl-6 "
                             />
                         </td>
                         <td className="border">
@@ -437,7 +435,7 @@ const CalculationTable = () => {
                                 type="number"
                                 id="n2b"
                                 placeholder="Enter value n2(b)"
-                                className="w-full py-2 pl-6 bg-slate-50"
+                                className="w-full py-2 pl-6 "
                             />
                         </td>
                         <td className="border">
@@ -445,7 +443,7 @@ const CalculationTable = () => {
                                 type="number"
                                 id="n2c"
                                 placeholder="Enter value n2(c)"
-                                className="w-full py-2 pl-6 bg-slate-50"
+                                className="w-full py-2 pl-6 "
                             />
                         </td>
                         <td className="border">
@@ -453,7 +451,7 @@ const CalculationTable = () => {
                                 type="number"
                                 id="n2d"
                                 placeholder="Enter value n2(d)"
-                                className="w-full py-2 pl-6 bg-slate-50"
+                                className="w-full py-2 pl-6 "
                             />
                         </td>
                     </tr>
@@ -579,7 +577,7 @@ const CalculationTable = () => {
                                 type="number"
                                 id="d1z"
                                 placeholder="Enter value d1(z)"
-                                className="w-full py-2 pl-6 bg-slate-50"
+                                className="w-full py-2 pl-6 "
                             />
                         </td>
                         <td className="border">
@@ -587,7 +585,7 @@ const CalculationTable = () => {
                                 type="number"
                                 id="d1a"
                                 placeholder="Enter value d1(a)"
-                                className="w-full py-2 pl-6 bg-slate-50"
+                                className="w-full py-2 pl-6 "
                             />
                         </td>
                         <td className="border">
@@ -595,7 +593,7 @@ const CalculationTable = () => {
                                 type="number"
                                 id="d1b"
                                 placeholder="Enter value d1(b)"
-                                className="w-full py-2 pl-6 bg-slate-50"
+                                className="w-full py-2 pl-6 "
                             />
                         </td>
                         <td className="border">
@@ -603,7 +601,7 @@ const CalculationTable = () => {
                                 type="number"
                                 id="d1c"
                                 placeholder="Enter value d1(c)"
-                                className="w-full py-2 pl-6 bg-slate-50"
+                                className="w-full py-2 pl-6 "
                             />
                         </td>
                         <td className="border">
@@ -611,7 +609,7 @@ const CalculationTable = () => {
                                 type="number"
                                 id="d1d"
                                 placeholder="Enter value d1(d)"
-                                className="w-full py-2 pl-6 bg-slate-50"
+                                className="w-full py-2 pl-6 "
                             />
                         </td>
                     </tr>
@@ -628,7 +626,7 @@ const CalculationTable = () => {
                                 type="number"
                                 id="d2z"
                                 placeholder="Enter value d2(z)"
-                                className="w-full py-2 pl-6 bg-slate-50"
+                                className="w-full py-2 pl-6 "
                             />
                         </td>
                         <td className="border">
@@ -636,7 +634,7 @@ const CalculationTable = () => {
                                 type="number"
                                 id="d2a"
                                 placeholder="Enter value d2(a)"
-                                className="w-full py-2 pl-6 bg-slate-50"
+                                className="w-full py-2 pl-6 "
                             />
                         </td>
                         <td className="border">
@@ -644,7 +642,7 @@ const CalculationTable = () => {
                                 type="number"
                                 id="d2b"
                                 placeholder="Enter value d2(b)"
-                                className="w-full py-2 pl-6 bg-slate-50"
+                                className="w-full py-2 pl-6 "
                             />
                         </td>
                         <td className="border">
@@ -652,7 +650,7 @@ const CalculationTable = () => {
                                 type="number"
                                 id="d2c"
                                 placeholder="Enter value d2(c)"
-                                className="w-full py-2 pl-6 bg-slate-50"
+                                className="w-full py-2 pl-6 "
                             />
                         </td>
                         <td className="border">
@@ -660,7 +658,7 @@ const CalculationTable = () => {
                                 type="number"
                                 id="d2d"
                                 placeholder="Enter value d2(d)"
-                                className="w-full py-2 pl-6 bg-slate-50"
+                                className="w-full py-2 pl-6 "
                             />
                         </td>
                     </tr>
@@ -685,6 +683,11 @@ const CalculationTable = () => {
                                 }}
                                 value={exposureOptions.find(option => option.value === inputStaffEz)}
                                 onChange={(selectedOption) => setInputEz(selectedOption ? selectedOption.value : '')}
+                                formatOptionLabel={(option, { context }) => (
+                                    <div>
+                                        {context === 'menu' ? option.label : option.value}
+                                    </div>
+                                )}
                             />
                         </td>
                         <td className="border">
@@ -701,6 +704,11 @@ const CalculationTable = () => {
                                 }}
                                 value={exposureOptions.find(option => option.value === inputStaffEa)}
                                 onChange={(selectedOption) => setInputEa(selectedOption ? selectedOption.value : '')}
+                                formatOptionLabel={(option, { context }) => (
+                                    <div>
+                                        {context === 'menu' ? option.label : option.value}
+                                    </div>
+                                )}
                             />
                         </td>
                         <td className="border">
@@ -717,6 +725,11 @@ const CalculationTable = () => {
                                 }}
                                 value={exposureOptions.find(option => option.value === inputStaffEb)}
                                 onChange={(selectedOption) => setInputEb(selectedOption ? selectedOption.value : '')}
+                                formatOptionLabel={(option, { context }) => (
+                                    <div>
+                                        {context === 'menu' ? option.label : option.value}
+                                    </div>
+                                )}
                             />
                         </td>
                         <td className="border">
@@ -726,13 +739,18 @@ const CalculationTable = () => {
                                 styles={{
                                     control: (provided) => ({
                                         ...provided,
-                                        backgroundColor: ' rgb(248 250 252 / var(--tw-bg-opacity))',
+                                        backgroundColor: 'rgb(248 250 252 / var(--tw-bg-opacity))',
                                         borderColor: 'transparent',
                                         alignContent: 'center'
                                     }),
                                 }}
                                 value={exposureOptions.find(option => option.value === inputStaffEc)}
                                 onChange={(selectedOption) => setInputEc(selectedOption ? selectedOption.value : '')}
+                                formatOptionLabel={(option, { context }) => (
+                                    <div>
+                                        {context === 'menu' ? option.label : option.value}
+                                    </div>
+                                )}
                             />
                         </td>
                         <td className="border">
@@ -749,6 +767,11 @@ const CalculationTable = () => {
                                 }}
                                 value={exposureOptions.find(option => option.value === inputStaffEd)}
                                 onChange={(selectedOption) => setInputEd(selectedOption ? selectedOption.value : '')}
+                                formatOptionLabel={(option, { context }) => (
+                                    <div>
+                                        {context === 'menu' ? option.label : option.value}
+                                    </div>
+                                )}
                             />
                         </td>
                     </tr>
@@ -990,7 +1013,7 @@ const CalculationTable = () => {
                                 type="number"
                                 id="A1z"
                                 placeholder="Enter value A(z)"
-                                className="w-full py-2 pl-6 bg-slate-50"
+                                className="w-full py-2 pl-6 "
                             />
                         </td>
                         <td className="border">
@@ -998,7 +1021,7 @@ const CalculationTable = () => {
                                 type="number"
                                 id="A1a"
                                 placeholder="Enter value A(a)"
-                                className="w-full py-2 pl-6 bg-slate-50"
+                                className="w-full py-2 pl-6 "
                             />
                         </td>
                         <td className="border">
@@ -1006,7 +1029,7 @@ const CalculationTable = () => {
                                 type="number"
                                 id="A1b"
                                 placeholder="Enter value A(b)"
-                                className="w-full py-2 pl-6 bg-slate-50"
+                                className="w-full py-2 pl-6 "
                             />
                         </td>
                         <td className="border">
@@ -1014,7 +1037,7 @@ const CalculationTable = () => {
                                 type="number"
                                 id="A1c"
                                 placeholder="Enter value A(c)"
-                                className="w-full py-2 pl-6 bg-slate-50"
+                                className="w-full py-2 pl-6 "
                             />
                         </td>
                         <td className="border">
@@ -1022,7 +1045,7 @@ const CalculationTable = () => {
                                 type="number"
                                 id="A1d"
                                 placeholder="Enter value A(d)"
-                                className="w-full py-2 pl-6 bg-slate-50"
+                                className="w-full py-2 pl-6 "
                             />
                         </td>
                     </tr>
@@ -1073,7 +1096,7 @@ const CalculationTable = () => {
             </tr>
         </table>
             </div >
-    <div className="flex gap-36">
+    <div className="flex gap-36 pb-12 pl-16">
         <div className="pt-10">
             <button onClick={calculategreatesValue} className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">Click to Show Greatest Value</button>
             <p className="pt-2">

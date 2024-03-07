@@ -1,11 +1,12 @@
 import Calculation from "./CalculationInput";
 import Table from "./Table";
-import { useRef } from 'react';
+import { useState, useRef } from 'react';
 import table1 from '../../public/table1.png';
 import table2 from '../../public/table-2.png';
 import Layout from "../homepage/layout";
 
 const Car = () => {
+  const [showInformation, setShowInformation] = useState(false);
   const tableRef = useRef<HTMLDivElement>(null);
 
   const scrollHandler = () => {
@@ -13,46 +14,50 @@ const Car = () => {
       window.scrollTo({ top: tableRef.current.offsetTop, behavior: 'smooth' });
     }
   };
+  const toggleInformation = () => {
+    setShowInformation(!showInformation);
+    if (!showInformation) {
+      setTimeout(() => {
+        scrollHandler();
+      }, 100);
+    }
+  };
 
   return (
-    <div className="bg-slate-50 pl-10 mt-[2680px]  ">
-      <div className="pl-60">   
-      <Layout>
-        {' '}
-      </Layout>
+    <div className=" h-[300px] pl-2 mt-[32px]">
+      <div className="">
+        <Layout>
+          {' '}
+        </Layout>
       </div>
       <div className="flex flex-row gap-14 pt-6 text-3xl content-center text-center pl-16 font-bold">
         Car Park Ventilation
-        <div className="flex gap-10">
-          <button className="text-sm border rounded p-2 bg-blue-500 text-white hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800" onClick={scrollHandler}>
-            Click for Information
-          </button>
+        <div>
+        <button style={{ width: '200px' }}className="text-sm border rounded p-2 bg-blue-500 text-white hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
+          onClick={() => toggleInformation()}>
+            {showInformation ? 'Hide Information' : 'Click for More Information'}
+        </button>
         </div>
       </div>
       <div>
         <Calculation />
       </div>
-
-      <div className="text-base font-bold pt-16" ref={tableRef}>
-        Information
-      </div>
-      <div className=" text-sm pr-20 py-3">
-        Natural Ventilation of Car park is permitted if:
-        <div className="pl-4">
+      {showInformation && (
+        <div>
+      <div className=" text-sm pr-20 pl-16" ref={tableRef}>
+       <b>Natural Ventilation of Car park is permitted if:</b>
+        <div className="pl-4 pt-2">
           <li>
             <b>The lowest point of the floor of the car park</b> being ventilated shall be <b>not more than 1.2 m below the ground level</b> of the required outdoor clear space, <b>with permanent ventilation</b> openings along at least one side.
           </li>
           <li>
             Minimum of 3m unobstructed space outside the permanent opening.
           </li>
-
           <li>
             Zone with parking space less than six motor vehicle: Opening area should not be less than 5% of the floor area
-
           </li>
           <li>
             Zone with Opening not less 12.5% of wall area, distance from opening to car park area should be less than 9 m.
-
           </li>
           <li>
             Zone within 18m distance from opening to other wall (opening to one side of wall), Opening should be uniformly distributed and should not be less than 2.0 m2 per car parking space. If opening on each side then opening should be min 1.0 m2 per car parking space.
@@ -60,18 +65,16 @@ const Car = () => {
           </li>
           <li>
             Zone with not more than 75 m distance between two extremes wall, then opening area should be 0.5 m2 on each wall per car parking space.
-
           </li>
         </div>
-
       </div >
-      <div className="text-base font-bold pt-6 ">
+      <div className="text-base font-bold pt-6 pl-16">
         Car Park Mechanical Ventilation
       </div>
-      <div className="text-sm font-bold pt-4 ">
+      <div className="text-sm font-bold pt-4 pl-16">
         A. Smaller Car park Exhaust requirement
       </div>
-      <div className="text-sm pt-2">
+      <div className="text-sm pt-2 pl-16">
         For car parks with <b>40 or fewer car spaces with no special vehicle population</b> and <b>no attendant parking,</b> the airflow rate, in liters per second, may be taken as the greatest of
         <ul>
           (a) 400 n1P;
@@ -92,12 +95,11 @@ const Car = () => {
         <ul>
           A =Area of the zone or level, in square meters
         </ul>
-
       </div>
-      <div className="text-sm pt-4 font-bold">
+      <div className="text-sm pt-4 font-bold pl-16">
         B. Big Car park Exhaust requirement:
       </div>
-      <div className="text-sm pt-2">
+      <div className="text-sm pt-2 pl-16">
         The greatest of --
         <ul>
           (a) 0.85 C × E × T;
@@ -117,8 +119,9 @@ const Car = () => {
       <div className="flex pt-8 pl-32 pb-20">
         <img src={table1} height={600} width={600} alt="Table 1" />
         <img src={table2} height={600} width={600} alt="Table 2" />
+        </div>
       </div>
-
+      )}
     </div>
   );
 }

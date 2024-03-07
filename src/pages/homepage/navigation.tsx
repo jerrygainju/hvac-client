@@ -1,11 +1,23 @@
 import React, { useState } from 'react';
 // import './index.css';
-import { MailOutlined, CarOutlined, InfoCircleOutlined, HomeOutlined, CodeSandboxOutlined, CloudServerOutlined } from '@ant-design/icons';
+import { MailOutlined, CarOutlined, InfoCircleOutlined, HomeOutlined, CodeSandboxOutlined, CloudServerOutlined, UserOutlined, UserAddOutlined, UserSwitchOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import SgLogo from '../../public/sg-logo2.png'
+
+const HomeLogo = () => (
+  <div className="flex">
+    <img src={SgLogo} alt="Logo" className=" h-10" />
+  </div>
+);
 
 const items: MenuProps['items'] = [
+  {
+    label: <HomeLogo />,
+    key: 'logo',
+  },
+
   {
     label: 'Home',
     key: 'home',
@@ -39,10 +51,28 @@ const items: MenuProps['items'] = [
     key: 'contactus',
     icon: <MailOutlined />,
   },
+
+  {
+    label: 'Profile',
+    key: 'profile',
+    icon: <UserOutlined />,
+    children: [
+      {
+        label: 'Sign In',
+        key: 'signin',
+        icon: <UserSwitchOutlined />,
+      },
+      {
+        label: 'Sign Up',
+        key: 'signup',
+        icon: <UserAddOutlined/>
+      },
+    ],
+  },
 ];
 
 const Navigation: React.FC = () => {
-  const [current, setCurrent] = useState('home');
+  const [current, setCurrent] = useState(' ');
   const navigate = useNavigate(); 
 
   const onClick = (e: any) => {
@@ -57,12 +87,15 @@ const Navigation: React.FC = () => {
     if (e.key === 'duct') {
       navigate('/duct-size-calculation');
     }
+    if (e.key === 'aboutus') {
+      navigate('/about-us');
+    }
     
   };
 
   return (
     <div className='flex mt-[-390px]'>
-      <Menu onClick={onClick} selectedKeys={[current]} mode="vertical" items={items}  className='flex gap-32 bg-gray-200 rounded ' />
+      <Menu onClick={onClick} selectedKeys={[current]} mode="vertical" items={items}  className='flex gap-24 lg:w-[1500px] bg-gray-200 rounded ' />
     </div>
   );
 };
