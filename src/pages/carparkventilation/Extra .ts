@@ -29,8 +29,8 @@ export const generateParkingOptions = () => {
 
 export const generateStaffExposureOptions = () => {
     return [
-        { value: '1', label: '1' },
-        { value: '1.8', label: '1.8' }
+        { value: '1', label: 'Staff in seperate enclosure' },
+        { value: '1.8', label: 'Staff in car park enclosure' }
     ]
 }
 

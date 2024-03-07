@@ -34,16 +34,16 @@ const DuctForm: React.FC<DuctFormProps> = ({
     handleVelocityChange
 }) => {
     return (
-        <div className="flex h-screen pt-10 max-w-screen justify-center bg-slate-300 w-screen max-w-screen overflow-x-hidden " >
-            <div className='flex flex-col mt-[360px] xl:w-1/2 lg:w-[50%] sm:w-[90%] items-center'>
+        <div className="flex h-screen pt-10 max-w-screen justify-center w-screen max-w-screen overflow-x-hidden " >
+            <div className='flex flex-col mt-[357px] xl:w-1/2 lg:w-[50%] sm:w-[90%] items-center'>
                 <Layout>
                     <div className='flex pt-10 justify-center w-full text-3xl font-bold mb-4 font-serif text-gray-600'>
                         Duct Size Calculation
                     </div>
-                    <div className='pl-64 pb-16'>
-                        <div className="bg-slate-400 xl:h-max w-full lg:w-[70%] lg:h-auto pb-6 rounded">
+                    <div className='flex justify-center pb-16'>
+                        <div className="bg-gray-200 xl:h-max w-full lg:w-[35%] lg:h-auto pb-6 rounded">
                             <div className='flex flex-row flex-wrap gap-4 pt-4 pl-6'>
-                                <div className='w-full sm:w-1/2 lg:w-1/3 '>
+                                <div className='w-full sm:w-1/2 lg:w-1/3 text-gray-600'>
                                     <b>Units</b>
                                     <SelectInput
                                         options={ductOptions}
@@ -51,7 +51,7 @@ const DuctForm: React.FC<DuctFormProps> = ({
                                         onChange={handleUnitChange}
                                     />
                                 </div>
-                                <div>
+                                <div className='text-gray-600'>
                                     <b>Material</b>
                                     <Select
                                         options={materialOptions}
@@ -61,13 +61,13 @@ const DuctForm: React.FC<DuctFormProps> = ({
                                             control: (provided) => ({
                                                 ...provided,
                                                 width: '165px',
-                                                backgroundColor: 'rgba(231,229,225,255)',
+                                                backgroundColor: 'rgba(245, 244, 248)',
                                                 borderColor: 'transparent',
                                             }),
                                             menu: (provided) => ({
                                                 ...provided,
                                                 width: '165px',
-                                                backgroundColor: "rgba(231,229,225,255)"
+                                                backgroundColor: "rgba(245, 244, 248)"
                                             }),
                                         }}
                                         value={materialOptions.find(option => option.value === inputValue)}
@@ -81,7 +81,7 @@ const DuctForm: React.FC<DuctFormProps> = ({
                                 </div>
                             </div>
                             <hr className="my-4 border-black " />
-                            <div className='flex flex-col pl-6 gap-2 pr-6'>
+                            <div className='flex flex-col pl-6 gap-2 pr-6 text-gray-600'>
                                 <b> Parameter </b>
                                 <div className='flex flex-row items-center'>
                                     Airflow
@@ -124,7 +124,7 @@ const DuctForm: React.FC<DuctFormProps> = ({
                                 />
                                 <hr className="my-4 border-black " />
                             </div>
-                            <div className='pl-6 pr-6'>
+                            <div className='pl-6 pr-6 text-gray-600'>
                                 <b>Equivalent Diameter: </b>
                                 <b> {equivalentDiameter !== null
                                     ? `${equivalentDiameter} ${selectedUnit === 'Metric' ? 'mm' : 'in'}`
@@ -132,7 +132,7 @@ const DuctForm: React.FC<DuctFormProps> = ({
                                 {/* <button onClick={() => { eqDiameterCal(); }} className="px-2  bg-gray-600 text-white rounded hover:bg-gray-500 focus:outline-none focus:shadow-outline-blue">Calculate</button> */}
                                 <hr className="my-4 border-black " />
                             </div>
-                            <div className='flex flex-col pl-6 pr-6'>
+                            <div className='flex flex-col pl-6 pr-6 text-gray-600'>
                                 <b>Shape of Duct</b>
                                 <div className='flex flex-row gap-12 pt-4'>
                                     <label className='flex items-center'>
@@ -176,7 +176,7 @@ const DuctForm: React.FC<DuctFormProps> = ({
                                 </div>
                                 <hr className="my-4 border-black " />
                             </div>
-                            <div className='flex flex-col pl-6 pr-6'>
+                            <div className='flex flex-col pl-6 pr-6 text-gray-600'>
                                 <b>Duct Size</b>
                                 <div className='flex flex-col sm:flex-row items-center'>
                                     Width × Height = {" "}
@@ -203,7 +203,7 @@ const DuctForm: React.FC<DuctFormProps> = ({
                         </div> */}
                                 <hr className="my-4 border-black " />
                             </div>
-                            <div className='flex flex-col pl-6 pr-6 items-center'>
+                            <div className='flex flex-col pl-6 pr-6 items-center text-gray-600'>
                                 <b>Additional Information</b>
                                 <div className='pt-2'>
                                     Equivalent Diameter: result

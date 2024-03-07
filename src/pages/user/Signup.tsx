@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import Header from '../../components/Header';
-import { EyeOutlined, EyeInvisibleOutlined, MailOutlined, UserOutlined, LockOutlined  } from '@ant-design/icons'; 
+import { EyeOutlined, EyeInvisibleOutlined, MailOutlined, UserOutlined, LockOutlined } from '@ant-design/icons';
 import { Input } from 'antd';
 import { fixedInputStyles, iconColorStyle, signInStyles } from './style/userStyle';
 import config from '../../config/config';
@@ -20,9 +20,9 @@ const Signup: React.FC = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
 
 
-const handleRegister = async () => {
+  const handleRegister = async () => {
     try {
-    await axios.post(`${config.BASE_URL}/user/signup`, {
+      await axios.post(`${config.BASE_URL}/user/signup`, {
         username,
         email,
         password,
@@ -55,71 +55,71 @@ const handleRegister = async () => {
   const toggleShowConfirmPassword = () => {
     setShowConfirmPassword(!showConfirmPassword);
   };
-  
 
-return (
-  <form className="mt-8 space-y-6">
-    <Header
-      heading="Signup to create an account"
-      paragraph="Already have an account? "
-      linkName="Signin"
-      linkUrl="/signin"
-    />
-    <div>
-      <Input
-        type="text"
-        value={username}
-        placeholder="Username"
-        className={`${fixedInputStyles}`}
-        prefix= {<UserOutlined style={iconColorStyle} />}
-        onChange={(e) => setUsername(e.target.value)}
+
+  return (
+    <form className="mt-8 space-y-6">
+      <Header
+        heading="Signup to create an account"
+        paragraph="Already have an account? "
+        linkName="Signin"
+        linkUrl="/signin"
       />
-      <Input
-        type="email"
-        placeholder="Email Address"
-        className={`${fixedInputStyles}`}
-        value={email}
-        prefix={<MailOutlined style={iconColorStyle} />}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <Input.Password
-        placeholder="Password"
-        value={password}
-        className={`${fixedInputStyles}`}
-        prefix = {<LockOutlined style={iconColorStyle}/>}
-        iconRender={(visible) =>
-          visible ? (
-            <EyeOutlined onClick={toggleShowPassword} />
-          ) : (
-            <EyeInvisibleOutlined onClick={toggleShowPassword} />
-          )
-        }
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <Input.Password
-        placeholder="Confirm Password"
-        className={`${fixedInputStyles}`}
-        prefix = {<LockOutlined style={iconColorStyle}/>}
-        value={confirmPassword}
-        iconRender={(visible) =>
-          visible ? (
-            <EyeOutlined onClick={toggleShowConfirmPassword} />
-          ) : (
-            <EyeInvisibleOutlined onClick={toggleShowConfirmPassword} />
-          )
-        }
-        onChange={(e) => setconfirmPasswod(e.target.value)}
-      />
-      <button type="button" className={signInStyles} onClick={handleRegister}>
-        Signup
-      </button>
       <div>
-        <ToastContainer />
+        <Input
+          type="text"
+          value={username}
+          placeholder="Username"
+          className={`${fixedInputStyles}`}
+          prefix={<UserOutlined style={iconColorStyle} />}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <Input
+          type="email"
+          placeholder="Email Address"
+          className={`${fixedInputStyles}`}
+          value={email}
+          prefix={<MailOutlined style={iconColorStyle} />}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <Input.Password
+          placeholder="Password"
+          value={password}
+          className={`${fixedInputStyles}`}
+          prefix={<LockOutlined style={iconColorStyle} />}
+          iconRender={(visible) =>
+            visible ? (
+              <EyeOutlined onClick={toggleShowPassword} />
+            ) : (
+              <EyeInvisibleOutlined onClick={toggleShowPassword} />
+            )
+          }
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <Input.Password
+          placeholder="Confirm Password"
+          className={`${fixedInputStyles}`}
+          prefix={<LockOutlined style={iconColorStyle} />}
+          value={confirmPassword}
+          iconRender={(visible) =>
+            visible ? (
+              <EyeOutlined onClick={toggleShowConfirmPassword} />
+            ) : (
+              <EyeInvisibleOutlined onClick={toggleShowConfirmPassword} />
+            )
+          }
+          onChange={(e) => setconfirmPasswod(e.target.value)}
+        />
+        <button type="button" className={signInStyles} onClick={handleRegister}>
+          Signup
+        </button>
+        <div>
+          <ToastContainer />
+        </div>
       </div>
-    </div>
-  </form>
-);
-  
+    </form>
+  );
+
 };
 
 export default Signup;

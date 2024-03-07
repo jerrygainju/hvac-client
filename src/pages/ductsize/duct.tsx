@@ -65,36 +65,36 @@ const Duct = () => {
     setAirflowInputValue(value);
     eqDiameterCal();
   };
-  
+
   const handleVelocityChange = (value: string) => {
     setVelocityInputValue(value);
     eqDiameterCal();
   };
-  
+
 
   useEffect(() => {
     eqDiameterCal();
   }, [selectedUnit]);
 
   return (
-    
-      <DuctForm
-        selectedUnit={selectedUnit}
-        inputValue={inputValue}
-        setInputValue={setInputValue}
-        selectedOption={selectedOption}
-        handleOptionChange={handleOptionChange}
-        selectedShape={selectedShape}
-        handleShapeChange={handleShapeChange}
-        ductOptions={ductOptions}
-        materialOptions={materialOptions}
-        handleUnitChange={handleUnitChange}
-        equivalentDiameter={equivalentDiameter}
-        handleAirFlowChange={handleAirFlowChange}
-        handleVelocityChange={handleVelocityChange}
-      />
-    
-        
+
+    <DuctForm
+      selectedUnit={selectedUnit}
+      inputValue={inputValue}
+      setInputValue={setInputValue}
+      selectedOption={selectedOption}
+      handleOptionChange={handleOptionChange}
+      selectedShape={selectedShape}
+      handleShapeChange={handleShapeChange}
+      ductOptions={ductOptions}
+      materialOptions={materialOptions}
+      handleUnitChange={handleUnitChange}
+      equivalentDiameter={equivalentDiameter}
+      handleAirFlowChange={handleAirFlowChange}
+      handleVelocityChange={handleVelocityChange}
+    />
+
+
   );
 };
 

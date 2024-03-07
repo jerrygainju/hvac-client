@@ -6,21 +6,21 @@ import 'react-toastify/dist/ReactToastify.css';
 import FormExtra from '../../components/FormExtra';
 import Header from '../../components/Header';
 import { Input } from 'antd';
-import { EyeOutlined, EyeInvisibleOutlined, MailOutlined, LockOutlined } from '@ant-design/icons'; 
+import { EyeOutlined, EyeInvisibleOutlined, MailOutlined, LockOutlined } from '@ant-design/icons';
 import { fixedInputStyles, iconColorStyle, signInStyles } from './style/userStyle';
 import '../user/style/user.css'
 import config from '../../config/config';
 
 
 const Signin = () => {
-    const navigate = useNavigate();
-    const [email, setEmail] = useState<string>('');
-    const [password, setPassword] = useState<string>('');
-    const [showPassword, setShowPassword] = useState<boolean>(false);
+  const navigate = useNavigate();
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [showPassword, setShowPassword] = useState<boolean>(false);
 
-    const toggleShowPassword = () => {
-      setShowPassword(!showPassword);
-    };
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
 
   const handleLogin = async () => {
     try {
@@ -51,46 +51,46 @@ const Signin = () => {
     }
   };
 
-    return (
+  return (
     <form className="mt-8 space-y-6">
       <Header
-                heading="Signin to your account"
-                paragraph="Don't have an account yet? "
-                linkName="Signup"
-                linkUrl="/signup"
-                />
-    <div>
-    <Input
-        type="email"
-        placeholder="Email Address"
-        className={`${fixedInputStyles}`}
-        value={email}
-        prefix={<MailOutlined style={iconColorStyle} />}
-        onChange={(e) => setEmail(e.target.value)}
+        heading="Signin to your account"
+        paragraph="Don't have an account yet? "
+        linkName="Signup"
+        linkUrl="/signup"
       />
-      <Input.Password
-        placeholder="Password"
-        value={password}
-        prefix = {<LockOutlined style={iconColorStyle}/>}
-        className={`${fixedInputStyles}`}
-        iconRender={(visible) =>
-          visible ? (
-            <EyeOutlined onClick={toggleShowPassword} />
-          ) : (
-            <EyeInvisibleOutlined onClick={toggleShowPassword} />
-          )
-        }
-        onChange={(e) => setPassword(e.target.value)}
-      />
+      <div>
+        <Input
+          type="email"
+          placeholder="Email Address"
+          className={`${fixedInputStyles}`}
+          value={email}
+          prefix={<MailOutlined style={iconColorStyle} />}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <Input.Password
+          placeholder="Password"
+          value={password}
+          prefix={<LockOutlined style={iconColorStyle} />}
+          className={`${fixedInputStyles}`}
+          iconRender={(visible) =>
+            visible ? (
+              <EyeOutlined onClick={toggleShowPassword} />
+            ) : (
+              <EyeInvisibleOutlined onClick={toggleShowPassword} />
+            )
+          }
+          onChange={(e) => setPassword(e.target.value)}
+        />
         <FormExtra />
-      <button type= 'button'
-          className= {`${signInStyles}`}
+        <button type='button'
+          className={`${signInStyles}`}
           onClick={handleLogin}> Signin </button>
         <div>
-      <ToastContainer />
-    </div>
-    </div>
-  </form>
+          <ToastContainer />
+        </div>
+      </div>
+    </form>
   );
 };
 

@@ -18,13 +18,13 @@ export const SelectInput: React.FC<SelectInputProps> = ({ options, placeholder, 
           control: (provided) => ({
             ...provided,
             width: '165px',
-            backgroundColor: 'rgba(231,229,225,255)',
+            backgroundColor: 'rgba(245, 244, 248)',
             borderColor: 'transparent',
           }),
           menu: (provided) => ({
             ...provided,
             width: '165px',
-            backgroundColor: "rgba(231,229,225,255)"
+            backgroundColor: "rgba(245, 244, 248)"
           }),
         }}
         onChange={onChange}
@@ -44,7 +44,7 @@ interface RadioInputProps {
 
 export const RadioInput: React.FC<RadioInputProps> = ({ type, label, options, selectedOption, onChange, additionalInputs }) => {
   return (
-    <div className='flex flex-col'>
+    <div className='flex flex-col text-gray-600'>
       <b>{label}</b>
       <div className='flex flex-row gap-4 pt-4'>
         {options.map((option) => (
@@ -73,7 +73,7 @@ export const RadioInput: React.FC<RadioInputProps> = ({ type, label, options, se
                   }
                 }}
                 type={type}
-                style={{ backgroundColor: 'rgba(231,229,225,255)' }}
+                style={{ backgroundColor: 'rgba(245, 244, 248)' }}
                 className='rounded w-full md:w-32 h-8 text-center'
               />
               {input.unit}
@@ -108,7 +108,7 @@ export const TextInput: React.FC<TextInputProps> = ({ type, id, placeholder, uni
         placeholder={placeholder}
         id={id}
         type={type}
-        style={{ backgroundColor: 'rgba(231,229,225,255)' }}
+        style={{ backgroundColor: 'rgba(245, 244, 248)' }}
         className='rounded w-28 h-8 text-center'
         onChange={handleChange}
       />
