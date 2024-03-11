@@ -4,6 +4,7 @@ import { useState, useRef } from 'react';
 import table1 from '../../public/table1.png';
 import table2 from '../../public/table-2.png';
 import Layout from "../homepage/layout";
+import { Image } from "antd";
 
 const Car = () => {
   const [showInformation, setShowInformation] = useState(false);
@@ -117,8 +118,8 @@ const Car = () => {
             {/* C (Contaminant Generation Rate) = P × (100 × n1 + n1 × d1 + n2 × d2) */}
           </div>
           <div className="flex pt-8 pl-32 pb-20">
-            <img src={table1} height={600} width={600} alt="Table 1" />
-            <img src={table2} height={600} width={600} alt="Table 2" />
+            <Image src={table1} height={600} width={600} alt="Table 1" />
+            <Image src={table2} height={600} width={600} alt="Table 2" />
           </div>
         </div>
       )}

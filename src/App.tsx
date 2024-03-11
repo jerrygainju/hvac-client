@@ -10,6 +10,7 @@ import Car from './pages/carparkventilation/Car';
 import Duct from './pages/ductsize/duct';
 import Home from './pages/homepage/home';
 import About from "./pages/about/About";
+import ContactUs from "./pages/contact-us/ContactUs";
 function App() {
   return (
 
@@ -18,6 +19,7 @@ function App() {
             <Route path="/" element={<Home/>} />
             <Route path="/car-park-ventilation" element={<Car />} />
             <Route path="/duct-size-calculation" element={<Duct />} />
+            <Route path="/contact-us" element={<ContactUs/>} />
             <Route path="/about-us" element={<About/>} />
             <Route path="/signin" element={<SignInPage/>} />
             <Route path="/signup" element={<SignUpPage/>} />

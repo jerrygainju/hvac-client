@@ -51,7 +51,7 @@ const items: MenuProps['items'] = [
     ],
   },
   {
-    label: 'About ',
+    label: 'About Us',
     key: 'aboutus',
     icon: <InfoCircleOutlined />,
   },
@@ -101,6 +101,9 @@ const Navigation: React.FC = () => {
     }
     if (e.key === 'aboutus') {
       navigate('/about-us');
+    }
+    if (e.key === 'contactus') {
+      navigate('/contact-us');
     }
     if (e.key === 'signup') {
       navigate('/signup');
