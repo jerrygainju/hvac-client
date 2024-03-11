@@ -3,8 +3,8 @@ import Table from "./Table";
 import { useState, useRef } from 'react';
 import table1 from '../../public/table1.png';
 import table2 from '../../public/table-2.png';
-import Layout from "../homepage/layout";
 import { Image } from "antd";
+import Navigation from "../homepage/navigation";
 
 const Car = () => {
   const [showInformation, setShowInformation] = useState(false);
@@ -26,11 +26,7 @@ const Car = () => {
 
   return (
     <div className=" h-[300px] pl-2 mt-[32px]">
-      <div className="">
-        <Layout>
-          {' '}
-        </Layout>
-      </div>
+      <Navigation />
       <div className="flex flex-row gap-14 pt-6 text-3xl content-center text-center pl-16 font-bold">
         Car Park Ventilation
         <div>

@@ -1,6 +1,5 @@
-import React from "react";
-import Layout from "../homepage/layout";
 import ContactImage from "../../public/contact.jpg";
+import Navigation from "../homepage/navigation";
 
 const ContactUs = () => {
   const containerStyles = {
@@ -24,9 +23,7 @@ const ContactUs = () => {
 
   return (
     <div className="pt-[240px]">
-      <Layout>
-        {" "}
-      </Layout>
+          <Navigation />
       <div className="pt-[18px]">
         <div style={containerStyles}>
           <div style={titleStyles}>

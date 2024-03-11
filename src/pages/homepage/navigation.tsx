@@ -115,7 +115,7 @@ const Navigation: React.FC = () => {
 
   return (
     <div className='flex mt-[-390px]'>
-      <Menu onClick={onClick} selectedKeys={[current]} mode="vertical" items={items} className='flex gap-24 lg:w-[1500px] bg-gray-200 rounded ' />
+      <Menu onClick={onClick} selectedKeys={[current]} mode="vertical" items={items} className='flex font-serif gap-24 lg:w-[1500px] bg-gray-200 rounded ' />
     </div>
   );
 };
