@@ -8,8 +8,8 @@ const About = () => {
                 <Navigation>
                 </Navigation>
                 </div>
-                <div className="">
-                welcome to about us
+                <div className="flex pt-20 text-4xl font-mono justify-center">
+                Welcome to About us
                 </div>
             </div>
         </>

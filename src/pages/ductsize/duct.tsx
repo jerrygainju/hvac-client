@@ -72,6 +72,44 @@ const Duct = () => {
   };
 
 
+const calculateFormula = (a:number, b:number) => {
+  return D - 1.3 * Math.pow((a * b), 0.625) / Math.pow((a + b), 0.25)
+}
+
+
+const performIteration = (initialValue:number, b:number, maxIterations:number) => {
+  let a = initialValue;
+
+  for (let i = 1; i <= maxIterations; i++) {
+    const result = calculateFormula(a, b);
+
+    if (result === 0) {
+      console.log(`Iteration ${i}: Found solution. a = ${a}`);
+      return a;
+    }
+
+    a = result;
+    console.log(`Iteration ${i}: a = ${a}`);
+  }
+
+  console.log(`Reached maximum iterations (${maxIterations}). Final value for a: ${a}`);
+  return a;
+}
+
+
+const D = 190.7;
+const b = 2;  
+
+const initialValue = b;
+
+const maxIterations = 7;
+
+const finalValueForA = performIteration(initialValue, b, maxIterations);
+
+console.log(`Final value for a: ${finalValueForA}`);
+
+
+
   useEffect(() => {
     eqDiameterCal();
   }, [selectedUnit]);

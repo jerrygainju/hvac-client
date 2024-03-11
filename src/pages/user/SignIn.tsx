@@ -10,6 +10,7 @@ import { EyeOutlined, EyeInvisibleOutlined, MailOutlined, LockOutlined } from '@
 import { fixedInputStyles, iconColorStyle, signInStyles } from './style/userStyle';
 import '../user/style/user.css'
 import config from '../../config/config';
+import Layout from '../homepage/layout';
 
 
 const Signin = () => {
@@ -52,6 +53,10 @@ const Signin = () => {
   };
 
   return (
+    <div className='pt-[212px]'>
+    <Layout>
+      {' '}
+    </Layout>
     <form className="mt-8 space-y-6">
       <Header
         heading="Signin to your account"
@@ -59,7 +64,7 @@ const Signin = () => {
         linkName="Signup"
         linkUrl="/signup"
       />
-      <div>
+      <div className='flex flex-col items-center'>
         <Input
           type="email"
           placeholder="Email Address"
@@ -91,6 +96,7 @@ const Signin = () => {
         </div>
       </div>
     </form>
+    </div>
   );
 };
 

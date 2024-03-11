@@ -86,6 +86,9 @@ const Navigation: React.FC = () => {
 
   const onClick = (e: any) => {
     setCurrent(e.key);
+    if (e.key === 'logo') {
+      navigate('/');
+    }
 
     if (e.key === 'home') {
       navigate('/');

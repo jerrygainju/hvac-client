@@ -8,6 +8,7 @@ import { EyeOutlined, EyeInvisibleOutlined, MailOutlined, UserOutlined, LockOutl
 import { Input } from 'antd';
 import { fixedInputStyles, iconColorStyle, signInStyles } from './style/userStyle';
 import config from '../../config/config';
+import Layout from '../homepage/layout';
 
 
 const Signup: React.FC = () => {
@@ -58,6 +59,10 @@ const Signup: React.FC = () => {
 
 
   return (
+    <div className='pt-[303px]'>
+      <Layout>
+        {' '}
+      </Layout>
     <form className="mt-8 space-y-6">
       <Header
         heading="Signup to create an account"
@@ -65,7 +70,7 @@ const Signup: React.FC = () => {
         linkName="Signin"
         linkUrl="/signin"
       />
-      <div>
+      <div className='flex flex-col items-center'>
         <Input
           type="text"
           value={username}
@@ -118,6 +123,7 @@ const Signup: React.FC = () => {
         </div>
       </div>
     </form>
+    </div>
   );
 
 };
