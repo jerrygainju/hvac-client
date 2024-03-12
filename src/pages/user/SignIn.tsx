@@ -10,6 +10,7 @@ import { EyeOutlined, EyeInvisibleOutlined, MailOutlined, LockOutlined } from '@
 import { fixedInputStyles, iconColorStyle, signInStyles } from './style/userStyle';
 import '../user/style/user.css'
 import config from '../../config/config';
+import Navigation from '../homepage/navigation';
 
 
 const Signin = () => {
@@ -52,45 +53,48 @@ const Signin = () => {
   };
 
   return (
-    <form className="mt-8 space-y-6">
-      <Header
-        heading="Signin to your account"
-        paragraph="Don't have an account yet? "
-        linkName="Signup"
-        linkUrl="/signup"
-      />
-      <div>
-        <Input
-          type="email"
-          placeholder="Email Address"
-          className={`${fixedInputStyles}`}
-          value={email}
-          prefix={<MailOutlined style={iconColorStyle} />}
-          onChange={(e) => setEmail(e.target.value)}
+    <div className='pt-[212px]'>
+      <Navigation />
+      <form className="mt-8 space-y-6">
+        <Header
+          heading="Signin to your account"
+          paragraph="Don't have an account yet? "
+          linkName="Signup"
+          linkUrl="/signup"
         />
-        <Input.Password
-          placeholder="Password"
-          value={password}
-          prefix={<LockOutlined style={iconColorStyle} />}
-          className={`${fixedInputStyles}`}
-          iconRender={(visible) =>
-            visible ? (
-              <EyeOutlined onClick={toggleShowPassword} />
-            ) : (
-              <EyeInvisibleOutlined onClick={toggleShowPassword} />
-            )
-          }
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <FormExtra />
-        <button type='button'
-          className={`${signInStyles}`}
-          onClick={handleLogin}> Signin </button>
-        <div>
-          <ToastContainer />
+        <div className='flex flex-col items-center'>
+          <Input
+            type="email"
+            placeholder="Email Address"
+            className={`${fixedInputStyles}`}
+            value={email}
+            prefix={<MailOutlined style={iconColorStyle} />}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <Input.Password
+            placeholder="Password"
+            value={password}
+            prefix={<LockOutlined style={iconColorStyle} />}
+            className={`${fixedInputStyles}`}
+            iconRender={(visible) =>
+              visible ? (
+                <EyeOutlined onClick={toggleShowPassword} />
+              ) : (
+                <EyeInvisibleOutlined onClick={toggleShowPassword} />
+              )
+            }
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <FormExtra />
+          <button type='button'
+            className={`${signInStyles}`}
+            onClick={handleLogin}> Signin </button>
+          <div>
+            <ToastContainer />
+          </div>
         </div>
-      </div>
-    </form>
+      </form>
+    </div>
   );
 };
 

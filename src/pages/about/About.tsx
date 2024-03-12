@@ -5,11 +5,10 @@ const About = () => {
         <>
             <div className="pt-16">
                 <div>
-                <Navigation>
-                </Navigation>
+                <Navigation />
                 </div>
-                <div className="">
-                welcome to about us
+                <div className="flex pt-20 text-4xl font-serif justify-center">
+                Welcome to About us
                 </div>
             </div>
         </>

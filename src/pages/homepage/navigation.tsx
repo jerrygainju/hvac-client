@@ -51,7 +51,7 @@ const items: MenuProps['items'] = [
     ],
   },
   {
-    label: 'About ',
+    label: 'About Us',
     key: 'aboutus',
     icon: <InfoCircleOutlined />,
   },
@@ -86,6 +86,9 @@ const Navigation: React.FC = () => {
 
   const onClick = (e: any) => {
     setCurrent(e.key);
+    if (e.key === 'logo') {
+      navigate('/');
+    }
 
     if (e.key === 'home') {
       navigate('/');
@@ -99,6 +102,9 @@ const Navigation: React.FC = () => {
     if (e.key === 'aboutus') {
       navigate('/about-us');
     }
+    if (e.key === 'contactus') {
+      navigate('/contact-us');
+    }
     if (e.key === 'signup') {
       navigate('/signup');
     }
@@ -109,7 +115,7 @@ const Navigation: React.FC = () => {
 
   return (
     <div className='flex mt-[-390px]'>
-      <Menu onClick={onClick} selectedKeys={[current]} mode="vertical" items={items} className='flex gap-24 lg:w-[1500px] bg-gray-200 rounded ' />
+      <Menu onClick={onClick} selectedKeys={[current]} mode="vertical" items={items} className='flex font-serif gap-24 lg:w-[1500px] bg-gray-200 rounded ' />
     </div>
   );
 };

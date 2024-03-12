@@ -8,6 +8,7 @@ import { EyeOutlined, EyeInvisibleOutlined, MailOutlined, UserOutlined, LockOutl
 import { Input } from 'antd';
 import { fixedInputStyles, iconColorStyle, signInStyles } from './style/userStyle';
 import config from '../../config/config';
+import Navigation from '../homepage/navigation';
 
 
 const Signup: React.FC = () => {
@@ -58,66 +59,69 @@ const Signup: React.FC = () => {
 
 
   return (
-    <form className="mt-8 space-y-6">
-      <Header
-        heading="Signup to create an account"
-        paragraph="Already have an account? "
-        linkName="Signin"
-        linkUrl="/signin"
-      />
-      <div>
-        <Input
-          type="text"
-          value={username}
-          placeholder="Username"
-          className={`${fixedInputStyles}`}
-          prefix={<UserOutlined style={iconColorStyle} />}
-          onChange={(e) => setUsername(e.target.value)}
+    <div className='pt-[303px]'>
+      <Navigation />
+      <form className="mt-8 space-y-6">
+        <Header
+          heading="Signup to create an account"
+          paragraph="Already have an account? "
+          linkName="Signin"
+          linkUrl="/signin"
         />
-        <Input
-          type="email"
-          placeholder="Email Address"
-          className={`${fixedInputStyles}`}
-          value={email}
-          prefix={<MailOutlined style={iconColorStyle} />}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <Input.Password
-          placeholder="Password"
-          value={password}
-          className={`${fixedInputStyles}`}
-          prefix={<LockOutlined style={iconColorStyle} />}
-          iconRender={(visible) =>
-            visible ? (
-              <EyeOutlined onClick={toggleShowPassword} />
-            ) : (
-              <EyeInvisibleOutlined onClick={toggleShowPassword} />
-            )
-          }
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <Input.Password
-          placeholder="Confirm Password"
-          className={`${fixedInputStyles}`}
-          prefix={<LockOutlined style={iconColorStyle} />}
-          value={confirmPassword}
-          iconRender={(visible) =>
-            visible ? (
-              <EyeOutlined onClick={toggleShowConfirmPassword} />
-            ) : (
-              <EyeInvisibleOutlined onClick={toggleShowConfirmPassword} />
-            )
-          }
-          onChange={(e) => setconfirmPasswod(e.target.value)}
-        />
-        <button type="button" className={signInStyles} onClick={handleRegister}>
-          Signup
-        </button>
-        <div>
-          <ToastContainer />
+        <div className='flex flex-col items-center'>
+          <Input
+            type="text"
+            value={username}
+            placeholder="Username"
+            className={`${fixedInputStyles}`}
+            prefix={<UserOutlined style={iconColorStyle} />}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <Input
+            type="email"
+            placeholder="Email Address"
+            className={`${fixedInputStyles}`}
+            value={email}
+            prefix={<MailOutlined style={iconColorStyle} />}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <Input.Password
+            placeholder="Password"
+            value={password}
+            className={`${fixedInputStyles}`}
+            prefix={<LockOutlined style={iconColorStyle} />}
+            iconRender={(visible) =>
+              visible ? (
+                <EyeOutlined onClick={toggleShowPassword} />
+              ) : (
+                <EyeInvisibleOutlined onClick={toggleShowPassword} />
+              )
+            }
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <Input.Password
+            placeholder="Confirm Password"
+            className={`${fixedInputStyles}`}
+            prefix={<LockOutlined style={iconColorStyle} />}
+            value={confirmPassword}
+            iconRender={(visible) =>
+              visible ? (
+                <EyeOutlined onClick={toggleShowConfirmPassword} />
+              ) : (
+                <EyeInvisibleOutlined onClick={toggleShowConfirmPassword} />
+              )
+            }
+            onChange={(e) => setconfirmPasswod(e.target.value)}
+          />
+          <button type="button" className={signInStyles} onClick={handleRegister}>
+            Signup
+          </button>
+          <div>
+            <ToastContainer />
+          </div>
         </div>
-      </div>
-    </form>
+      </form>
+    </div>
   );
 
 };

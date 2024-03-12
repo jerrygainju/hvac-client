@@ -181,7 +181,7 @@ export default function FormExtra() {
   };
 
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex gap-4 items-center justify-between">
       <div className="flex items-center">
         <input
           id="remember-me"
@@ -193,7 +193,6 @@ export default function FormExtra() {
           Remember me
         </label>
       </div>
-
       <div className="text-sm">
         <a href="#" className="font-medium text-purple-600 hover:text-purple-500" onClick={showModal}>
           Forgot your password?
