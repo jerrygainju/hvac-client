@@ -41,7 +41,7 @@ const DuctForm: React.FC<DuctFormProps> = ({
                         Duct Size Calculation
                     </div>
                     <div className='flex justify-center pb-16'>
-                        <div className="bg-gray-200 xl:h-max w-full lg:w-[35%] lg:h-auto pb-6 rounded">
+                        <div className="bg-gray-200 xl:h-max w-full lg:w-[35%] lg:h-auto pb-6 rounded shadow-xl">
                             <div className='flex flex-row flex-wrap gap-4 pt-4 pl-6'>
                                 <div className='w-full sm:w-1/2 lg:w-1/3 text-gray-600'>
                                     <b>Units</b>
