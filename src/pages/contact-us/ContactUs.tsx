@@ -41,7 +41,7 @@ const ContactUs = () => {
     fontSize: '5rem',
     color: '#332',
     fontWeight: 'bold',
-    fontFamily: 'sans-serif',
+    fontFamily: 'sanserif',
   };
 
   return (
