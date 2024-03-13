@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Select from "react-select";
-// import * as XLSX from 'xlsx';
+
 import * as ExcelJS from 'exceljs';
 import { generateParkingOptions, generateStaffExposureOptions, generateStaffUsageFactor, generateVehicleTypeFactor, getElementStringValue, getElementValue, percentageOptions } from "./Extra ";
 
@@ -65,25 +65,6 @@ const CalculationTable = () => {
     const [calculatedValueC1d, setCalculatedValueC1d] = useState('');
 
     const [calculateAirSupply, setCalculateTotalAirSupply] = useState<number | null>(null);
-
-    // const downloadTableData = () => {
-    //     const fixedHeaders = ['Variables', getElementStringValue("h1"),  getElementStringValue("h2"),  getElementStringValue("h3"),  getElementStringValue("h4"),  getElementStringValue("h5")];
-    //     const data = [
-    //       [ "n1", getElementValue("n1z"), getElementValue("n1a"), getElementValue("n1b"), getElementValue("n1c"), getElementValue("n1d")],
-    //       [ "n2", getElementValue("n2z"), getElementValue("n2a"), getElementValue("n2b"), getElementValue("n2c"), getElementValue("n2d")],
-    //       [ "p", inputValuePz, inputValuePa, inputValuePb, inputValuePc, inputValuePd],
-    //       [ "d1", , getElementValue("d1z"), getElementValue("d1a"), getElementValue("d1b"), getElementValue("d1c"), getElementValue("d1d")],
-    //       [ "d2", , getElementValue("d2z"), getElementValue("d2a"), getElementValue("d2b"), getElementValue("d2c"), getElementValue("d2d")],
-    //       [ "E", inputStaffEz, inputStaffEa, inputStaffEb, inputStaffEc, inputStaffEd],
-    //       [ "T", inputVTypeTz, inputVTypeTa, inputVTypeTb, inputVTypeTc, inputVTypeTd],
-    //       [ "F", inputFactorFz, inputFactorFa, inputFactorFb, inputFactorFc, inputFactorFd], 
-    //       [ "A", getElementValue("A1z"), getElementValue("A1a"), getElementValue("A1b"), getElementValue("A1c"), getElementValue("A1d")],
-    //     ];
-    //     const ws = XLSX.utils.aoa_to_sheet([fixedHeaders, ...data]);
-    //     const wb = XLSX.utils.book_new();
-    //     XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-    //     XLSX.writeFile(wb, 'car_park.xlsx');
-    //   };
 
     const downloadTableData = () => {
         const workbook = new ExcelJS.Workbook();
