@@ -4,8 +4,24 @@ import Select from "react-select";
 import * as ExcelJS from 'exceljs';
 import { generateParkingOptions, generateStaffExposureOptions, generateStaffUsageFactor, generateVehicleTypeFactor, getElementStringValue, getElementValue, percentageOptions } from "./Extra ";
 
+interface RowData {
+    interpretation: string;
+    variable: string;
+    values: {
+        [key: string]: number;
+    };
+}
+
+interface ProjectData {
+    projectName: string;
+    tableData: RowData[];
+}
+
 
 const CalculationTable = () => {
+    const [projectName, setProjectName] = useState('');
+    const [savedProjects, setSavedProjects] = useState<ProjectData[]>([]);
+    const [selectedProject, setSelectedProject] = useState<ProjectData | null>(null);
     const [greatestValueCol1, setGreatestValueCol1] = useState<number | null>(null);
     const [greatestValueCol2, setGreatestValueCol2] = useState<number | null>(null);
     const [greatestValueCol3, setGreatestValueCol3] = useState<number | null>(null);
@@ -264,6 +280,57 @@ const CalculationTable = () => {
         setCalculateTotalAirSupply(totalAirSupply);
     };
 
+    const handleSave = () => {
+
+        const tableData: RowData[] = [
+            {
+                interpretation: "No of parking spaces in the zone of level under consideration",
+                variable: "n1",
+                values: {
+                    "z": parseInt((document.getElementById("n1z") as HTMLInputElement)?.value || "0"),
+                    "a": parseInt((document.getElementById("n1a") as HTMLInputElement)?.value || "0"),
+                    "b": parseInt((document.getElementById("n1b") as HTMLInputElement)?.value || "0"),
+                    "c": parseInt((document.getElementById("n1c") as HTMLInputElement)?.value || "0"),
+                    "d": parseInt((document.getElementById("n1d") as HTMLInputElement)?.value || "0"),
+                }
+            },
+            {
+                interpretation: "No of parking spaces situated in other parts of the car park",
+                variable: "n2",
+                values: {
+                    "z": parseInt((document.getElementById("n2z") as HTMLInputElement)?.value || "0"),
+                    "a": parseInt((document.getElementById("n2a") as HTMLInputElement)?.value || "0"),
+                    "b": parseInt((document.getElementById("n2b") as HTMLInputElement)?.value || "0"),
+                    "c": parseInt((document.getElementById("n2c") as HTMLInputElement)?.value || "0"),
+                    "d": parseInt((document.getElementById("n2d") as HTMLInputElement)?.value || "0"),
+                }
+            },
+
+        ];
+
+
+        const projectData: ProjectData = {
+            projectName: projectName,
+            tableData: tableData
+        };
+
+        setSavedProjects([...savedProjects, projectData]);
+        setProjectName('');
+    };
+
+
+    const handleDeleteProject = (index: number) => {
+        const updatedProjects = [...savedProjects];
+        updatedProjects.splice(index, 1);
+        setSavedProjects(updatedProjects);
+    };
+
+    const handleEditProject = (index: number, newName: string) => {
+        const updatedProjects = [...savedProjects];
+        updatedProjects[index].projectName = newName;
+        setSavedProjects(updatedProjects);
+    };
+
     const maxC1z = Math.max(parseInt(calculatedValueAz), parseInt(calculatedValueBz), parseInt(calculatedValueC1z));
     const maxC2z = Math.max(parseInt(calculatedValueAa), parseInt(calculatedValueBa), parseInt(calculatedValueC1a));
     const maxC3z = Math.max(parseInt(calculatedValueAb), parseInt(calculatedValueBb), parseInt(calculatedValueC1b));
@@ -281,7 +348,8 @@ const CalculationTable = () => {
             <div className="pl-16">
                 <input
                     type='text'
-                    id='pr1'
+                    value={projectName}
+                    onChange={(e) => setProjectName(e.target.value)}
                     placeholder='Enter project name'
                     className="border rounded h-10 text-center border-gray-400 w-72"
                 />
@@ -1077,7 +1145,7 @@ const CalculationTable = () => {
                     </tr>
                 </table>
             </div >
-            <div className="flex gap-36 pb-12 pl-16">
+            <div className="flex gap-24 pb-12 pl-16">
                 <div className="pt-10">
                     <button onClick={calculategreatesValue} className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">Click to Show Greatest Value</button>
                     <p className="pt-2">
@@ -1144,7 +1212,44 @@ const CalculationTable = () => {
                 <div className="pt-10">
                     <button onClick={downloadTableData} className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-700 focus:outline-none focus:shadow-outline-blue">Download Excel File </button>
                 </div>
+                <div className="pt-10">
+                    <button onClick={handleSave} className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-700 focus:outline-none focus:shadow-outline-blue">
+                        Save
+                    </button>
+                </div>
             </div>
+            <div>
+                <h2 className="pt-4">Saved Projects:</h2>
+                <ul>
+                    {savedProjects.map((project, index) => (
+                        <li key={index}>
+                               <button onClick={() => setSelectedProject(project)}>
+                                {project.projectName}
+                            </button>
+                            <button onClick={() => handleDeleteProject(index)}>Delete</button>
+                            <button onClick={() => handleEditProject(index, " ")}>Edit</button>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+            {selectedProject && (
+                <div>
+                    <p>Project Name: {selectedProject.projectName}</p>
+                    <table className="border border-collapse mt-4 text-sm w-11/12 mx-auto ">
+                        <tbody>
+                            {selectedProject.tableData.map((rowData, rowIndex) => (
+                                <tr key={rowIndex}>
+                                    <td>{rowData.interpretation}</td>
+                                    <td>{rowData.variable}</td>
+                                    {Object.keys(rowData.values).map((key, columnIndex) => (
+                                        <td key={columnIndex}>{rowData.values[key]}</td>
+                                    ))}
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            )}
         </div >
     )
 }
