@@ -68,7 +68,7 @@
 
 // export default Home;
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Navigation from "./navigation";
 import Contact from '../../public/contact.jpg';
 import SGLogo from '../../public/log.jpeg';
