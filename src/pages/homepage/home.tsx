@@ -100,7 +100,7 @@ const Home = () => {
                 <div className="overflow-hidden mx-auto border rounded-xl shadow-2xl w-[1000px] h-96">
                     <div className="flex transition-transform duration-500 ease-in-out" style={{ transform: `translateX(-${(currentIndex % images.length) * 100}%)` }}>
                         {duplicatedImages.map((image, index) => (
-                            <img key={index} src={image} alt={`Image ${index + 1}`} className="object-cover  h-full" />
+                            <img key={index} src={image} alt={`Image ${index + 1}`} className="object-cover h-full"/>
                         ))}
                     </div>
                 </div>
