@@ -7,7 +7,7 @@ import { Image } from 'antd';
 import User from '../../public/user.jpg';
 import Construct from '../../public/const.jpg';
 import Call from '../../public/call.jpg';
-import './Home.css'; // Import CSS file for custom styling
+import './home.css'; 
 
 const Home = () => {
     const slides = [
