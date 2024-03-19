@@ -102,7 +102,7 @@ const Home = () => {
                     <BsChevronCompactRight onClick={nextSlide} size={30} />
                 </div>
                 <div className='flex top-4 justify-center pt-[470px]'>
-                    {slides.map((slide, slideIndex) => (
+                    {slides.map((_slide, slideIndex) => (
                         <div
                             key={slideIndex}
                             onClick={() => goToSlide(slideIndex)}
