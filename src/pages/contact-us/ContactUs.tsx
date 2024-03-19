@@ -5,6 +5,7 @@ import Input from "antd/es/input/Input";
 import TextArea from "antd/es/input/TextArea";
 import MapComponent from "./Map";
 import { EnvironmentOutlined, PhoneOutlined, MailOutlined } from '@ant-design/icons';
+import '../homepage/home.css'
 
 
 const ContactUs = () => {
@@ -31,11 +32,11 @@ const ContactUs = () => {
     backgroundImage: `url(${ContactImage})`,
     backgroundSize: "cover",
     backgroundPosition: "center",
-    height: "500px",
+    height: "450px",
     display: "flex",
-    paddingTop: "50px",
+    paddingTop: "45px",
     justifyContent: "center",
-    borderRadius: '10px',
+    borderRadius: '15px',
     border: '1px solid #ddd',
   };
 
@@ -47,9 +48,9 @@ const ContactUs = () => {
   };
 
   return (
-    <div className="pt-[803px] pb-20">
+    <div className="pt-[743px] pb-20">
       <Navigation />
-      <div className="pt-[18px]">
+      <div className="pt-[8px] slide-from-left">
         <div style={containerStyles}>
           <div style={titleStyles}>
             <b>Contact Us</b>
@@ -57,7 +58,7 @@ const ContactUs = () => {
         </div>
       </div>
       <div className="flex flex-row gap-12 mt-8 justify-center">
-        <div className="flex flex-col w-3/12  p-6  bg-gray-200 border rounded-xl shadow-2xl text-gray-600">
+        <div className="flex flex-col w-3/12  p-6  bg-gray-200 border rounded-xl shadow-2xl text-gray-600 card">
           <h2 className="text-2xl font-semibold mb-4">Get in Touch</h2>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
@@ -75,10 +76,10 @@ const ContactUs = () => {
             <button type="submit" className="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-700">Submit</button>
           </form>
         </div>
-        <div className="shadow-2xl">
+        <div className="shadow-2xl card">
           <MapComponent />
         </div>
-        <div className="flex flex-col border rounded-xl px-12 pt-12 shadow-2xl gap-10 bg-gray-200 text-gray-600 w-96">
+        <div className="flex flex-col border rounded-xl px-12 pt-12 shadow-2xl gap-10 bg-gray-200 text-gray-600 w-96 card">
           <div className="flex flex-col font-semibold text-2xl border rounded-xl p-2 bg-gray-50 text-center shadow-xl ">
             <div>
               <EnvironmentOutlined /> Location
