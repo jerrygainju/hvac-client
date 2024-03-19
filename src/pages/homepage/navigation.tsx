@@ -8,25 +8,19 @@ import {
   CloudServerOutlined,
   UserOutlined,
   UserAddOutlined,
-  UserSwitchOutlined
+  UserSwitchOutlined,
+  FacebookOutlined,
+  InstagramOutlined,
+  TwitterOutlined,
+  SlackOutlined,
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import SgLogo from '../../public/sg-logo2.png'
 
-const HomeLogo = () => (
-  <div className="flex">
-    <img src={SgLogo} alt="Logo" className=" h-10" />
-  </div>
-);
 
 const items: MenuProps['items'] = [
-  {
-    label: <HomeLogo />,
-    key: 'logo',
-  },
-
   {
     label: 'Home',
     key: 'home',
@@ -114,8 +108,33 @@ const Navigation: React.FC = () => {
   };
 
   return (
-    <div className='flex mt-[-390px]'>
-      <Menu onClick={onClick} selectedKeys={[current]} mode="vertical" items={items} className='flex font-serif gap-24 lg:w-[1500px] bg-gray-200 rounded ' />
+    <div className='flex flex-row gap-4 mt-[-390px]'>
+      <div>
+        <img src={SgLogo} width={40} height={40} alt="logo" />
+      </div>
+      <div className='flex flex-row gap-2'>
+        <div className='pt-2'>
+          <a href="facebook.com">
+            <FacebookOutlined />
+          </a>
+        </div>
+        <div className='pt-2'>
+          <a href="facebook.com">
+            <InstagramOutlined />
+          </a>
+        </div>
+        <div className='pt-2'>
+          <a href="facebook.com">
+            <TwitterOutlined />
+          </a>
+        </div>
+        <div className='pt-2'>
+          <a href="facebook.com">
+            <SlackOutlined />
+          </a>
+        </div>
+      </div>
+      <Menu onClick={onClick} selectedKeys={[current]} mode="vertical" items={items} className='flex font-serif gap-20 lg:w-[1300px] bg-gray-200 rounded ' />
     </div>
   );
 };

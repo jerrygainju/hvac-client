@@ -25,7 +25,7 @@ const Car = () => {
   };
 
   return (
-    <div className=" h-[300px] pl-2 mt-[32px]">
+    <div className=" h-[300px] pt-[182px] pl-8">
       <Navigation />
       <div className="flex flex-row gap-14 pt-6 text-3xl content-center text-center pl-16 font-bold">
         Car Park Ventilation
