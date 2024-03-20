@@ -13,12 +13,12 @@ import {
   InstagramOutlined,
   TwitterOutlined,
   SlackOutlined,
+  PhoneOutlined
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import SgLogo from '../../public/sg-logo2.png'
-
 
 const items: MenuProps['items'] = [
   {
@@ -26,7 +26,6 @@ const items: MenuProps['items'] = [
     key: 'home',
     icon: <HomeOutlined />,
   },
-
   {
     label: 'Services',
     key: 'services',
@@ -40,7 +39,7 @@ const items: MenuProps['items'] = [
       {
         label: 'Duct Size Calculation',
         key: 'duct',
-        icon: <CodeSandboxOutlined />
+        icon: <CodeSandboxOutlined />,
       },
     ],
   },
@@ -54,7 +53,6 @@ const items: MenuProps['items'] = [
     key: 'contactus',
     icon: <MailOutlined />,
   },
-
   {
     label: 'Profile',
     key: 'profile',
@@ -68,14 +66,14 @@ const items: MenuProps['items'] = [
       {
         label: 'Sign Up',
         key: 'signup',
-        icon: <UserAddOutlined />
+        icon: <UserAddOutlined />,
       },
     ],
   },
 ];
 
 const Navigation: React.FC = () => {
-  const [current, setCurrent] = useState(' ');
+  const [current, setCurrent] = useState('');
   const navigate = useNavigate();
 
   const onClick = (e: any) => {
@@ -108,36 +106,48 @@ const Navigation: React.FC = () => {
   };
 
   return (
-    <div className='flex flex-row gap-4 mt-[-390px]'>
-      <div>
-        <img src={SgLogo} width={40} height={40} alt="logo" />
+    <div className='sticky top-0 z-50 bg-white shadow rounded w-screen'>
+    <div className='flex flex-row justify-between items-center gap-4 py-2 px-4'>
+        <div>
+          <img src={SgLogo} width={40} height={40} alt="logo" />
+        </div>
+        <div className='text-lg font-semibold text-gray-600 font-mono slide-from-left'>
+          Welcome to HVAC Calculation
+        </div>
+        <div className='flex flex-col'>
+        <div className='text-base font-semibold text-gray-600 font-mono'>
+           <PhoneOutlined style={{ transform: 'rotate(90deg)' }}/> Call us
+          </div>
+          <div className='text-sm font-semibold text-gray-600 font-mono'>
+            +01 6632154
+          </div>
+        </div>
+        <div className='flex flex-row gap-4'>
+          <div className='pt-2'>
+            <a href="facebook.com">
+              <FacebookOutlined />
+            </a>
+          </div>
+          <div className='pt-2'>
+            <a href="facebook.com">
+              <InstagramOutlined />
+            </a>
+          </div>
+          <div className='pt-2'>
+            <a href="facebook.com">
+              <TwitterOutlined />
+            </a>
+          </div>
+          <div className='pt-2'>
+            <a href="facebook.com">
+              <SlackOutlined />
+            </a>
+          </div>
+        </div>
       </div>
-      <div className='flex flex-row gap-2'>
-        <div className='pt-2'>
-          <a href="facebook.com">
-            <FacebookOutlined />
-          </a>
-        </div>
-        <div className='pt-2'>
-          <a href="facebook.com">
-            <InstagramOutlined />
-          </a>
-        </div>
-        <div className='pt-2'>
-          <a href="facebook.com">
-            <TwitterOutlined />
-          </a>
-        </div>
-        <div className='pt-2'>
-          <a href="facebook.com">
-            <SlackOutlined />
-          </a>
-        </div>
-      </div>
-      <Menu onClick={onClick} selectedKeys={[current]} mode="vertical" items={items} className='flex font-serif gap-20 lg:w-[1300px] bg-gray-200 rounded ' />
+      <Menu onClick={onClick} selectedKeys={[current]} mode="vertical" items={items} className='flex font-serif gap-28 lg:w-[1400px] bg-gray-200 rounded' />
     </div>
   );
 };
+
 export default Navigation;
-
-

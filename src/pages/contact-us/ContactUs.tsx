@@ -40,20 +40,13 @@ const ContactUs = () => {
     border: '1px solid #ddd',
   };
 
-  const titleStyles = {
-    fontSize: '5rem',
-    color: '#332',
-    fontWeight: 'bold',
-    fontFamily: 'sanserif',
-  };
-
   return (
-    <div className="pt-[743px] pb-20">
-      <Navigation />
-      <div className="pt-[8px] slide-from-left">
-        <div style={containerStyles}>
-          <div style={titleStyles}>
-            <b>Contact Us</b>
+    <div>
+        <Navigation />
+      <div className="pt-[8px] w-[1490px] pl-[42px] slide-from-left">
+        <div style={containerStyles} className="items-center">
+          <div className="text-5xl font-serif">
+            Contact Us
           </div>
         </div>
       </div>
@@ -90,7 +83,7 @@ const ContactUs = () => {
           </div>
           <div className="flex flex-col font-semibold text-2xl border rounded-xl p-2 bg-gray-50 text-center shadow-xl ">
             <div>
-              <PhoneOutlined /> Phone
+              <PhoneOutlined style={{ transform: 'rotate(90deg)' }}/> Phone
             </div>
             <div className="text-lg">
               +01 6698634

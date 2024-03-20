@@ -53,7 +53,7 @@ const Signin = () => {
   };
 
   return (
-    <div className='pt-[212px]'>
+    <div>
       <Navigation />
       <form className="mt-8 space-y-6">
         <Header

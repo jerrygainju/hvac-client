@@ -59,7 +59,7 @@ const Signup: React.FC = () => {
 
 
   return (
-    <div className='pt-[303px]'>
+    <div>
       <Navigation />
       <form className="mt-8 space-y-6">
         <Header
