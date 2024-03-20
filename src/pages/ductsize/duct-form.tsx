@@ -34,8 +34,8 @@ const DuctForm: React.FC<DuctFormProps> = ({
     handleVelocityChange
 }) => {
     return (
-        <div className="flex h-screen pt-10 max-w-screen justify-center w-screen max-w-screen overflow-x-hidden " >
-            <div className='flex flex-col mt-[357px] xl:w-1/2 lg:w-[50%] sm:w-[90%] items-center'>
+        <div className="flex h-screen justify-center w-screen overflow-x-hidden " >
+            <div className='flex flex-col xl:w-1/2 lg:w-[50%] sm:w-[90%] items-center'>
                 <Layout>
                     <div className='flex pt-10 justify-center w-full text-3xl font-bold mb-4 font-serif text-gray-600'>
                         Duct Size Calculation

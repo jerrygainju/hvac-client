@@ -25,12 +25,12 @@ const Car = () => {
   };
 
   return (
-    <div className=" h-[300px] pt-[182px] pl-8">
+    <div>
       <Navigation />
-      <div className="flex flex-row gap-14 pt-6 text-3xl content-center text-center pl-16 font-bold">
+      <div className="flex flex-row gap-14 pt-6 text-3xl content-center text-center pl-16 font-mono font-bold">
         Car Park Ventilation
         <div>
-          <button style={{ width: '200px' }} className="text-sm border rounded p-2 bg-blue-500 text-white hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
+          <button style={{ width: '250px' }} className="text-sm border rounded p-2 bg-blue-500 text-white hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
             onClick={() => toggleInformation()}>
             {showInformation ? 'Hide Information' : 'Click for More Information'}
           </button>

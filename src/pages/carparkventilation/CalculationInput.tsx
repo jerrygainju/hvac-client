@@ -339,7 +339,7 @@ const CalculationTable = () => {
 
     return (
         <div>
-            <div className="text-lg font-bold text-center pt-6">
+            <div className="text-lg font-bold text-center pt-6 font-mono">
                 Car Park Ventilation Calculation
             </div>
             <div className="text-sm font-bold text-center ">
