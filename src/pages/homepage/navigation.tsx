@@ -73,7 +73,7 @@ const items: MenuProps['items'] = [
 ];
 
 const Navigation: React.FC = () => {
-  const [current, setCurrent] = useState(' ');
+  const [current, setCurrent] = useState('');
   const navigate = useNavigate();
 
   const onClick = (e: any) => {
@@ -145,7 +145,7 @@ const Navigation: React.FC = () => {
           </div>
         </div>
       </div>
-      <Menu onClick={onClick} selectedKeys={[current]} mode="vertical" items={items} className='flex font-serif gap-28 lg:w-[1400px] bg-gray-200 rounded ' />
+      <Menu onClick={onClick} selectedKeys={[current]} mode="vertical" items={items} className='flex font-serif gap-28 lg:w-[1400px] bg-gray-200 rounded' />
     </div>
   );
 };

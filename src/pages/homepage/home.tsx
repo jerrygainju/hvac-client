@@ -66,7 +66,7 @@ const Home = () => {
                         className='text-2xl cursor-pointer'
                     >
                         <div
-                            style={{ width: '40px', height: '3px', backgroundColor: currentIndex === slideIndex ? 'aqua' : 'gray', marginRight: slideIndex !== slides.length - 1 ? '20px' : '0' }}
+                            style={{ width: '40px', height: '3px', backgroundColor: currentIndex === slideIndex ? 'black' : 'gray', marginRight: slideIndex !== slides.length - 1 ? '20px' : '0' }}
                             className='line'
                         ></div>
                     </div>
