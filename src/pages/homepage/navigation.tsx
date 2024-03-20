@@ -19,6 +19,7 @@ import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import SgLogo from '../../public/sg-logo2.png'
+import './navigation.css'
 
 const items: MenuProps['items'] = [
   {

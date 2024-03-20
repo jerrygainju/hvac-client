@@ -1,0 +1,7 @@
+.ant-menu-item {
+    transition: transform 0.3s;
+  }
+  
+  .ant-menu-item:hover {
+    transform: scale(1.1);
+  }
