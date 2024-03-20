@@ -72,7 +72,7 @@ const Home = () => {
                     </div>
                 ))}
             </div>
-        </div>
+        </div> 
                 <div className='flex flex-col md:flex-row md:pt-12 gap-8'>
                     {card.map((item, index) => (
                         <div key={index} className='border rounded-xl bg-gray-200 w-auto shadow-2xl py-4 px-8 zoom-animation md:w-1/3'>
@@ -94,9 +94,9 @@ const Home = () => {
                 </div>
                 <div className='pt-12 flex justify-center'>
                     {experience.map((item, index) => (
-                    <div key={index} className='flex flex-row border rounded-xl shadow-2xl w-[1300px]'>
+                    <div key={index} className='flex flex-row border rounded-xl shadow-2xl w-[1300px] bg-gray-200'>
                         <div className='p-6 zoom-animation'>
-                            <Image src={item.image} width={500} height={500} className='rounded-xl relative shadow-2xl' />
+                            <Image src={item.image} width={500} height={500} className='rounded-2xl  shadow-2xl' />
                         </div>
                         <div className='flex flex-col gap-4'>
                             <div className='flex font-mono text-2xl justify-center text-yellow-500 pt-12'>
