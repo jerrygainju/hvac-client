@@ -1,4 +1,4 @@
-import Navigation from "../homepage/navigation"
+import Navigation from "../homepage/navigation/navigation"
 
 const About = () => {
     return (

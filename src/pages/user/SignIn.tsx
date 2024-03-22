@@ -10,7 +10,7 @@ import { EyeOutlined, EyeInvisibleOutlined, MailOutlined, LockOutlined } from '@
 import { fixedInputStyles, iconColorStyle, signInStyles } from './style/userStyle';
 import '../user/style/user.css'
 import config from '../../config/config';
-import Navigation from '../homepage/navigation';
+import Navigation from '../homepage/navigation/navigation';
 
 
 const Signin = () => {

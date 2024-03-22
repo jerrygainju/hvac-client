@@ -5,3 +5,11 @@
   .ant-menu-item:hover {
     transform: scale(1.1);
   }
+
+  .ant-title {
+    transition: transform 0.3s;
+  }
+  
+  .ant-title:hover {
+    transform: scale(1.8);
+  }

@@ -8,7 +8,7 @@ import SignUpPage from './pages/user/Signup';
 import  SignInPage  from './pages/user/SignIn';
 import Car from './pages/carparkventilation/Car';
 import Duct from './pages/ductsize/duct';
-import Home from './pages/homepage/home';
+import Home from './pages/homepage/home/home';
 import About from "./pages/about/About";
 import ContactUs from "./pages/contact-us/ContactUs";
 function App() {

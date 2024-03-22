@@ -1,10 +1,10 @@
 
-import Contact from '../../public/contact.jpg';
-import SGLogo from '../../public/log.jpeg';
-import User from '../../public/user.jpg';
-import Construct from '../../public/const.jpg';
-import Call from '../../public/call.jpg';
-import Company from '../../public/company.jpg';
+import Contact from '../../../public/contact.jpg';
+import SGLogo from '../../../public/log.jpeg';
+import User from '../../../public/user.jpg';
+import Construct from '../../../public/const.jpg';
+import Call from '../../../public/call.jpg';
+import Company from '../../../public/company.jpg';
 
 export const slides = [
     {
