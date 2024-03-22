@@ -4,7 +4,7 @@ import { useState, useRef } from 'react';
 import table1 from '../../public/table1.png';
 import table2 from '../../public/table-2.png';
 import { Image } from "antd";
-import Navigation from "../homepage/navigation";
+import Navigation from "../homepage/navigation/navigation";
 
 const Car = () => {
   const [showInformation, setShowInformation] = useState(false);

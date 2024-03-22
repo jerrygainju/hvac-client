@@ -8,7 +8,7 @@ import { EyeOutlined, EyeInvisibleOutlined, MailOutlined, UserOutlined, LockOutl
 import { Input } from 'antd';
 import { fixedInputStyles, iconColorStyle, signInStyles } from './style/userStyle';
 import config from '../../config/config';
-import Navigation from '../homepage/navigation';
+import Navigation from '../homepage/navigation/navigation';
 
 
 const Signup: React.FC = () => {

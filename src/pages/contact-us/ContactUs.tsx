@@ -1,11 +1,11 @@
 import { useState } from "react";
-import Navigation from "../homepage/navigation";
+import Navigation from "../homepage/navigation/navigation";
 import ContactImage from "../../public/contact.jpg";
 import Input from "antd/es/input/Input";
 import TextArea from "antd/es/input/TextArea";
 import MapComponent from "./Map";
 import { EnvironmentOutlined, PhoneOutlined, MailOutlined } from '@ant-design/icons';
-import '../homepage/home.css'
+import '../homepage/style.css'
 
 
 const ContactUs = () => {
@@ -34,7 +34,7 @@ const ContactUs = () => {
     backgroundPosition: "center",
     height: "450px",
     display: "flex",
-    paddingTop: "45px",
+    alignItems: "center", 
     justifyContent: "center",
     borderRadius: '15px',
     border: '1px solid #ddd',
@@ -42,12 +42,14 @@ const ContactUs = () => {
 
   return (
     <div>
-        <Navigation />
-      <div className="pt-[8px] w-[1490px] pl-[42px] slide-from-left">
-        <div style={containerStyles} className="items-center">
-          <div className="text-5xl font-serif">
+      <Navigation />
+      <div className="pt-[8px] ">
+        <div className="flex justify-center">
+        <div style={containerStyles} className="w-[1452px]">
+          <div className="text-5xl font-serif pb-40 slide-from-top text-gray-600">
             Contact Us
           </div>
+        </div>
         </div>
       </div>
       <div className="flex flex-row gap-12 mt-8 justify-center">
@@ -83,7 +85,7 @@ const ContactUs = () => {
           </div>
           <div className="flex flex-col font-semibold text-2xl border rounded-xl p-2 bg-gray-50 text-center shadow-xl ">
             <div>
-              <PhoneOutlined style={{ transform: 'rotate(90deg)' }}/> Phone
+              <PhoneOutlined style={{ transform: 'rotate(90deg)' }} /> Phone
             </div>
             <div className="text-lg">
               +01 6698634
