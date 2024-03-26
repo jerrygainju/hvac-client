@@ -66,7 +66,7 @@ const Signup: React.FC = () => {
           heading="Signup to create an account"
           paragraph="Already have an account? "
           linkName="Signin"
-          linkUrl="/signin"
+          linkUrl="/signin" 
         />
         <div className='flex flex-col items-center'>
           <Input

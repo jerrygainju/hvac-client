@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Select from "react-select";
 
 import * as ExcelJS from 'exceljs';
@@ -81,6 +81,12 @@ const CalculationTable = () => {
     const [calculatedValueC1d, setCalculatedValueC1d] = useState('');
 
     const [calculateAirSupply, setCalculateTotalAirSupply] = useState<number | null>(null);
+    useEffect(() => {
+        const savedProjectsFromStorage = localStorage.getItem('savedProjects');
+        if (savedProjectsFromStorage) {
+            setSavedProjects(JSON.parse(savedProjectsFromStorage));
+        }
+    }, []);
 
     const downloadTableData = () => {
         const workbook = new ExcelJS.Workbook();
@@ -281,7 +287,6 @@ const CalculationTable = () => {
     };
 
     const handleSave = () => {
-
         const tableData: RowData[] = [
             {
                 interpretation: "No of parking spaces in the zone of level under consideration",
@@ -305,30 +310,35 @@ const CalculationTable = () => {
                     "d": parseInt((document.getElementById("n2d") as HTMLInputElement)?.value || "0"),
                 }
             },
-
         ];
-
-
+    
         const projectData: ProjectData = {
             projectName: projectName,
             tableData: tableData
         };
+    
+        const savedProjectsFromStorage = localStorage.getItem('savedProjects');
+        const existingSavedProjects = savedProjectsFromStorage ? JSON.parse(savedProjectsFromStorage) : [];
+    
+        const updatedSavedProjects = [...existingSavedProjects, projectData];
 
-        setSavedProjects([...savedProjects, projectData]);
-        setProjectName('');
+        setSavedProjects(updatedSavedProjects);
+        localStorage.setItem('savedProjects', JSON.stringify(updatedSavedProjects));
     };
+    
 
 
-    const handleDeleteProject = (index: number) => {
-        const updatedProjects = [...savedProjects];
-        updatedProjects.splice(index, 1);
-        setSavedProjects(updatedProjects);
+    const handleDeleteProject = (index: any) => {
+        const updatedSavedProjects = [...savedProjects];
+        updatedSavedProjects.splice(index, 1);
+        setSavedProjects(updatedSavedProjects);
+        localStorage.setItem('savedProjects', JSON.stringify(updatedSavedProjects));
     };
-
-    const handleEditProject = (index: number, newName: string) => {
-        const updatedProjects = [...savedProjects];
-        updatedProjects[index].projectName = newName;
-        setSavedProjects(updatedProjects);
+    const handleEditProject = (index: any, newName: any) => {
+        const updatedSavedProjects = [...savedProjects];
+        updatedSavedProjects[index].projectName = newName;
+        setSavedProjects(updatedSavedProjects);
+        localStorage.setItem('savedProjects', JSON.stringify(updatedSavedProjects));
     };
 
     const maxC1z = Math.max(parseInt(calculatedValueAz), parseInt(calculatedValueBz), parseInt(calculatedValueC1z));
@@ -1219,23 +1229,25 @@ const CalculationTable = () => {
                 </div>
             </div>
             <div>
-                <h2 className="pt-4">Saved Projects:</h2>
-                <ul>
-                    {savedProjects.map((project, index) => (
-                        <li key={index}>
-                               <button onClick={() => setSelectedProject(project)}>
-                                {project.projectName}
-                            </button>
-                            <button onClick={() => handleDeleteProject(index)}>Delete</button>
-                            <button onClick={() => handleEditProject(index, " ")}>Edit</button>
-                        </li>
-                    ))}
-                </ul>
+            <h2 className="pt-4 pl-20 text-xl font-mono"><u>Saved Projects</u></h2>
+            <ul>
+                {savedProjects.map((project, index) => (
+                    <li key={index}>
+                        <button onClick={() => setSelectedProject(project)}>
+                          <div className="pl-20">
+                          {project.projectName}
+                            </div> 
+                        </button>
+                        <button className="pl-10 pt-4" onClick={() => handleDeleteProject(index)}>Delete</button>
+                        <button onClick={() => handleEditProject(index, " ")}>Edit</button>
+                    </li>
+                ))}
+            </ul>
             </div>
             {selectedProject && (
                 <div>
-                    <p>Project Name: {selectedProject.projectName}</p>
-                    <table className="border border-collapse mt-4 text-sm w-11/12 mx-auto ">
+                    <p className="pl-20">Project Name: {selectedProject.projectName}</p>
+                    <table className="border border-collapse mt-4 text-sm w-7/12 mx-auto">
                         <tbody>
                             {selectedProject.tableData.map((rowData, rowIndex) => (
                                 <tr key={rowIndex}>
