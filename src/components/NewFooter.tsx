@@ -139,7 +139,7 @@ const NewFooter: React.FC = () => {
             }}
           >
             <div>
-              Copyright &copy; {currentYear}{" "}
+              Copyright &copy; {currentYear}
               <strong>
                 <span>by SG Design Group</span>
               </strong>
