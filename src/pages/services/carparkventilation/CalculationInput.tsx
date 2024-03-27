@@ -5,7 +5,6 @@ import * as ExcelJS from 'exceljs';
 import { generateParkingOptions, generateStaffExposureOptions, generateStaffUsageFactor, generateVehicleTypeFactor, getElementStringValue, getElementValue, percentageOptions } from "./Extra ";
 
 interface RowData {
-    interpretation: string;
     variable: string;
     values: {
         [key: string]: number;
@@ -81,6 +80,7 @@ const CalculationTable = () => {
     const [calculatedValueC1d, setCalculatedValueC1d] = useState('');
 
     const [calculateAirSupply, setCalculateTotalAirSupply] = useState<number | null>(null);
+
     useEffect(() => {
         const savedProjectsFromStorage = localStorage.getItem('savedProjects');
         if (savedProjectsFromStorage) {
@@ -289,43 +289,111 @@ const CalculationTable = () => {
     const handleSave = () => {
         const tableData: RowData[] = [
             {
-                interpretation: "No of parking spaces in the zone of level under consideration",
                 variable: "n1",
                 values: {
-                    "z": parseInt((document.getElementById("n1z") as HTMLInputElement)?.value || "0"),
-                    "a": parseInt((document.getElementById("n1a") as HTMLInputElement)?.value || "0"),
-                    "b": parseInt((document.getElementById("n1b") as HTMLInputElement)?.value || "0"),
-                    "c": parseInt((document.getElementById("n1c") as HTMLInputElement)?.value || "0"),
-                    "d": parseInt((document.getElementById("n1d") as HTMLInputElement)?.value || "0"),
+                    "z": getElementValue("n1z"),
+                    "a": getElementValue("n1a"),
+                    "b": getElementValue("n1b"),
+                    "c": getElementValue("n1c"),
+                    "d": getElementValue("n1d"),
                 }
             },
             {
-                interpretation: "No of parking spaces situated in other parts of the car park",
                 variable: "n2",
                 values: {
-                    "z": parseInt((document.getElementById("n2z") as HTMLInputElement)?.value || "0"),
-                    "a": parseInt((document.getElementById("n2a") as HTMLInputElement)?.value || "0"),
-                    "b": parseInt((document.getElementById("n2b") as HTMLInputElement)?.value || "0"),
-                    "c": parseInt((document.getElementById("n2c") as HTMLInputElement)?.value || "0"),
-                    "d": parseInt((document.getElementById("n2d") as HTMLInputElement)?.value || "0"),
+                    "z": getElementValue("n2z"),
+                    "a": getElementValue("n2a"),
+                    "b": getElementValue("n2b"),
+                    "c": getElementValue("n2c"),
+                    "d": getElementValue("n2d"),
+                }
+            },
+            {
+                variable: "P",
+                values: {
+                    "z": parseFloat(inputValuePz),
+                    "a": parseFloat(inputValuePa),
+                    "b": parseFloat(inputValuePb),
+                    "c": parseFloat(inputValuePc),
+                    "d": parseFloat(inputValuePd),
+                }
+            },
+            {
+                variable: "d1",
+                values: {
+                    "z": getElementValue("d1z"),
+                    "a": getElementValue("d1a"),
+                    "b": getElementValue("d1b"),
+                    "c": getElementValue("d1c"),
+                    "d": getElementValue("d1d"),
+                }
+            },
+            {
+                variable: "d2",
+                values: {
+                    "z": getElementValue("d2z"),
+                    "a": getElementValue("d2a"),
+                    "b": getElementValue("d2b"),
+                    "c": getElementValue("d2c"),
+                    "d": getElementValue("d2d"),
+                }
+            },
+            {
+                variable: "E",
+                values: {
+                    "z": parseFloat(inputStaffEz),
+                    "a": parseFloat(inputStaffEa),
+                    "b": parseFloat(inputStaffEb),
+                    "c": parseFloat(inputStaffEc),
+                    "d": parseFloat(inputStaffEd),
+                }
+            },
+            {
+                variable: "T",
+                values: {
+                    "z": parseFloat(inputVTypeTz),
+                    "a": parseFloat(inputVTypeTa),
+                    "b": parseFloat(inputVTypeTb),
+                    "c": parseFloat(inputVTypeTc),
+                    "d": parseFloat(inputVTypeTd),
+                }
+            },
+            {
+                variable: "F",
+                values: {
+                    "z": parseFloat(inputFactorFz),
+                    "a": parseFloat(inputFactorFa),
+                    "b": parseFloat(inputFactorFb),
+                    "c": parseFloat(inputFactorFc),
+                    "d": parseFloat(inputFactorFd),
+                }
+            },
+            {
+                variable: "A",
+                values: {
+                    "z": getElementValue("A1z"),
+                    "a": getElementValue("A1a"),
+                    "b": getElementValue("A1b"),
+                    "c": getElementValue("A1c"),
+                    "d": getElementValue("A1d"),
                 }
             },
         ];
-    
+
         const projectData: ProjectData = {
             projectName: projectName,
             tableData: tableData
         };
-    
+
         const savedProjectsFromStorage = localStorage.getItem('savedProjects');
         const existingSavedProjects = savedProjectsFromStorage ? JSON.parse(savedProjectsFromStorage) : [];
-    
+
         const updatedSavedProjects = [...existingSavedProjects, projectData];
 
         setSavedProjects(updatedSavedProjects);
         localStorage.setItem('savedProjects', JSON.stringify(updatedSavedProjects));
     };
-    
+
 
 
     const handleDeleteProject = (index: any) => {
@@ -1224,35 +1292,34 @@ const CalculationTable = () => {
                 </div>
                 <div className="pt-10">
                     <button onClick={handleSave} className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-700 focus:outline-none focus:shadow-outline-blue">
-                        Save
+                        Save Project
                     </button>
                 </div>
             </div>
             <div>
-            <h2 className="pt-4 pl-20 text-xl font-mono"><u>Saved Projects</u></h2>
-            <ul>
-                {savedProjects.map((project, index) => (
-                    <li key={index}>
-                        <button onClick={() => setSelectedProject(project)}>
-                          <div className="pl-20">
-                          {project.projectName}
-                            </div> 
-                        </button>
-                        <button className="pl-10 pt-4" onClick={() => handleDeleteProject(index)}>Delete</button>
-                        <button onClick={() => handleEditProject(index, " ")}>Edit</button>
-                    </li>
-                ))}
-            </ul>
+                <h2 className="pt-4 pl-20 text-xl font-mono">Projects List</h2>
+                <ul>
+                    {savedProjects.map((project, index) => (
+                        <li key={index}>
+                            <button onClick={() => setSelectedProject(project)}>
+                                <div className="pl-20 font-mono">
+                                    {index + 1} {project.projectName}
+                                </div>
+                            </button>
+                            <button className="pl-10" onClick={() => handleDeleteProject(index)}>Delete</button>
+                            <button onClick={() => handleEditProject(index, " ")}>Edit</button>
+                        </li>
+                    ))}
+                </ul>
             </div>
             {selectedProject && (
                 <div>
                     <p className="pl-20">Project Name: {selectedProject.projectName}</p>
-                    <table className="border border-collapse mt-4 text-sm w-7/12 mx-auto">
+                    <table className="border border-gray-400  mt-4 text-sm w-7/12 mx-auto">
                         <tbody>
                             {selectedProject.tableData.map((rowData, rowIndex) => (
                                 <tr key={rowIndex}>
-                                    <td>{rowData.interpretation}</td>
-                                    <td>{rowData.variable}</td>
+                                    <td className="pl-6">{rowData.variable}</td>
                                     {Object.keys(rowData.values).map((key, columnIndex) => (
                                         <td key={columnIndex}>{rowData.values[key]}</td>
                                     ))}
@@ -1261,6 +1328,7 @@ const CalculationTable = () => {
                         </tbody>
                     </table>
                 </div>
+                
             )}
         </div >
     )

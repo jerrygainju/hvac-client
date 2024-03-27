@@ -41,7 +41,7 @@ const Car = () => {
       </div>
       {showInformation && (
         <div>
-          <div className=" text-sm pr-20 pl-16" ref={tableRef}>
+          <div className=" text-sm pr-20 pl-16 pt-10" ref={tableRef}>
             <b>Natural Ventilation of Car park is permitted if:</b>
             <div className="pl-4 pt-2">
               <li>
