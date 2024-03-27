@@ -5,6 +5,7 @@ import table1 from '../../../public/table1.png';
 import table2 from '../../../public/table-2.png';
 import { Image } from "antd";
 import Navigation from "../../homepage/navigation/navigation";
+import NewFooter from "../../homepage/home/footer/NewFooter";
 
 const Car = () => {
   const [showInformation, setShowInformation] = useState(false);
@@ -119,6 +120,7 @@ const Car = () => {
           </div>
         </div>
       )}
+      <NewFooter />
     </div>
   );
 }

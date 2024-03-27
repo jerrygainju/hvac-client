@@ -2,6 +2,7 @@ import Select from 'react-select';
 import { Dispatch, SetStateAction } from 'react';
 import { RadioInput, SelectInput, TextInput } from './extraInputs';
 import Layout from '../../homepage/navigation/layout';
+import NewFooter from '../../homepage/home/footer/NewFooter';
 
 interface DuctFormProps {
     selectedUnit: string;
@@ -237,6 +238,7 @@ const DuctForm: React.FC<DuctFormProps> = ({
                             </div>
                         </div>
                     </div>
+                    <NewFooter />
                 </Layout>
             </div>
         </div>

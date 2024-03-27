@@ -6,6 +6,7 @@ import TextArea from "antd/es/input/TextArea";
 import MapComponent from "./Map";
 import { EnvironmentOutlined, PhoneOutlined, MailOutlined } from '@ant-design/icons';
 import '../homepage/style.css'
+import NewFooter from "../homepage/home/footer/NewFooter";
 
 
 const ContactUs = () => {
@@ -41,7 +42,7 @@ const ContactUs = () => {
   };
 
   return (
-    <div>
+    <div className="">
       <Navigation />
       <div className="pt-[8px] ">
         <div className="flex justify-center">
@@ -103,6 +104,7 @@ const ContactUs = () => {
           </div>
         </div>
       </div>
+      <NewFooter/>
     </div>
   );
 };

@@ -10,6 +10,9 @@ export default {
 ],
 darkMode: "class",
   theme: {
+    colors: {
+      'black': '#001529',
+    },
     extend: {},
   },
   plugins: [addVariablesForColors],
