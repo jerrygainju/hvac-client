@@ -5,7 +5,6 @@ import * as ExcelJS from 'exceljs';
 import { generateParkingOptions, generateStaffExposureOptions, generateStaffUsageFactor, generateVehicleTypeFactor, getElementStringValue, getElementValue, percentageOptions } from "./Extra ";
 
 interface RowData {
-    interpretation: string;
     variable: string;
     values: {
         [key: string]: number;
@@ -290,7 +289,6 @@ const CalculationTable = () => {
     const handleSave = () => {
         const tableData: RowData[] = [
             {
-                interpretation: "No of parking spaces in the zone of level under consideration",
                 variable: "n1",
                 values: {
                     "z": getElementValue("n1z"),
@@ -301,7 +299,6 @@ const CalculationTable = () => {
                 }
             },
             {
-                interpretation: "No of parking spaces situated in other parts of the car park",
                 variable: "n2",
                 values: {
                     "z": getElementValue("n2z"),
@@ -309,6 +306,76 @@ const CalculationTable = () => {
                     "b": getElementValue("n2b"),
                     "c": getElementValue("n2c"),
                     "d": getElementValue("n2d"),
+                }
+            },
+            {
+                variable: "P",
+                values: {
+                    "z": parseFloat(inputValuePz),
+                    "a": parseFloat(inputValuePa),
+                    "b": parseFloat(inputValuePb),
+                    "c": parseFloat(inputValuePc),
+                    "d": parseFloat(inputValuePd),
+                }
+            },
+            {
+                variable: "d1",
+                values: {
+                    "z": getElementValue("d1z"),
+                    "a": getElementValue("d1a"),
+                    "b": getElementValue("d1b"),
+                    "c": getElementValue("d1c"),
+                    "d": getElementValue("d1d"),
+                }
+            },
+            {
+                variable: "d2",
+                values: {
+                    "z": getElementValue("d2z"),
+                    "a": getElementValue("d2a"),
+                    "b": getElementValue("d2b"),
+                    "c": getElementValue("d2c"),
+                    "d": getElementValue("d2d"),
+                }
+            },
+            {
+                variable: "E",
+                values: {
+                    "z": parseFloat(inputStaffEz),
+                    "a": parseFloat(inputStaffEa),
+                    "b": parseFloat(inputStaffEb),
+                    "c": parseFloat(inputStaffEc),
+                    "d": parseFloat(inputStaffEd),
+                }
+            },
+            {
+                variable: "T",
+                values: {
+                    "z": parseFloat(inputVTypeTz),
+                    "a": parseFloat(inputVTypeTa),
+                    "b": parseFloat(inputVTypeTb),
+                    "c": parseFloat(inputVTypeTc),
+                    "d": parseFloat(inputVTypeTd),
+                }
+            },
+            {
+                variable: "F",
+                values: {
+                    "z": parseFloat(inputFactorFz),
+                    "a": parseFloat(inputFactorFa),
+                    "b": parseFloat(inputFactorFb),
+                    "c": parseFloat(inputFactorFc),
+                    "d": parseFloat(inputFactorFd),
+                }
+            },
+            {
+                variable: "A",
+                values: {
+                    "z": getElementValue("A1z"),
+                    "a": getElementValue("A1a"),
+                    "b": getElementValue("A1b"),
+                    "c": getElementValue("A1c"),
+                    "d": getElementValue("A1d"),
                 }
             },
         ];
@@ -1252,8 +1319,7 @@ const CalculationTable = () => {
                         <tbody>
                             {selectedProject.tableData.map((rowData, rowIndex) => (
                                 <tr key={rowIndex}>
-                                    <td>{rowData.interpretation}</td>
-                                    <td>{rowData.variable}</td>
+                                    <td className="pl-6">{rowData.variable}</td>
                                     {Object.keys(rowData.values).map((key, columnIndex) => (
                                         <td key={columnIndex}>{rowData.values[key]}</td>
                                     ))}
