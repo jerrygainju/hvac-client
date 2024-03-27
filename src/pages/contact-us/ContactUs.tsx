@@ -6,7 +6,7 @@ import TextArea from "antd/es/input/TextArea";
 import MapComponent from "./components/Map";
 import { EnvironmentOutlined, PhoneOutlined, MailOutlined } from '@ant-design/icons';
 import '../homepage/style.css'
-import NewFooter from "../homepage/home/footer/Footer";
+import NewFooter from "../homepage/footer/Footer";
 
 
 const ContactUs = () => {
