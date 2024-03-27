@@ -1,10 +1,10 @@
-import Calculation from "./CalculationInput";
-import Table from "./Table";
+import Calculation from "./components/CalculationInput";
+import Table from "./components/Table";
 import { useState, useRef } from 'react';
 import table1 from '../../../public/table1.png';
 import table2 from '../../../public/table-2.png';
 import { Image } from "antd";
-import Navigation from "../../homepage/navigation/navigation";
+import Navigation from "../../homepage/navigation/Navigation";
 
 const Car = () => {
   const [showInformation, setShowInformation] = useState(false);

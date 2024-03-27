@@ -1,5 +1,5 @@
 import { Image } from 'antd';
-import { experience } from '../homeData';
+import { experience } from '../HomeData';
 import { useNavigate } from 'react-router-dom';
 import { useInView } from 'react-intersection-observer';
 import '../../style.css';

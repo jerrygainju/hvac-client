@@ -1,7 +1,7 @@
 import Select from 'react-select';
 import { Dispatch, SetStateAction } from 'react';
 import { RadioInput, SelectInput, TextInput } from './extraInputs';
-import Layout from '../../homepage/navigation/layout';
+import Layout from '../../../homepage/navigation/Layout';
 
 interface DuctFormProps {
     selectedUnit: string;
@@ -35,13 +35,13 @@ const DuctForm: React.FC<DuctFormProps> = ({
 }) => {
     return (
         <div className="flex h-screen justify-center w-screen overflow-x-hidden " >
-            <div className='flex flex-col xl:w-1/2 lg:w-[50%] sm:w-[90%] items-center'>
+            <div className='flex flex-col xl:w-1/2 lg:w-[50%] sm:w-[90%] items-center'> 
                 <Layout>
                     <div className='flex pt-10 justify-center w-full text-3xl font-bold mb-4 font-serif text-gray-600'>
                         Duct Size Calculation
                     </div>
                     <div className='flex justify-center pb-16'>
-                        <div className="bg-gray-200 xl:h-max w-full lg:w-[35%] lg:h-auto pb-6 rounded shadow-xl">
+                        <div className="bg-gray-200 xl:h-max w-full lg:w-[35%] lg:h-auto pb-6 rounded shadow-2xl">
                             <div className='flex flex-row flex-wrap gap-4 pt-4 pl-6'>
                                 <div className='w-full sm:w-1/2 lg:w-1/3 text-gray-600'>
                                     <b>Units</b>

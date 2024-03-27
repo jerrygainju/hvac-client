@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Materials, Units } from './Inputs';
-import DuctForm from './duct-form';
-import { getElementValue } from '../carparkventilation/Extra ';
+import { Materials, Units } from './components/Inputs';
+import DuctForm from './components/duct-form';
+import { getElementValue } from '../carparkventilation/components/Extra ';
 
 const Duct = () => {
   const [selectedUnit, setSelectedUnit] = useState<string>('');

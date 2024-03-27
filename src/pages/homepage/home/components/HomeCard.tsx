@@ -1,6 +1,6 @@
 
 import { Image } from 'antd';
-import { card } from '../homeData';
+import { card } from '../HomeData';
 import { useInView } from 'react-intersection-observer';
 
 export const HomeCard = () => {
@@ -17,7 +17,7 @@ export const HomeCard = () => {
                         <Image src={item.image} width={120} height={120} className='rounded-xl shadow-2xl ' />
                     </div>
                     <div className='flex flex-col'>
-                        <div ref={ref} className={`text-3xl text-center font-mono text-gray-700 ${inView ? 'slide-from-top' : ''}`}>
+                        <div ref={ref} className={`text-3xl text-center font-mono text-yellow-500 ${inView ? 'slide-from-top' : ''}`}>
                             <b>{item.title}</b>
                         </div>
                         <div className='text-xl text-center pt-4 text-gray-600'>

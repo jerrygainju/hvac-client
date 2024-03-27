@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { BsChevronCompactLeft, BsChevronCompactRight } from 'react-icons/bs';
-import { slides } from '../homeData';
+import { slides } from '../HomeData';
 
 export const Carousel = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
