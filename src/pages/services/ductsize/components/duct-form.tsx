@@ -1,7 +1,7 @@
 import Select from 'react-select';
 import { Dispatch, SetStateAction } from 'react';
 import { RadioInput, SelectInput, TextInput } from './extraInputs';
-import Layout from '../../../homepage/navigation/Layout';
+import Layout from '../../../homepage/navigation/layout';
 
 interface DuctFormProps {
     selectedUnit: string;
