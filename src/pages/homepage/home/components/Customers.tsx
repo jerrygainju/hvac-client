@@ -11,7 +11,7 @@ const Customer = () => {
     });
     return (
         <>
-            <div className="flex flex-row pt-12 pb-12 gap-6">
+            <div className="flex flex-row pt-12 gap-2">
                 <div ref={ref} className={`flex flex-col border rounded-xl shadow-2xl bg-gray-200 ${inView ? 'slide-from-left' : ''}`}>
                     <div className="font-mono text-xl p-8 text-center text-yellow-500 ">
                         SG Design Mechanical Company

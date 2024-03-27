@@ -6,6 +6,7 @@ import { Carousel } from './components/Carousel';
 import ChatBot from "react-chatbotify";
 import "react-chatbotify/dist/react-chatbotify.css";
 import Customer from './components/Customers';
+import NewFooter from './footer/Footer';
 
 
 const Home = () => {
@@ -17,6 +18,7 @@ const Home = () => {
                 <HomeCard />
                 <Experience />
                 <Customer />
+                <NewFooter />
                 <ChatBot />
             </div>
         </div>
