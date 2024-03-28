@@ -1,6 +1,6 @@
 
 import { Image } from 'antd';
-import { card } from '../HomeData';
+import { card } from '../homeData';
 import { useInView } from 'react-intersection-observer';
 
 export const HomeCard = () => {
