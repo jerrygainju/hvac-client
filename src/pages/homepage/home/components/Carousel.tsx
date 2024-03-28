@@ -27,13 +27,13 @@ export const Carousel = () => {
     };
 
     return (
-        <>
+
         <div className='flex pt-2 justify-center'>
             {slides.map((slide, index) => (
                 <div
-                key={index}
-                className={`w-[1450px] h-[450px] rounded-2xl shadow-2xl bg-center bg-cover absolute ${currentIndex === index ? 'opacity-100' : 'opacity-0'} `}
-                style={{ backgroundImage: `url(${slide.url})` }}
+                    key={index}
+                    className={`w-[1450px] h-[450px] rounded-2xl shadow-2xl bg-center bg-cover absolute ${currentIndex === index ? 'opacity-100' : 'opacity-0'} `}
+                    style={{ backgroundImage: `url(${slide.url})` }}
                 >
                     <div className={`text-gray-600 text-4xl font-mono flex items-center justify-center pt-52 ${currentIndex === index ? 'slide-from-top' : ''}`}>
                         {slide.description}
@@ -50,19 +50,19 @@ export const Carousel = () => {
                 <div className='flex top-4 justify-center pt-[470px]'>
                     {slides.map((_slide, slideIndex) => (
                         <div
-                        key={slideIndex}
-                        onClick={() => setCurrentIndex(slideIndex)}
-                        className='text-2xl cursor-pointer'
+                            key={slideIndex}
+                            onClick={() => setCurrentIndex(slideIndex)}
+                            className='text-2xl cursor-pointer'
                         >
                             <div
                                 style={{ width: '40px', height: '3px', backgroundColor: currentIndex === slideIndex ? 'black' : 'gray', marginRight: slideIndex !== slides.length - 1 ? '20px' : '0' }}
                                 className='line'
-                                ></div>
+                            ></div>
                         </div>
                     ))}
                 </div>
             </div>
-                    </div>
-        </>
+        </div>
+
     )
 }
