@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import downloadedImage from '../public/download.png'
+import downloadedImage from '../../../public/download.png'
 
 interface HeaderProps {
   heading: string;

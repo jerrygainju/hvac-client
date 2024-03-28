@@ -1,4 +1,4 @@
-import Navigation from "../homepage/navigation/navigation"
+import Navigation from "../homepage/navigation/Navigation"
 
 const About = () => {
     return (
@@ -7,7 +7,6 @@ const About = () => {
                 <div className="flex text-4xl font-serif justify-center">
                 Welcome to About us
                 </div>
-       
         </div>
     )
 }

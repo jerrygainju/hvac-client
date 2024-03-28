@@ -1315,7 +1315,8 @@ const CalculationTable = () => {
             {selectedProject && (
                 <div>
                     <p className="pl-20">Project Name: {selectedProject.projectName}</p>
-                    <table className="border border-gray-400  mt-4 text-sm w-7/12 mx-auto">
+                    <div className="pb-6">
+                    <table className="border border-gray-400  mt-4 text-sm w-7/12 mx-auto ">
                         <tbody>
                             {selectedProject.tableData.map((rowData, rowIndex) => (
                                 <tr key={rowIndex}>
@@ -1327,6 +1328,7 @@ const CalculationTable = () => {
                             ))}
                         </tbody>
                     </table>
+                    </div>
                 </div>
                 
             )}

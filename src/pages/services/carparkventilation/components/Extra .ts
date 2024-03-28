@@ -51,3 +51,4 @@ export const generateStaffUsageFactor = () => {
         { value: '2', label: 'Staff in car park enclosure' }
     ]
 }
+

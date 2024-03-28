@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import { Materials, Units } from './Inputs';
-import DuctForm from './duct-form';
-import { getElementValue } from '../carparkventilation/Extra ';
+import { Materials, Units } from './components/Inputs';
+import DuctForm from './components/duct-form';
+import { getElementValue } from '../carparkventilation/components/Extra ';
+import NewFooter from '../../homepage/footer/Footer';
 
 const Duct = () => {
   const [selectedUnit, setSelectedUnit] = useState<string>('');
@@ -115,7 +116,7 @@ console.log(`Final value for a: ${finalValueForA}`);
   }, [selectedUnit]);
 
   return (
-
+    <>
     <DuctForm
       selectedUnit={selectedUnit}
       inputValue={inputValue}
@@ -131,8 +132,8 @@ console.log(`Final value for a: ${finalValueForA}`);
       handleAirFlowChange={handleAirFlowChange}
       handleVelocityChange={handleVelocityChange}
     />
-
-
+    <NewFooter />
+    </>
   );
 };
 

@@ -3,12 +3,12 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
-import Header from '../../components/Header';
+import Header from './components/Header';
 import { EyeOutlined, EyeInvisibleOutlined, MailOutlined, UserOutlined, LockOutlined } from '@ant-design/icons';
 import { Input } from 'antd';
 import { fixedInputStyles, iconColorStyle, signInStyles } from './style/userStyle';
 import config from '../../config/config';
-import Navigation from '../homepage/navigation/navigation';
+import Navigation from '../homepage/navigation/Navigation';
 
 
 const Signup: React.FC = () => {

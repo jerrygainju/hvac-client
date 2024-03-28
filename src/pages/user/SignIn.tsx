@@ -3,14 +3,14 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import FormExtra from '../../components/FormExtra';
-import Header from '../../components/Header';
+import FormExtra from './components/FormExtra';
+import Header from './components/Header';
 import { Input } from 'antd';
 import { EyeOutlined, EyeInvisibleOutlined, MailOutlined, LockOutlined } from '@ant-design/icons';
 import { fixedInputStyles, iconColorStyle, signInStyles } from './style/userStyle';
 import '../user/style/user.css'
 import config from '../../config/config';
-import Navigation from '../homepage/navigation/navigation';
+import Navigation from '../homepage/navigation/Navigation';
 
 
 const Signin = () => {
