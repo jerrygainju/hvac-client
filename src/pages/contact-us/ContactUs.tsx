@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Navigation from "../homepage/navigation/Navigation";
+import Navigation from "../homepage/navigation/navigation";
 import ContactImage from "../../public/contact.jpg";
 import Input from "antd/es/input/Input";
 import TextArea from "antd/es/input/TextArea";
