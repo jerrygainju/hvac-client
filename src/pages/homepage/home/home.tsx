@@ -1,4 +1,4 @@
-import Navigation from '../navigation/Navigation';
+import Navigation from '../navigation/navigation';
 import '../style.css';
 import { Experience } from './components/Experience';
 import { HomeCard } from './components/HomeCard';
