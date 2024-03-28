@@ -13,7 +13,8 @@ import {
   InstagramOutlined,
   TwitterOutlined,
   SlackOutlined,
-  PhoneOutlined
+  PhoneOutlined,
+  WalletOutlined
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
@@ -42,6 +43,11 @@ const items: MenuProps['items'] = [
         label: 'Duct Size Calculation',
         key: 'duct',
         icon: <CodeSandboxOutlined />,
+      },
+      {
+        label: 'Refrigerant Charge Calculation',
+        key: 'refrigerant',
+        icon: <WalletOutlined />,
       },
     ],
   },
@@ -92,6 +98,9 @@ const Navigation: React.FC = () => {
     }
     if (e.key === 'duct') {
       navigate('/duct-size-calculation');
+    }
+    if (e.key === 'refrigerant') {
+      navigate('/refrigerant-charge-calculation');
     }
     if (e.key === 'aboutus') {
       navigate('/about-us');
