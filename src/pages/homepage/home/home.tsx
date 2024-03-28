@@ -12,8 +12,7 @@ import NewFooter from '../footer/Footer';
 const Home = () => {
     return (
         <div>
-            <Navigation />
-            <div className=' w-[1450px]  h-[780px] pt-2 m-auto relative'>
+                <Navigation />
                 <Carousel />
                 <HomeCard />
                 <Experience />
@@ -21,7 +20,6 @@ const Home = () => {
                 <NewFooter />
                 <ChatBot />
             </div>
-        </div>
     )
 }
 

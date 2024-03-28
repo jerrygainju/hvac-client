@@ -5,6 +5,7 @@ import table1 from '../../../public/table1.png';
 import table2 from '../../../public/table-2.png';
 import { Image } from "antd";
 import Navigation from "../../homepage/navigation/Navigation";
+import NewFooter from "../../homepage/footer/Footer";
 
 const Car = () => {
   const [showInformation, setShowInformation] = useState(false);
@@ -113,12 +114,13 @@ const Car = () => {
           <div className="text-sm pt-4 font-bold">
             {/* C (Contaminant Generation Rate) = P × (100 × n1 + n1 × d1 + n2 × d2) */}
           </div>
-          <div className="flex pt-8 pl-32 pb-20">
+          <div className="flex pt-8 pl-32">
             <Image src={table1} height={600} width={600} alt="Table 1" />
             <Image src={table2} height={600} width={600} alt="Table 2" />
           </div>
         </div>
       )}
+      <NewFooter />
     </div>
   );
 }

@@ -47,13 +47,13 @@ const ContactUs = () => {
       <div className="pt-[8px] ">
         <div className="flex justify-center">
         <div style={containerStyles} className="w-[1452px]">
-          <div className="text-5xl font-serif pb-40 slide-from-top text-gray-600">
+          <div className="text-5xl font-serif slide-from-top text-gray-600">
             Contact Us
           </div>
         </div>
         </div>
       </div>
-      <div className="flex flex-row gap-12 mt-8 justify-center">
+      <div className="flex flex-row gap-12 mt-12 justify-center">
         <div className="flex flex-col w-3/12  px-6 pt-2  bg-gray-200 border rounded-xl shadow-2xl text-gray-600 card">
           <h2 className="text-2xl font-semibold mb-2">Get in Touch</h2>
           <form onSubmit={handleSubmit} className="space-y-4">

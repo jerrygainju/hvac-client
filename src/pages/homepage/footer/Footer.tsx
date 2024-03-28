@@ -88,14 +88,6 @@ const NewFooter: React.FC = () => {
                                                 About Us
                                             </a>
                                         </li>
-                                        <li className="pb-4">
-                                            <a
-                                                href="/"
-                                                className="hover:text-blue-500"
-                                            >
-                                                Services
-                                            </a>
-                                        </li>
                                     </ul>
                                 </div>
                             </Col>

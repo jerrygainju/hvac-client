@@ -7,7 +7,6 @@ const About = () => {
                 <div className="flex text-4xl font-serif justify-center">
                 Welcome to About us
                 </div>
-       
         </div>
     )
 }

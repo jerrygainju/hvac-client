@@ -9,7 +9,8 @@ export const HomeCard = () => {
         threshold: 0.5, 
     });
     return(
-        <div className='flex flex-col md:flex-row md:pt-12 gap-8'>
+        <div className='flex justify-center pt-12 '>
+        <div className='flex flex-col lg:w-[1450px] md:flex-row gap-8'>
         {card.map((item, index) => (
             <div key={index} className='border rounded-xl bg-gray-200 w-auto shadow-2xl py-4 px-8 zoom-animation md:w-1/3'>
                 <div className='flex flex-row gap-4'>
@@ -28,5 +29,6 @@ export const HomeCard = () => {
             </div>
         ))}
     </div>
+        </div>
     )
 }
