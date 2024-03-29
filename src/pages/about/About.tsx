@@ -2,7 +2,7 @@ import Navigation from "../homepage/navigation/navigation"
 
 const About = () => {
     return (
-        <div className="">
+        <div>
                 <Navigation />
                 <div className="flex text-4xl font-serif justify-center">
                 Welcome to About us

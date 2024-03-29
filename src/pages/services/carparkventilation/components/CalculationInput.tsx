@@ -426,6 +426,7 @@ const CalculationTable = () => {
             <div className="pl-16">
                 <input
                     type='text'
+                    id='pr1'
                     value={projectName}
                     onChange={(e) => setProjectName(e.target.value)}
                     placeholder='Enter project name'

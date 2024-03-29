@@ -13,7 +13,8 @@ import {
   InstagramOutlined,
   TwitterOutlined,
   SlackOutlined,
-  PhoneOutlined
+  PhoneOutlined,
+  WalletOutlined
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
@@ -42,6 +43,11 @@ const items: MenuProps['items'] = [
         label: 'Duct Size Calculation',
         key: 'duct',
         icon: <CodeSandboxOutlined />,
+      },
+      {
+        label: 'Refrigerant Charge Calculation',
+        key: 'refrigerant',
+        icon: <WalletOutlined />,
       },
     ],
   },
@@ -93,6 +99,9 @@ const Navigation: React.FC = () => {
     if (e.key === 'duct') {
       navigate('/duct-size-calculation');
     }
+    if (e.key === 'refrigerant') {
+      navigate('/refrigerant-charge-calculation');
+    }
     if (e.key === 'aboutus') {
       navigate('/about-us');
     }
@@ -108,7 +117,7 @@ const Navigation: React.FC = () => {
   };
 
   return (
-    <div className='sticky top-0 z-50 bg-white shadow rounded w-screen'>
+    <div className='sticky top-0 z-50 bg-white shadow rounded w-full'>
       <div className='flex flex-row justify-between items-center gap-4 py-2 px-4'>
         <div>
           <img src={SgLogo} width={40} height={40} alt="logo" />
@@ -147,8 +156,8 @@ const Navigation: React.FC = () => {
           </div>
         </div>
       </div>
-      <div className='flex'>
-      <Menu onClick={onClick} selectedKeys={[current]} mode="vertical" items={items} className='flex font-serif gap-36 w-full bg-gray-200 rounded' />
+      <div>
+      <Menu onClick={onClick} selectedKeys={[current]} mode="vertical" items={items} className='flex font-serif lg:w-screen md:w-[750px] gap-36 bg-gray-200 rounded' />
       </div>
     </div>
   );

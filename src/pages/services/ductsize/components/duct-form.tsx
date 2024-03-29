@@ -1,7 +1,10 @@
 import Select from 'react-select';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { RadioInput, SelectInput, TextInput } from './extraInputs';
 import Layout from '../../../homepage/navigation/layout';
+import { InfoCircleOutlined } from '@ant-design/icons';
+import { Tooltip } from 'antd';
+
 
 interface DuctFormProps {
     selectedUnit: string;
@@ -14,9 +17,18 @@ interface DuctFormProps {
     ductOptions: any[];
     materialOptions: any[];
     handleUnitChange: (selectedOption: any) => void;
-    equivalentDiameter: number | null;
+    equivalentDiameter: number | null; 
     handleAirFlowChange: (value: string) => void;
     handleVelocityChange: (value: string) => void;
+    isHovered: boolean;
+    handleMouseOver: () => void
+    handleMouseOut: () => void
+    calculatedHeight: number | null; 
+    eqdiamter2: number | null; 
+    handleWidthChange: (value: string) => void;
+    handleHeightChange: (value: string) => void
+    
+
 }
 const DuctForm: React.FC<DuctFormProps> = ({
     selectedUnit,
@@ -31,13 +43,28 @@ const DuctForm: React.FC<DuctFormProps> = ({
     handleUnitChange,
     equivalentDiameter,
     handleAirFlowChange,
-    handleVelocityChange
+    handleVelocityChange,
+    calculatedHeight,
+    eqdiamter2,
+    handleWidthChange,
+    handleHeightChange
 }) => {
+
+    const [isHovered, setIsHovered] = useState(false);
+
+    const handleMouseOver = () => {
+        setIsHovered(true);
+    };
+
+    const handleMouseOut = () => {
+        setIsHovered(false);
+    };
+
     return (
-        <div className="flex  justify-center w-screen " >
-            <div className='flex flex-col xl:w-1/2 lg:w-[50%] sm:w-[90%] items-center'> 
-                <Layout>
-                    <div className='flex pt-10 justify-center w-full text-3xl font-bold mb-4 font-serif text-gray-600'>
+        <div className="flex justify-center" >
+            <div className='flex flex-col items-center'>
+                <Layout >
+                    <div className='flex pt-10 justify-center text-3xl font-bold mb-4 font-serif text-gray-600'>
                         Duct Size Calculation
                     </div>
                     <div className='flex justify-center'>
@@ -53,6 +80,19 @@ const DuctForm: React.FC<DuctFormProps> = ({
                                 </div>
                                 <div className='text-gray-600'>
                                     <b>Material</b>
+                                    <Tooltip
+                                        title="Additional information"
+                                        overlay={isHovered ? `Value for GI is 1.5 Value for plastic is 2  Value for flex is 2.5` : ""}
+                                        visible={isHovered}
+                                        placement="top">
+                                        <span
+                                            onMouseEnter={handleMouseOver}
+                                            onMouseLeave={handleMouseOut}
+                                            style={{ marginLeft: '4px', cursor: 'pointer' }}
+                                        >
+                                            <InfoCircleOutlined />
+                                        </span>
+                                    </Tooltip>
                                     <Select
                                         options={materialOptions}
                                         placeholder="Select Material"
@@ -70,11 +110,11 @@ const DuctForm: React.FC<DuctFormProps> = ({
                                                 backgroundColor: "rgba(245, 244, 248)"
                                             }),
                                         }}
-                                        value={materialOptions.find(option => option.value === inputValue)}
-                                        onChange={(selectedOption) => setInputValue(selectedOption ? selectedOption.value : '')}
+                                        value={materialOptions.find(option => option.label === inputValue)}
+                                        onChange={(selectedOption) => setInputValue(selectedOption ? selectedOption.label : '')}
                                         formatOptionLabel={(option, { context }) => (
                                             <div>
-                                                {context === 'menu' ? option.label : option.value}
+                                                {context === 'menu' ? option.label : option.label}
                                             </div>
                                         )}
                                     />
@@ -82,7 +122,7 @@ const DuctForm: React.FC<DuctFormProps> = ({
                             </div>
                             <hr className="my-4 border-black " />
                             <div className='flex flex-col pl-6 gap-2 pr-6 text-gray-600'>
-                                <b> Parameter </b>
+                                <b> Input Parameter </b>
                                 <div className='flex flex-row items-center'>
                                     Airflow
                                     <TextInput
@@ -93,9 +133,9 @@ const DuctForm: React.FC<DuctFormProps> = ({
                                         unit={selectedUnit === 'Metric' ? ' l/s' : ' cfm'}
                                     />
                                 </div>
-                                <hr className="my-4 border-black " />
+                                {/* <hr className="my-4 border-black " /> */}
                             </div>
-                            <div className='pl-6 pr-6'>
+                            <div className='pl-6 pr-6 pt-4'>
                                 {/* Size By */}
                                 <RadioInput
                                     type='number'
@@ -122,9 +162,9 @@ const DuctForm: React.FC<DuctFormProps> = ({
                                         },
                                     }}
                                 />
-                                <hr className="my-4 border-black " />
+                                {/* <hr className="my-4 border-black " /> */}
                             </div>
-                            <div className='pl-6 pr-6 text-gray-600'>
+                            <div className='pl-6 pr-6 pt-4 text-gray-600'>
                                 <b>Equivalent Diameter: </b>
                                 <b> {equivalentDiameter !== null
                                     ? `${equivalentDiameter} ${selectedUnit === 'Metric' ? 'mm' : 'in'}`
@@ -185,6 +225,7 @@ const DuctForm: React.FC<DuctFormProps> = ({
                                         id='width'
                                         placeholder='Width'
                                         unit={selectedUnit === 'Metric' ? ' mm' : ' in'}
+                                        onChange={handleWidthChange}
                                     />
                                     <span className='pl-2'> × </span>
                                     <TextInput
@@ -192,36 +233,22 @@ const DuctForm: React.FC<DuctFormProps> = ({
                                         id='height'
                                         placeholder='height'
                                         unit={selectedUnit === 'Metric' ? ' mm' : ' in'}
+                                        value={calculatedHeight}
+                                        onChange={(e) => handleHeightChange(e)} 
                                     />
                                 </div>
-                                {/* <div className='pt-2'>
-                            Width × Height = {" "}
-                            <input placeholder='width' style={{ backgroundColor: 'rgb(255, 216, 155)' }} className='rounded w-24 h-8 text-center' />
-                            {selectedUnit === 'Metric' ? ' mm' : ' in'}  ×  {' '}
-                            <input placeholder='height' style={{ backgroundColor: 'rgb(255, 216, 155)' }} className='rounded w-24 h-8 text-center' />
-                            {selectedUnit === 'Metric' ? ' mm' : ' in'}
-                        </div> */}
+                       
                                 <hr className="my-4 border-black " />
                             </div>
                             <div className='flex flex-col pl-6 pr-6 items-center text-gray-600'>
                                 <b>Additional Information</b>
                                 <div className='pt-2'>
-                                    Equivalent Diameter: result
+                                    Equivalent Diameter: {eqdiamter2}
                                     {selectedUnit === 'Metric' ? ' mm' : ' in'}
-                                </div>
-                                <div className='pt-2'>
-                                    Flow Area: result
-                                    {selectedUnit === 'Metric' ? ' mm' : ' ft'}
-                                    {selectedUnit === 'Metric' && <sup>2</sup>}
-                                    {selectedUnit !== 'Metric' && <sup>2</sup>}
                                 </div>
                                 <div className='pt-2'>
                                     Fluid Velocity: result
                                     {selectedUnit === 'Metric' ? ' m/s' : ' ft/min'}
-                                </div>
-                                <div className='pt-2'>
-                                    Reynolds Number: result
-
                                 </div>
                                 <div className='pt-2'>
                                     Friction Factor: result
@@ -238,59 +265,11 @@ const DuctForm: React.FC<DuctFormProps> = ({
                         </div>
                     </div>
                 </Layout>
-            </div>
-        </div>
+            </div >
+        </div >
 
     );
 };
 
 export default DuctForm;
 
-
-
-{/* <b>Size By </b>
-                        <div className='flex flex-row gap-10 pt-4'>
-                            <div>
-                                <label className="flex items-center">
-                                    <input
-                                        type="radio"
-                                        value="velocity"
-                                        checked={selectedOption === "velocity"}
-                                        onChange={() => handleOptionChange("velocity")}
-                                        className="h-4 w-4"
-                                    />
-                                    <span className="pl-2">Velocity</span>
-                                </label>
-                            </div>
-                            <div>
-                                <label className="flex items-center">
-                                    <input
-                                        type="radio"
-                                        value="frictionLoss"
-                                        checked={selectedOption === "frictionLoss"}
-                                        onChange={() => handleOptionChange("frictionLoss")}
-                                        className="h-4 w-4"
-
-                                    />
-                                    <span className="pl-2">Friction Loss</span>
-                                </label>
-                            </div>
-                        </div>
-                        <div className='flex flex-row pt-4'>
-                            <div>
-                                {selectedOption === "velocity" && (
-                                    <div>
-                                        Velocity: <input placeholder='add velocity' style={{ backgroundColor: 'rgb(255, 216, 155)' }} className='rounded w-28 h-8 text-center' />
-                                        {selectedUnit === 'Metric' ? ' m/s' : ' fpm'}
-                                    </div>
-                                )}
-                            </div>
-                            <div>
-                                {selectedOption === "frictionLoss" && (
-                                    <div>
-                                        Friction Loss: <input placeholder='add friction loss' style={{ backgroundColor: 'rgb(255, 216, 155)' }} className='rounded w-32 h-8 text-center' />
-                                        {selectedUnit === 'Metric' ? ' Pa/m' : ' in. wg/100 ft'}
-                                    </div>
-                                )}
-                            </div>
-                        </div> */}

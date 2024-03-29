@@ -92,9 +92,10 @@ interface TextInputProps {
   id: string;
   unit: string;
   onChange?: (value: string) => void;
+  value?: any
 }
 
-export const TextInput: React.FC<TextInputProps> = ({ type, id, placeholder, unit, onChange }) => {
+export const TextInput: React.FC<TextInputProps> = ({ type, id, placeholder, unit, onChange, value  }) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
     if (onChange) {
@@ -111,6 +112,7 @@ export const TextInput: React.FC<TextInputProps> = ({ type, id, placeholder, uni
         style={{ backgroundColor: 'rgba(245, 244, 248)' }}
         className='rounded w-28 h-8 text-center'
         onChange={handleChange}
+        value={value}
       />
       {unit}
     </div>

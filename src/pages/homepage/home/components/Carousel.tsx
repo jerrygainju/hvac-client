@@ -27,7 +27,6 @@ export const Carousel = () => {
     };
 
     return (
-
         <div className='flex pt-2 justify-center'>
             {slides.map((slide, index) => (
                 <div

@@ -12,14 +12,14 @@ import NewFooter from '../footer/Footer';
 const Home = () => {
     return (
         <div>
-                <Navigation />
-                <Carousel />
-                <HomeCard />
-                <Experience />
-                <Customer />
-                <NewFooter />
-                <ChatBot />
-            </div>
+            <Navigation />
+            <Carousel />
+            <HomeCard />
+            <Experience />
+            <Customer />
+            <NewFooter />
+            <ChatBot />
+        </div>
     )
 }
 
