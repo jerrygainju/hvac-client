@@ -1,17 +1,16 @@
 import NewFooter from "../../homepage/footer/Footer"
 import Navigation from "../../homepage/navigation/navigation"
-// import RefrigerantForm from "./components/RefrigerantForm"
 import RefrigerantProp from "./components/RefrigerantProps"
 
 const Refrigerant = () => {
     return (
-        <>
-        <Navigation />
-        <RefrigerantProp />
-        {/* <div className="bottom-0 absolute w-full"> */}
-        <NewFooter />
-        {/* </div> */}
-        </>
+        <div className="flex flex-col min-h-screen">
+            <Navigation />
+            <div className="flex-grow">
+                <RefrigerantProp />
+            </div>
+            <NewFooter />
+        </div>
     )
 } 
 export default Refrigerant
