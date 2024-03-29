@@ -10,10 +10,13 @@ const Duct = () => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [selectedShape, setSelectedShape] = useState('');
   const [equivalentDiameter, setEquivalentDiameter] = useState<number | null>(null);
+  const [equivalentDiameter2, setEquivalentDiameter2] = useState<number | null>(null);
   const [airflowInputValue, setAirflowInputValue] = useState('');
   const [velocityInputValue, setVelocityInputValue] = useState('');
-  console.log(airflowInputValue);
-  console.log(velocityInputValue);
+  const [widthInput, setWidthInput] = useState('');
+  const [isHovered, setIsHovered] = useState(false);
+  const [calculatedHeight, setCalculatedHeight] = useState<number>(0);
+
 
   const handleOptionChange = (option: any) => {
     setSelectedOption(option);
@@ -29,17 +32,17 @@ const Duct = () => {
   const handleUnitChange = (selectedOption: any) => {
     const airFlow = document.querySelector('#airflow') as HTMLInputElement | null;
     const velocity = document.querySelector('#velocity') as HTMLInputElement | null;
+
     if (selectedUnit === selectedOption.value) {
       return;
-    }
-    else if (selectedOption?.value === 'Metric' && airFlow && velocity) {
+    } else if (selectedOption?.value === 'Metric' && airFlow && velocity) {
       airFlow.value = Math.round((getElementValue('airflow') / 2118.8800) * 1000).toString()
       velocity.value = (getElementValue('velocity') / 196.8504).toFixed(3)
-    }
-    else if (selectedOption?.value === 'Imperial' && airFlow && velocity) {
+    } else if (selectedOption?.value === 'Imperial' && airFlow && velocity) {
       airFlow.value = Math.round((getElementValue('airflow') * 2118.8800) / 1000).toString()
       velocity.value = (getElementValue('velocity') * 196.8504).toFixed(3);
     }
+
     setSelectedUnit(selectedOption ? selectedOption.value : '');
   };
 
@@ -49,7 +52,7 @@ const Duct = () => {
 
     if (selectedUnit === 'Metric') {
       const D = Math.sqrt((4 * q) / (Math.PI * v)) * 1000;
-      const parseD = Number(D.toFixed(3))
+      const parseD = Number(D.toFixed(3));
       setEquivalentDiameter(parseD);
     }
 
@@ -57,7 +60,7 @@ const Duct = () => {
       const qi = getElementValue('airflow');
       const vi = getElementValue('velocity');
       const Di = Math.sqrt((4 * qi) / (Math.PI * vi)) * 12;
-      const parseDi = Number(Di.toFixed(3))
+      const parseDi = Number(Di.toFixed(3));
       setEquivalentDiameter(parseDi);
     }
   };
@@ -72,67 +75,100 @@ const Duct = () => {
     eqDiameterCal();
   };
 
+  const handleHeightChange = (value: string) => {
+    setCalculatedHeight(parseFloat(value)); 
+  };
+  
+  const handleWidthChange = (value: string) => {
+    setWidthInput(value);
+    calculateHeight();
+  };
 
-const calculateFormula = (a:number, b:number) => {
-  return D - 1.3 * Math.pow((a * b), 0.625) / Math.pow((a + b), 0.25)
-}
+  const flowAreaCal = () => {
+    const airFlow = getElementValue('airflow');
+    const newAirFlow = airFlow / 1000;
+    const velocity = getElementValue('velocity');
+    const flowArea = newAirFlow / velocity;
+    return flowArea;
+  };
 
+  const convertFlowArea = () => {
+    const flowArea = flowAreaCal();
+    const newFlowArea = flowArea * 1000000;
+    return newFlowArea;
+  };
 
-const performIteration = (initialValue:number, b:number, maxIterations:number) => {
-  let a = initialValue;
+  const insertWidth = () => {
+    const width = getElementValue('width');
+    const newFlowArea = convertFlowArea();
+    const height = newFlowArea / width;
+    return {height};
+  };
 
-  for (let i = 1; i <= maxIterations; i++) {
-    const result = calculateFormula(a, b);
-
-    if (result === 0) {
-      console.log(`Iteration ${i}: Found solution. a = ${a}`);
-      return a;
+  const calculateHeight = () => {
+    const { height } = insertWidth();
+    const notPoint = height / 25;
+    console.log(notPoint, 'checkpoint');
+    
+    if (Number.isInteger(notPoint)) {
+      setCalculatedHeight(height);
+      return height
+    } else {
+      const height2 = (Math.floor(notPoint) + 1) * 25;
+      setCalculatedHeight(height2);
+      return height2
     }
+  };
 
-    a = result;
-    console.log(`Iteration ${i}: a = ${a}`);
-  }
+  const eqDiameterCal2 = () => {
+    const a = calculateHeight(); 
+    const b = getElementValue('width'); 
+    const D = (1.3 * Math.pow(a * b, 0.625)) / Math.pow(a + b, 0.25)
+    const diameter =  Number(D.toFixed(3))
+    setEquivalentDiameter2(diameter)
+  };
+  
 
-  console.log(`Reached maximum iterations (${maxIterations}). Final value for a: ${a}`);
-  return a;
-}
-
-
-const D = 190.7;
-const b = 2;  
-
-const initialValue = b;
-
-const maxIterations = 7;
-
-const finalValueForA = performIteration(initialValue, b, maxIterations);
-
-console.log(`Final value for a: ${finalValueForA}`);
+  const handleMouseOver = () => {
+    setIsHovered(true);
+  };
 
 
+  const handleMouseOut = () => {
+    setIsHovered(false);
+  };
 
   useEffect(() => {
     eqDiameterCal();
-  }, [selectedUnit]);
+    eqDiameterCal2();
+    calculateHeight
+  }, [selectedUnit, airflowInputValue, velocityInputValue , widthInput]);
 
   return (
     <>
-    <DuctForm
-      selectedUnit={selectedUnit}
-      inputValue={inputValue}
-      setInputValue={setInputValue}
-      selectedOption={selectedOption}
-      handleOptionChange={handleOptionChange}
-      selectedShape={selectedShape}
-      handleShapeChange={handleShapeChange}
-      ductOptions={ductOptions}
-      materialOptions={materialOptions}
-      handleUnitChange={handleUnitChange}
-      equivalentDiameter={equivalentDiameter}
-      handleAirFlowChange={handleAirFlowChange}
-      handleVelocityChange={handleVelocityChange}
-    />
-    <NewFooter />
+      <DuctForm
+        selectedUnit={selectedUnit}
+        inputValue={inputValue}
+        setInputValue={setInputValue}
+        selectedOption={selectedOption}
+        handleOptionChange={handleOptionChange}
+        selectedShape={selectedShape}
+        handleShapeChange={handleShapeChange}
+        ductOptions={ductOptions}
+        materialOptions={materialOptions}
+        handleUnitChange={handleUnitChange}
+        equivalentDiameter={equivalentDiameter}
+        handleAirFlowChange={handleAirFlowChange}
+        handleVelocityChange={handleVelocityChange}
+        isHovered={isHovered}
+        handleMouseOver={handleMouseOver}
+        handleMouseOut={handleMouseOut}
+        calculatedHeight={calculatedHeight}
+        eqdiamter2 = {equivalentDiameter2}
+        handleWidthChange = {handleWidthChange}
+        handleHeightChange={handleHeightChange}
+      />
+      <NewFooter />
     </>
   );
 };
