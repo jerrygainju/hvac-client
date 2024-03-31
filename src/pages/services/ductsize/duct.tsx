@@ -128,6 +128,25 @@ const Duct = () => {
     setEquivalentDiameter2(diameter)
   };
   
+  const hydraulicDiameter = () => {
+    const a = calculateHeight();
+    const b = getElementValue("width"); 
+    const hydraulicDia = (4*(a*b))/(2*(a+b))
+     return Number(hydraulicDia.toFixed(2));
+  }
+
+  const calRaynouldsNumber = () => {
+    const velocity = getElementValue("velocity"); 
+    console.log(velocity, 'bel');
+    
+    const dh = hydraulicDiameter()
+    console.log(dh, 'hydraulic');
+    
+    const raynouldNum = 66.4 * velocity * dh
+    console.log(raynouldNum, 'ray');
+    
+    return Number(raynouldNum.toFixed(2))
+ }
 
   const handleMouseOver = () => {
     setIsHovered(true);
@@ -164,9 +183,11 @@ const Duct = () => {
         handleMouseOver={handleMouseOver}
         handleMouseOut={handleMouseOut}
         calculatedHeight={calculatedHeight}
-        eqdiamter2 = {equivalentDiameter2}
-        handleWidthChange = {handleWidthChange}
+        eqdiamter2={equivalentDiameter2}
+        handleWidthChange={handleWidthChange}
         handleHeightChange={handleHeightChange}
+        hydraulicDiameter={hydraulicDiameter}
+        raynouldNumber={calRaynouldsNumber}
       />
       <NewFooter />
     </>
