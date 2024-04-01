@@ -27,8 +27,7 @@ interface DuctFormProps {
     eqdiamter2: number | null; 
     handleWidthChange: (value: string) => void;
     handleHeightChange: (value: string) => void
-    
-
+    hydraulicDiameter: number | null; 
 }
 const DuctForm: React.FC<DuctFormProps> = ({
     selectedUnit,
@@ -47,7 +46,8 @@ const DuctForm: React.FC<DuctFormProps> = ({
     calculatedHeight,
     eqdiamter2,
     handleWidthChange,
-    handleHeightChange
+    handleHeightChange,
+    hydraulicDiameter
 }) => {
 
     const [isHovered, setIsHovered] = useState(false);
@@ -245,6 +245,10 @@ const DuctForm: React.FC<DuctFormProps> = ({
                                 <div className='pt-2'>
                                     Equivalent Diameter: {eqdiamter2}
                                     {selectedUnit === 'Metric' ? ' mm' : ' in'}
+                                </div>
+                                <div className='pt-2'>
+                                    Hadraulic Diameter: {hydraulicDiameter}
+                                    {selectedUnit === 'Metric' ? ' m/s' : ' ft/min'}
                                 </div>
                                 <div className='pt-2'>
                                     Fluid Velocity: result

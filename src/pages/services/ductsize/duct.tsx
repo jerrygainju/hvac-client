@@ -11,6 +11,7 @@ const Duct = () => {
   const [selectedShape, setSelectedShape] = useState('');
   const [equivalentDiameter, setEquivalentDiameter] = useState<number | null>(null);
   const [equivalentDiameter2, setEquivalentDiameter2] = useState<number | null>(null);
+  const [hydraulicDiameter, setHydraulicDiameter] = useState<number | null>(null);
   const [airflowInputValue, setAirflowInputValue] = useState('');
   const [velocityInputValue, setVelocityInputValue] = useState('');
   const [widthInput, setWidthInput] = useState('');
@@ -128,6 +129,13 @@ const Duct = () => {
     setEquivalentDiameter2(diameter)
   };
   
+  const hydraulicDiameterCal = () => {
+    const a = calculateHeight(); 
+    const b = getElementValue('width'); 
+    const dh = (4 * (a * b)) / (2 * (a + b)); 
+    const diameter = Number(dh.toFixed(3)); 
+    setHydraulicDiameter(diameter); 
+  };
 
   const handleMouseOver = () => {
     setIsHovered(true);
@@ -141,6 +149,7 @@ const Duct = () => {
   useEffect(() => {
     eqDiameterCal();
     eqDiameterCal2();
+    hydraulicDiameterCal();
     calculateHeight
   }, [selectedUnit, airflowInputValue, velocityInputValue , widthInput]);
 
@@ -167,6 +176,7 @@ const Duct = () => {
         eqdiamter2 = {equivalentDiameter2}
         handleWidthChange = {handleWidthChange}
         handleHeightChange={handleHeightChange}
+        hydraulicDiameter = {hydraulicDiameter}
       />
       <NewFooter />
     </>
