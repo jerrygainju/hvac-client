@@ -11,12 +11,13 @@ const Duct = () => {
   const [selectedShape, setSelectedShape] = useState('');
   const [equivalentDiameter, setEquivalentDiameter] = useState<number | null>(null);
   const [equivalentDiameter2, setEquivalentDiameter2] = useState<number | null>(null);
-  const [hydraulicDiameter, setHydraulicDiameter] = useState<number | null>(null);
   const [airflowInputValue, setAirflowInputValue] = useState('');
   const [velocityInputValue, setVelocityInputValue] = useState('');
   const [widthInput, setWidthInput] = useState('');
   const [isHovered, setIsHovered] = useState(false);
   const [calculatedHeight, setCalculatedHeight] = useState<number>(0);
+  const [f, setF] = useState<number | null>(null);
+
 
 
   const handleOptionChange = (option: any) => {
@@ -134,8 +135,100 @@ const Duct = () => {
     const b = getElementValue('width'); 
     const dh = (4 * (a * b)) / (2 * (a + b)); 
     const diameter = Number(dh.toFixed(3)); 
-    setHydraulicDiameter(diameter); 
+    return diameter
   };
+
+
+  const calRaynouldsNumber = () => {
+    const velocity = getElementValue("velocity"); 
+    const dh = hydraulicDiameterCal()
+    const raynouldNum = 66.4 * velocity * dh
+    return Number(raynouldNum.toFixed(2))
+ }
+
+
+ const calculateF = () => {
+
+   
+   // Given values
+   const Dh = 200;
+   const Re = 66400;
+   
+   // Initial guess for f
+   let f = 0.02;
+   
+   // Define a tolerance for convergence
+   const tolerance = 1e-6;
+   
+   // Iteration counter
+   let iterations = 0;
+   
+   // Iterate until convergence
+   while (true) {
+     // Calculate LHS
+     const lhs = 1 / Math.sqrt(f);
+     
+     // Calculate RHS
+     const rhs = 2 * Math.log10((0.09 / (3.7 * Dh)) + (2.51 / (Re * Math.sqrt(f))));
+     
+     // Calculate the difference
+     const diff = lhs - rhs;
+     
+     // Check for convergence
+     if (Math.abs(diff) < tolerance) {
+       break;
+      }
+      
+      // Update f for the next iteration
+      f = f - diff / (1 / (2 * Math.pow(f, 1.5)));
+      
+      // Increment iteration counter
+      iterations++;
+    }
+    
+    console.log("Converged to f =", f);
+    
+  } 
+
+  // calculateF()
+
+// import math
+
+// # Given values
+// Dh = 200
+// Re = 66400
+
+// # Initial guess for f
+// f = 0.02
+
+// # Define a tolerance for convergence
+// tolerance = 1e-6
+
+// # Iteration counter
+// iterations = 0
+
+// # Iterate until convergence
+// while True:
+//     # Calculate LHS
+//     lhs = 1 / math.sqrt(f)
+    
+//     # Calculate RHS
+//     rhs = 2 * math.log10((0.09 / (3.7 * Dh)) + (2.51 / (Re * math.sqrt(f))))
+    
+//     # Calculate the difference
+//     diff = lhs - rhs
+    
+//     # Check for convergence
+//     if abs(diff) < tolerance:
+//         break
+    
+//     # Update f for the next iteration
+//     f = f - diff / (1 / (2 * f ** (3/2)))
+    
+//     # Increment iteration counter
+//     iterations += 1
+
+
 
   const handleMouseOver = () => {
     setIsHovered(true);
@@ -149,8 +242,8 @@ const Duct = () => {
   useEffect(() => {
     eqDiameterCal();
     eqDiameterCal2();
-    hydraulicDiameterCal();
-    calculateHeight
+    // calculateF();
+    calculateHeight();
   }, [selectedUnit, airflowInputValue, velocityInputValue , widthInput]);
 
   return (
@@ -173,10 +266,12 @@ const Duct = () => {
         handleMouseOver={handleMouseOver}
         handleMouseOut={handleMouseOut}
         calculatedHeight={calculatedHeight}
-        eqdiamter2 = {equivalentDiameter2}
-        handleWidthChange = {handleWidthChange}
+        eqdiamter2={equivalentDiameter2}
+        handleWidthChange={handleWidthChange}
         handleHeightChange={handleHeightChange}
-        hydraulicDiameter = {hydraulicDiameter}
+        hydraulicDiameter = {hydraulicDiameterCal}
+        raynouldNumber={calRaynouldsNumber}
+        calculateF={f}
       />
       <NewFooter />
     </>
