@@ -1,24 +1,26 @@
-import { useState, useEffect } from 'react';
-import { Materials, Units } from './components/Inputs';
-import DuctForm from './components/duct-form';
-import { getElementValue } from '../carparkventilation/components/Extra ';
-import NewFooter from '../../homepage/footer/Footer';
+import { useState, useEffect } from "react";
+import { Materials, Units } from "./components/Inputs";
+import DuctForm from "./components/duct-form";
+import { getElementValue } from "../carparkventilation/components/Extra ";
+import NewFooter from "../../homepage/footer/Footer";
 
 const Duct = () => {
-  const [selectedUnit, setSelectedUnit] = useState<string>('');
-  const [inputValue, setInputValue] = useState('');
+  const [selectedUnit, setSelectedUnit] = useState<string>("");
+  const [inputValue, setInputValue] = useState("");
   const [selectedOption, setSelectedOption] = useState(null);
-  const [selectedShape, setSelectedShape] = useState('');
-  const [equivalentDiameter, setEquivalentDiameter] = useState<number | null>(null);
-  const [equivalentDiameter2, setEquivalentDiameter2] = useState<number | null>(null);
-  const [airflowInputValue, setAirflowInputValue] = useState('');
-  const [velocityInputValue, setVelocityInputValue] = useState('');
-  const [widthInput, setWidthInput] = useState('');
+  const [selectedShape, setSelectedShape] = useState("");
+  const [equivalentDiameter, setEquivalentDiameter] = useState<number | null>(
+    null
+  );
+  const [equivalentDiameter2, setEquivalentDiameter2] = useState<number | null>(
+    null
+  );
+  const [airflowInputValue, setAirflowInputValue] = useState("");
+  const [velocityInputValue, setVelocityInputValue] = useState("");
+  const [widthInput, setWidthInput] = useState("");
   const [isHovered, setIsHovered] = useState(false);
   const [calculatedHeight, setCalculatedHeight] = useState<number>(0);
   const [f, setF] = useState<number | null>(null);
-
-
 
   const handleOptionChange = (option: any) => {
     setSelectedOption(option);
@@ -32,35 +34,43 @@ const Duct = () => {
   const materialOptions = Materials();
 
   const handleUnitChange = (selectedOption: any) => {
-    const airFlow = document.querySelector('#airflow') as HTMLInputElement | null;
-    const velocity = document.querySelector('#velocity') as HTMLInputElement | null;
+    const airFlow = document.querySelector(
+      "#airflow"
+    ) as HTMLInputElement | null;
+    const velocity = document.querySelector(
+      "#velocity"
+    ) as HTMLInputElement | null;
 
     if (selectedUnit === selectedOption.value) {
       return;
-    } else if (selectedOption?.value === 'Metric' && airFlow && velocity) {
-      airFlow.value = Math.round((getElementValue('airflow') / 2118.8800) * 1000).toString()
-      velocity.value = (getElementValue('velocity') / 196.8504).toFixed(3)
-    } else if (selectedOption?.value === 'Imperial' && airFlow && velocity) {
-      airFlow.value = Math.round((getElementValue('airflow') * 2118.8800) / 1000).toString()
-      velocity.value = (getElementValue('velocity') * 196.8504).toFixed(3);
+    } else if (selectedOption?.value === "Metric" && airFlow && velocity) {
+      airFlow.value = Math.round(
+        (getElementValue("airflow") / 2118.88) * 1000
+      ).toString();
+      velocity.value = (getElementValue("velocity") / 196.8504).toFixed(3);
+    } else if (selectedOption?.value === "Imperial" && airFlow && velocity) {
+      airFlow.value = Math.round(
+        (getElementValue("airflow") * 2118.88) / 1000
+      ).toString();
+      velocity.value = (getElementValue("velocity") * 196.8504).toFixed(3);
     }
 
-    setSelectedUnit(selectedOption ? selectedOption.value : '');
+    setSelectedUnit(selectedOption ? selectedOption.value : "");
   };
 
   const eqDiameterCal = () => {
-    const q = getElementValue('airflow') / 1000;
-    const v = getElementValue('velocity');
+    const q = getElementValue("airflow") / 1000;
+    const v = getElementValue("velocity");
 
-    if (selectedUnit === 'Metric') {
+    if (selectedUnit === "Metric") {
       const D = Math.sqrt((4 * q) / (Math.PI * v)) * 1000;
       const parseD = Number(D.toFixed(3));
       setEquivalentDiameter(parseD);
     }
 
-    if (selectedUnit === 'Imperial') {
-      const qi = getElementValue('airflow');
-      const vi = getElementValue('velocity');
+    if (selectedUnit === "Imperial") {
+      const qi = getElementValue("airflow");
+      const vi = getElementValue("velocity");
       const Di = Math.sqrt((4 * qi) / (Math.PI * vi)) * 12;
       const parseDi = Number(Di.toFixed(3));
       setEquivalentDiameter(parseDi);
@@ -78,18 +88,18 @@ const Duct = () => {
   };
 
   const handleHeightChange = (value: string) => {
-    setCalculatedHeight(parseFloat(value)); 
+    setCalculatedHeight(parseFloat(value));
   };
-  
+
   const handleWidthChange = (value: string) => {
     setWidthInput(value);
     calculateHeight();
   };
 
   const flowAreaCal = () => {
-    const airFlow = getElementValue('airflow');
+    const airFlow = getElementValue("airflow");
     const newAirFlow = airFlow / 1000;
-    const velocity = getElementValue('velocity');
+    const velocity = getElementValue("velocity");
     const flowArea = newAirFlow / velocity;
     return flowArea;
   };
@@ -101,139 +111,96 @@ const Duct = () => {
   };
 
   const insertWidth = () => {
-    const width = getElementValue('width');
+    const width = getElementValue("width");
     const newFlowArea = convertFlowArea();
     const height = newFlowArea / width;
-    return {height};
+    return { height };
   };
 
   const calculateHeight = () => {
     const { height } = insertWidth();
     const notPoint = height / 25;
-    console.log(notPoint, 'checkpoint');
-    
+    console.log(notPoint, "checkpoint");
+
     if (Number.isInteger(notPoint)) {
       setCalculatedHeight(height);
-      return height
+      return height;
     } else {
       const height2 = (Math.floor(notPoint) + 1) * 25;
       setCalculatedHeight(height2);
-      return height2
+      return height2;
     }
   };
 
   const eqDiameterCal2 = () => {
-    const a = calculateHeight(); 
-    const b = getElementValue('width'); 
-    const D = (1.3 * Math.pow(a * b, 0.625)) / Math.pow(a + b, 0.25)
-    const diameter =  Number(D.toFixed(3))
-    setEquivalentDiameter2(diameter)
-  };
-  
-  const hydraulicDiameterCal = () => {
-    const a = calculateHeight(); 
-    const b = getElementValue('width'); 
-    const dh = (4 * (a * b)) / (2 * (a + b)); 
-    const diameter = Number(dh.toFixed(3)); 
-    return diameter
+    const a = calculateHeight();
+    const b = getElementValue("width");
+    const D = (1.3 * Math.pow(a * b, 0.625)) / Math.pow(a + b, 0.25);
+    const diameter = Number(D.toFixed(3));
+    setEquivalentDiameter2(diameter);
   };
 
+  const hydraulicDiameterCal = () => {
+    const a = calculateHeight();
+    const b = getElementValue("width");
+    const dh = (4 * (a * b)) / (2 * (a + b));
+    const diameter = Number(dh.toFixed(3));
+    return diameter;
+  };
 
   const calRaynouldsNumber = () => {
-    const velocity = getElementValue("velocity"); 
-    const dh = hydraulicDiameterCal()
-    const raynouldNum = 66.4 * velocity * dh
-    return Number(raynouldNum.toFixed(2))
- }
+    const velocity = getElementValue("velocity");
+    const dh = hydraulicDiameterCal();
+    const raynouldNum = 66.4 * velocity * dh;
+    return Number(raynouldNum.toFixed(2));
+  };
 
+  const calculateF = () => {
+    // Given values
+    const Dh = 200;
+    const Re = 66400;
 
- const calculateF = () => {
+    // Initial guess for f
+    let f = 0.02;
 
-   
-   // Given values
-   const Dh = 200;
-   const Re = 66400;
-   
-   // Initial guess for f
-   let f = 0.02;
-   
-   // Define a tolerance for convergence
-   const tolerance = 1e-6;
-   
-   // Iteration counter
-   let iterations = 0;
-   
-   // Iterate until convergence
-   while (true) {
-     // Calculate LHS
-     const lhs = 1 / Math.sqrt(f);
-     
-     // Calculate RHS
-     const rhs = 2 * Math.log10((0.09 / (3.7 * Dh)) + (2.51 / (Re * Math.sqrt(f))));
-     
-     // Calculate the difference
-     const diff = lhs - rhs;
-     
-     // Check for convergence
-     if (Math.abs(diff) < tolerance) {
-       break;
+    // Define a tolerance for convergence
+    const tolerance = 1e-6;
+
+    // Iteration counter
+    let iterations = 0;
+
+    // Iterate until convergence
+    while (iterations < 100) {
+      // Calculate LHS
+      const lhs = 1 / Math.sqrt(f);
+
+      // Calculate RHS
+      const rhs =
+        2 * Math.log10(0.09 / (3.7 * Dh) + 2.51 / (Re * Math.sqrt(f)));
+
+      // Calculate the difference
+      const diff = lhs - rhs;
+
+      // Check for convergence
+      if (Math.abs(diff) < tolerance) {
+        break;
       }
-      
+
       // Update f for the next iteration
-      f = f - diff / (1 / (2 * Math.pow(f, 1.5)));
-      
+      f = Math.pow(1 / rhs, 2);
+
       // Increment iteration counter
       iterations++;
     }
-    
+
     console.log("Converged to f =", f);
-    
-  } 
+  };
 
-  // calculateF()
-
-// import math
-
-// # Given values
-// Dh = 200
-// Re = 66400
-
-// # Initial guess for f
-// f = 0.02
-
-// # Define a tolerance for convergence
-// tolerance = 1e-6
-
-// # Iteration counter
-// iterations = 0
-
-// # Iterate until convergence
-// while True:
-//     # Calculate LHS
-//     lhs = 1 / math.sqrt(f)
-    
-//     # Calculate RHS
-//     rhs = 2 * math.log10((0.09 / (3.7 * Dh)) + (2.51 / (Re * math.sqrt(f))))
-    
-//     # Calculate the difference
-//     diff = lhs - rhs
-    
-//     # Check for convergence
-//     if abs(diff) < tolerance:
-//         break
-    
-//     # Update f for the next iteration
-//     f = f - diff / (1 / (2 * f ** (3/2)))
-    
-//     # Increment iteration counter
-//     iterations += 1
-
-
+  calculateF();
 
   const handleMouseOver = () => {
     setIsHovered(true);
   };
-
 
   const handleMouseOut = () => {
     setIsHovered(false);
@@ -244,7 +211,7 @@ const Duct = () => {
     eqDiameterCal2();
     // calculateF();
     calculateHeight();
-  }, [selectedUnit, airflowInputValue, velocityInputValue , widthInput]);
+  }, [selectedUnit, airflowInputValue, velocityInputValue, widthInput]);
 
   return (
     <>
@@ -269,7 +236,7 @@ const Duct = () => {
         eqdiamter2={equivalentDiameter2}
         handleWidthChange={handleWidthChange}
         handleHeightChange={handleHeightChange}
-        hydraulicDiameter = {hydraulicDiameterCal}
+        hydraulicDiameter={hydraulicDiameterCal}
         raynouldNumber={calRaynouldsNumber}
         calculateF={f}
       />
