@@ -7,8 +7,7 @@ export const Units = () => {
 
 export const Materials = () => {
     return [
-        { value: '0.15', label: 'GI' },
-        { value: '2', label: 'Plastic' },
+        { value: '0.09', label: 'GI' },
         { value: '3', label: 'Flex' }
     ]
 }
