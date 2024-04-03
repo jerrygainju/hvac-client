@@ -18,9 +18,8 @@ const Duct = () => {
   const [airflowInputValue, setAirflowInputValue] = useState("");
   const [velocityInputValue, setVelocityInputValue] = useState("");
   const [widthInput, setWidthInput] = useState("");
-  const [isHovered, setIsHovered] = useState(false);
   const [calculatedHeight, setCalculatedHeight] = useState<number>(0);
-  const [f, setF] = useState<number | null>(null);
+  const [frictionInput, setFrictionInput] = useState<number | null>(null);
 
   const handleOptionChange = (option: any) => {
     setSelectedOption(option);
@@ -120,7 +119,6 @@ const Duct = () => {
   const calculateHeight = () => {
     const { height } = insertWidth();
     const notPoint = height / 25;
-    console.log(notPoint, "checkpoint");
 
     if (Number.isInteger(notPoint)) {
       setCalculatedHeight(height);
@@ -156,61 +154,47 @@ const Duct = () => {
   };
 
   const calculateF = () => {
-    // Given values
-    const Dh = 200;
-    const Re = 66400;
-
-    // Initial guess for f
+    const Dh = hydraulicDiameterCal();
+    const Re = calRaynouldsNumber();
     let f = 0.02;
-
-    // Define a tolerance for convergence
     const tolerance = 1e-6;
-
-    // Iteration counter
     let iterations = 0;
-
-    // Iterate until convergence
     while (iterations < 100) {
-      // Calculate LHS
       const lhs = 1 / Math.sqrt(f);
-
-      // Calculate RHS
       const rhs =
-        2 * Math.log10(0.09 / (3.7 * Dh) + 2.51 / (Re * Math.sqrt(f)));
-
-      // Calculate the difference
+        -2 * Math.log10(0.09 / (3.7 * Dh) + 2.51 / (Re * Math.sqrt(f)));
       const diff = lhs - rhs;
-
-      // Check for convergence
       if (Math.abs(diff) < tolerance) {
         break;
       }
-
-      // Update f for the next iteration
-      f = Math.pow(1 / rhs, 2);
-
-      // Increment iteration counter
+      f = Math.pow(1 / rhs, 2)
       iterations++;
     }
-
-    console.log("Converged to f =", f);
+    setFrictionInput(Number(f.toFixed(5)))
+    return (Number(f.toFixed(5)))
   };
 
-  calculateF();
+  const calculateHeadLoss = () => {
+    const f = calculateF();
+    const Dh = hydraulicDiameterCal();
+    const v = getElementValue('velocity');
+    const headLoss = ((1000 * f)/Dh * (1.204 * Math.pow(v, 2))/2)
+    return Number(headLoss.toFixed(3))
+  }
 
-  const handleMouseOver = () => {
-    setIsHovered(true);
-  };
-
-  const handleMouseOut = () => {
-    setIsHovered(false);
-  };
+  const calculateVelocityPressure = () => {
+    const v = getElementValue('velocity');
+    const velocityPressure = 0.602 * Math.pow(v,2);
+    return Number(velocityPressure.toFixed(4));
+  }
 
   useEffect(() => {
     eqDiameterCal();
     eqDiameterCal2();
-    // calculateF();
+    calculateF();
     calculateHeight();
+    calculateHeadLoss();
+    calculateVelocityPressure()
   }, [selectedUnit, airflowInputValue, velocityInputValue, widthInput]);
 
   return (
@@ -229,16 +213,15 @@ const Duct = () => {
         equivalentDiameter={equivalentDiameter}
         handleAirFlowChange={handleAirFlowChange}
         handleVelocityChange={handleVelocityChange}
-        isHovered={isHovered}
-        handleMouseOver={handleMouseOver}
-        handleMouseOut={handleMouseOut}
         calculatedHeight={calculatedHeight}
         eqdiamter2={equivalentDiameter2}
         handleWidthChange={handleWidthChange}
         handleHeightChange={handleHeightChange}
         hydraulicDiameter={hydraulicDiameterCal}
         raynouldNumber={calRaynouldsNumber}
-        calculateF={f}
+        calculateF={frictionInput}
+        calculateHeadLoss = {calculateHeadLoss}
+        calculateVelocityPressure = {calculateVelocityPressure}
       />
       <NewFooter />
     </>

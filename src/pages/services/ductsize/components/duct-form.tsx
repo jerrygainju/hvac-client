@@ -19,9 +19,6 @@ interface DuctFormProps {
   equivalentDiameter: number | null;
   handleAirFlowChange: (value: string) => void;
   handleVelocityChange: (value: string) => void;
-  isHovered: boolean;
-  handleMouseOver: () => void;
-  handleMouseOut: () => void;
   calculatedHeight: number | null;
   eqdiamter2: number | null;
   handleWidthChange: (value: string) => void;
@@ -29,6 +26,8 @@ interface DuctFormProps {
   hydraulicDiameter: () => number | null;
   raynouldNumber: () => number;
   calculateF: number | null;
+  calculateHeadLoss: () => number;
+  calculateVelocityPressure: () => number | null;
 }
 const DuctForm: React.FC<DuctFormProps> = ({
   selectedUnit,
@@ -50,7 +49,9 @@ const DuctForm: React.FC<DuctFormProps> = ({
   handleHeightChange,
   hydraulicDiameter,
   raynouldNumber,
-  calculateF
+  calculateF,
+  calculateHeadLoss,
+  calculateVelocityPressure
 }) => {
   const [isHovered, setIsHovered] = useState(false);
 
@@ -144,10 +145,8 @@ const DuctForm: React.FC<DuctFormProps> = ({
                     unit={selectedUnit === "Metric" ? " l/s" : " cfm"}
                   />
                 </div>
-                {/* <hr className="my-4 border-black " /> */}
               </div>
               <div className="pl-6 pr-6 pt-4">
-                {/* Size By */}
                 <RadioInput
                   type="number"
                   label="Size By"
@@ -174,7 +173,6 @@ const DuctForm: React.FC<DuctFormProps> = ({
                     },
                   }}
                 />
-                {/* <hr className="my-4 border-black " /> */}
               </div>
               <div className="pl-6 pr-6 pt-4 text-gray-600">
                 <b>Equivalent Diameter: </b>
@@ -186,8 +184,6 @@ const DuctForm: React.FC<DuctFormProps> = ({
                       }`
                     : "result"}{" "}
                 </b>
-                .
-                {/* <button onClick={() => { eqDiameterCal(); }} className="px-2  bg-gray-600 text-white rounded hover:bg-gray-500 focus:outline-none focus:shadow-outline-blue">Calculate</button> */}
                 <hr className="my-4 border-black " />
               </div>
               <div className="flex flex-col pl-6 pr-6 text-gray-600">
@@ -270,7 +266,6 @@ const DuctForm: React.FC<DuctFormProps> = ({
                 </div>
                 <div className="pt-2">
                   Raynould Number: {raynouldNumber()}
-                  {/* {selectedUnit === "Metric" ? " mm" : " in"} */}
                 </div>
                 <div className="pt-2">
                   Fluid Velocity: result
@@ -278,11 +273,11 @@ const DuctForm: React.FC<DuctFormProps> = ({
                 </div>
                 <div className="pt-2">Friction Factor: {calculateF}</div>
                 <div className="pt-2">
-                  Velocuty Pressure: result
+                  Velocuty Pressure: {calculateVelocityPressure()}
                   {selectedUnit === "Metric" ? " Pa" : " in.WC"}
                 </div>
                 <div className="pt-2">
-                  Head Loss: result
+                  Head Loss: {calculateHeadLoss()}
                   {selectedUnit === "Metric" ? " Pa/m" : " in.WC/100ft"}
                 </div>
               </div>

@@ -58,7 +58,6 @@ const RefrigerantProp = () => {
                 totalVolume += inputArea * inputHeight;
             });
         });
-        console.log(totalVolume, 'check');
         setTotalVolume(Number(totalVolume.toFixed(2)))
         return Number(totalVolume.toFixed(2))
     }
