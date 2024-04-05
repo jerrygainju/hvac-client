@@ -101,10 +101,9 @@ const DuctForm: React.FC<DuctFormProps> = ({
                       <InfoCircleOutlined />
                     </span>
                   </Tooltip>
-                  <Select
+                  <SelectInput
                     options={materialOptions}
                     placeholder="Select Material"
-                    className="pt-2"
                     value={materialOptions.find((option) => option.value === selectedMaterial)}
                     onChange={handleMaterialChange}
                   />
@@ -228,7 +227,6 @@ const DuctForm: React.FC<DuctFormProps> = ({
                     onChange={(e) => handleHeightChange(e)}
                   />
                 </div>
-
                 <hr className="my-4 border-black " />
               </div>
               <div className="flex flex-col pl-6 pr-6 items-center text-gray-600">
