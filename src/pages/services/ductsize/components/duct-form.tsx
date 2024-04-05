@@ -1,5 +1,4 @@
-import Select from "react-select";
-import { Dispatch, SetStateAction, useState } from "react";
+import {useState } from "react";
 import { RadioInput, SelectInput, TextInput } from "./extraInputs";
 import Layout from "../../../homepage/navigation/layout";
 import { InfoCircleOutlined } from "@ant-design/icons";
@@ -7,8 +6,6 @@ import { Tooltip } from "antd";
 
 interface DuctFormProps {
   selectedUnit: string;
-  inputValue: string;
-  setInputValue: Dispatch<SetStateAction<string>>;
   selectedOption: any;
   handleOptionChange: (option: any) => void;
   selectedShape: string;
@@ -28,11 +25,11 @@ interface DuctFormProps {
   calculateF: number | null;
   calculateHeadLoss: () => number;
   calculateVelocityPressure: () => number | null;
+  selectedMaterial: any;
+  handleMaterialChange: (materialId: number) => void;
 }
 const DuctForm: React.FC<DuctFormProps> = ({
   selectedUnit,
-  inputValue,
-  setInputValue,
   handleOptionChange,
   selectedOption,
   selectedShape,
@@ -51,7 +48,9 @@ const DuctForm: React.FC<DuctFormProps> = ({
   raynouldNumber,
   calculateF,
   calculateHeadLoss,
-  calculateVelocityPressure
+  calculateVelocityPressure,
+  selectedMaterial,
+  handleMaterialChange
 }) => {
   const [isHovered, setIsHovered] = useState(false);
 
@@ -87,7 +86,7 @@ const DuctForm: React.FC<DuctFormProps> = ({
                     title="Additional information"
                     overlay={
                       isHovered
-                        ? `Value for GI is 1.5 Value for plastic is 2  Value for flex is 2.5`
+                        ? `Value for GI is 1.5 Value for plastic is 2`
                         : ""
                     }
                     visible={isHovered}
@@ -101,34 +100,11 @@ const DuctForm: React.FC<DuctFormProps> = ({
                       <InfoCircleOutlined />
                     </span>
                   </Tooltip>
-                  <Select
+                  <SelectInput
                     options={materialOptions}
                     placeholder="Select Material"
-                    className="pt-2"
-                    styles={{
-                      control: (provided) => ({
-                        ...provided,
-                        width: "165px",
-                        backgroundColor: "rgba(245, 244, 248)",
-                        borderColor: "transparent",
-                      }),
-                      menu: (provided) => ({
-                        ...provided,
-                        width: "165px",
-                        backgroundColor: "rgba(245, 244, 248)",
-                      }),
-                    }}
-                    value={materialOptions.find(
-                      (option) => option.label === inputValue
-                    )}
-                    onChange={(selectedOption) =>
-                      setInputValue(selectedOption ? selectedOption.label : "")
-                    }
-                    formatOptionLabel={(option, { context }) => (
-                      <div>
-                        {context === "menu" ? option.label : option.label}
-                      </div>
-                    )}
+                    value={materialOptions.find((option) => option.value === selectedMaterial)}
+                    onChange={handleMaterialChange}
                   />
                 </div>
               </div>
@@ -179,9 +155,8 @@ const DuctForm: React.FC<DuctFormProps> = ({
                 <b>
                   {" "}
                   {equivalentDiameter !== null
-                    ? `${equivalentDiameter} ${
-                        selectedUnit === "Metric" ? "mm" : "in"
-                      }`
+                    ? `${equivalentDiameter} ${selectedUnit === "Metric" ? "mm" : "in"
+                    }`
                     : "result"}{" "}
                 </b>
                 <hr className="my-4 border-black " />
@@ -251,7 +226,6 @@ const DuctForm: React.FC<DuctFormProps> = ({
                     onChange={(e) => handleHeightChange(e)}
                   />
                 </div>
-
                 <hr className="my-4 border-black " />
               </div>
               <div className="flex flex-col pl-6 pr-6 items-center text-gray-600">

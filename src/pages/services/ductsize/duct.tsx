@@ -6,7 +6,6 @@ import NewFooter from "../../homepage/footer/Footer";
 
 const Duct = () => {
   const [selectedUnit, setSelectedUnit] = useState<string>("");
-  const [inputValue, setInputValue] = useState("");
   const [selectedOption, setSelectedOption] = useState(null);
   const [selectedShape, setSelectedShape] = useState("");
   const [equivalentDiameter, setEquivalentDiameter] = useState<number | null>(
@@ -20,6 +19,7 @@ const Duct = () => {
   const [widthInput, setWidthInput] = useState("");
   const [calculatedHeight, setCalculatedHeight] = useState<number>(0);
   const [frictionInput, setFrictionInput] = useState<number | null>(null);
+  const [selectedMaterial, setSelectedMaterial] = useState(""); 
 
   const handleOptionChange = (option: any) => {
     setSelectedOption(option);
@@ -27,6 +27,10 @@ const Duct = () => {
 
   const handleShapeChange = (shape: string) => {
     setSelectedShape(shape);
+  };
+
+  const handleMaterialChange = (selectedOption: any) => {
+    setSelectedMaterial(selectedOption.value);
   };
 
   const ductOptions = Units();
@@ -154,25 +158,26 @@ const Duct = () => {
   };
 
   const calculateF = () => {
+    const M = parseFloat(selectedMaterial);
     const Dh = hydraulicDiameterCal();
     const Re = calRaynouldsNumber();
     let f = 0.02;
     const tolerance = 1e-6;
     let iterations = 0;
     while (iterations < 100) {
-      const lhs = 1 / Math.sqrt(f);
-      const rhs =
-        -2 * Math.log10(0.09 / (3.7 * Dh) + 2.51 / (Re * Math.sqrt(f)));
-      const diff = lhs - rhs;
-      if (Math.abs(diff) < tolerance) {
-        break;
-      }
-      f = Math.pow(1 / rhs, 2)
-      iterations++;
+       const lhs = 1 / Math.sqrt(f);
+       const rhs = -2 * Math.log10(M / (3.7 * Dh) + 2.51 / (Re * Math.sqrt(f)));
+       const diff = lhs - rhs;
+       if (Math.abs(diff) < tolerance) {
+         break;
+       }
+       f = Math.pow(1 / rhs, 2);
+       iterations++;
     }
-    setFrictionInput(Number(f.toFixed(5)))
-    return (Number(f.toFixed(5)))
-  };
+    setFrictionInput(Number(f.toFixed(5)));
+    return Number(f.toFixed(5));
+   };
+
 
   const calculateHeadLoss = () => {
     const f = calculateF();
@@ -201,8 +206,6 @@ const Duct = () => {
     <>
       <DuctForm
         selectedUnit={selectedUnit}
-        inputValue={inputValue}
-        setInputValue={setInputValue}
         selectedOption={selectedOption}
         handleOptionChange={handleOptionChange}
         selectedShape={selectedShape}
@@ -222,6 +225,8 @@ const Duct = () => {
         calculateF={frictionInput}
         calculateHeadLoss = {calculateHeadLoss}
         calculateVelocityPressure = {calculateVelocityPressure}
+        selectedMaterial={selectedMaterial}
+        handleMaterialChange={handleMaterialChange}
       />
       <NewFooter />
     </>

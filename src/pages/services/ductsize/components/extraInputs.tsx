@@ -5,9 +5,10 @@ interface SelectInputProps {
   options: any[];
   placeholder: string;
   onChange: (selectedOption: any) => void;
+  value?:  any;
 }
 
-export const SelectInput: React.FC<SelectInputProps> = ({ options, placeholder, onChange }) => {
+export const SelectInput: React.FC<SelectInputProps> = ({ options, placeholder, onChange, value }) => {
   return (
     <div>
       <Select
@@ -27,6 +28,7 @@ export const SelectInput: React.FC<SelectInputProps> = ({ options, placeholder, 
             backgroundColor: "rgba(245, 244, 248)"
           }),
         }}
+        value={value}
         onChange={onChange}
       />
     </div>
