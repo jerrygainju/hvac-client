@@ -1,4 +1,3 @@
-import Select from "react-select";
 import {useState } from "react";
 import { RadioInput, SelectInput, TextInput } from "./extraInputs";
 import Layout from "../../../homepage/navigation/layout";
