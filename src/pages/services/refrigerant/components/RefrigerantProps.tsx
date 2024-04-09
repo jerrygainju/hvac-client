@@ -2,119 +2,232 @@ import { useEffect, useState } from 'react';
 import RefrigerantForm from './RefrigerantForm'; 
 import { RefrigerantType } from './Inputs';
 
-
 const RefrigerantProp = () => {
     const [fcuList, setFcuList] = useState<string[][]>([[""]]);
     const [condenserList, setCondenserList] = useState<string[]>([""]);
-    const [additionalRefrigerantCharge, setAdditionalRefrigerantCharge] = useState<number>(0);
-    const [prechargedRefrigerantCharge, setPrechargedRefrigerantCharge] = useState<number>(0);
-    const [totalRefrigerantCharge, setTotalRefrigerantCharge] = useState<number>(0);
+    const [additionalRefrigerantCharges, setAdditionalRefrigerantCharges] = useState<number[]>([0]);
+    const [prechargedRefrigerantCharges, setPrechargedRefrigerantCharges] = useState<number[]>([0]);
+    const [totalRefrigerantCharges, setTotalRefrigerantCharges] = useState<number[]>([0]);
+
     const [areas, setAreas] = useState<number[][]>([[0]]); 
     const [heights, setHeights] = useState<number[][]>([[0]]); 
-    const [totalVolume, setTotalVolume] = useState<number[][]>([[0]]);
-    const [selectRefrigerantType, setRefrigerantType] = useState("");
+    const [totalVolumes, setTotalVolumes] = useState<number[][]>([[0]]);
+    const [selectRefrigerantTypes, setRefrigerantTypes] = useState<string[]>([""]);
+    const [chargeLimits, setChargeLimits] = useState<(number)[][]>([[0]]);
+    const [remark, setRemark] = useState<(string)[][]>([[""]])
    
- 
-    const handleRefrigerantType = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const handleRefrigerantType = (event: any, condenserIndex: number) => {
         const selectedValue = event.target.value;
-        setRefrigerantType(selectedValue);;
+        setRefrigerantTypes(prevTypes => {
+            const newTypes = [...prevTypes];
+            newTypes[condenserIndex] = selectedValue;
+            return newTypes;
+        });
     };
-    const refrigerantOptions = RefrigerantType()
+
+    const refrigerantOptions = RefrigerantType();
     
     const handleAddCondenser = () => {
-        setCondenserList([...condenserList, ""]);
-        setFcuList([...fcuList, [""]]);
+        setCondenserList(prevList => [...prevList, ""]);
+        setFcuList(prevList => [...prevList, [""]]);
+        setAdditionalRefrigerantCharges(prevCharges => [...prevCharges, 0]);
+        setPrechargedRefrigerantCharges(prevCharges => [...prevCharges, 0]);
+        setTotalRefrigerantCharges(prevCharges => [...prevCharges, 0]);
+        setAreas(prevAreas => [...prevAreas, [0]]);
+        setHeights(prevHeights => [...prevHeights, [0]]);
+        setTotalVolumes(prevVolumes => [...prevVolumes, [0]]);
+        setRefrigerantTypes(prevTypes => [...prevTypes, ""]);
+        setChargeLimits(prevLimits => [...prevLimits, [0]]); 
+        setRemark(prevRemarks => [...prevRemarks, [""]])
+    };
+    
+    const handleDeleteCondenser = (condenserIndex: number) => {
+        setCondenserList(prevList => prevList.filter((_, index) => index !== condenserIndex));
+        setFcuList(prevList => prevList.filter((_, index) => index !== condenserIndex));
+        setAdditionalRefrigerantCharges(prevCharges => prevCharges.filter((_, index) => index !== condenserIndex));
+        setPrechargedRefrigerantCharges(prevCharges => prevCharges.filter((_, index) => index !== condenserIndex));
+        setTotalRefrigerantCharges(prevCharges => prevCharges.filter((_, index) => index !== condenserIndex));
+        setAreas(prevAreas => prevAreas.filter((_, index) => index !== condenserIndex));
+        setHeights(prevHeights => prevHeights.filter((_, index) => index !== condenserIndex));
+        setTotalVolumes(prevVolumes => prevVolumes.filter((_, index) => index !== condenserIndex));
+        setRefrigerantTypes(prevTypes => prevTypes.filter((_, index) => index !== condenserIndex));
+        setChargeLimits(prevLimits => prevLimits.filter((_, index) => index !== condenserIndex)); 
+        setRemark(prevRemarks => prevRemarks.filter((_, index) => index !== condenserIndex))
     };
 
     const handleAddFcu = (condenserIndex: number) => {
-        setFcuList(prevFcuList => {
-            const newFcuList = [...prevFcuList];
-            newFcuList[condenserIndex] = [...newFcuList[condenserIndex], ""];
-            return newFcuList;
+        setFcuList(prevList => {
+            const newList = [...prevList];
+            newList[condenserIndex] = [...newList[condenserIndex], ""];
+            return newList;
         });
-    
-        setTotalVolume(prevTotalVolume => {
-            const newTotalVolume = [...prevTotalVolume];
-            newTotalVolume[condenserIndex] = [...newTotalVolume[condenserIndex], 0]; 
-            return newTotalVolume;
+        setAreas(prevAreas => {
+            const newAreas = [...prevAreas];
+            newAreas[condenserIndex] = [...newAreas[condenserIndex], 0];
+            return newAreas;
         });
+        setHeights(prevHeights => {
+            const newHeights = [...prevHeights];
+            newHeights[condenserIndex] = [...newHeights[condenserIndex], 0];
+            return newHeights;
+        });
+        setTotalVolumes(prevVolumes => {
+            const newVolumes = [...prevVolumes];
+            newVolumes[condenserIndex] = [...newVolumes[condenserIndex], 0];
+            return newVolumes;
+        });
+        setChargeLimits(prevLimits => {
+            const newLimits = [...prevLimits];
+            newLimits[condenserIndex] = [...newLimits[condenserIndex], 0]; 
+            return newLimits;
+        });
+        setRemark(prevRemarks => {
+            const newRemarks = [...prevRemarks];
+            newRemarks[condenserIndex] = [...newRemarks[condenserIndex], ""];
+            return newRemarks;
+        })
     };
     
     const handleDeleteFcu = (condenserIndex: number, fcuIndex: number) => {
-        setFcuList(prevFcuList => {
-            const newFcuList = [...prevFcuList];
-            newFcuList[condenserIndex] = newFcuList[condenserIndex].filter((_, i) => i !== fcuIndex);
-            return newFcuList;
+        setFcuList(prevList => {
+            const newList = [...prevList];
+            newList[condenserIndex] = prevList[condenserIndex].filter((_, index) => index !== fcuIndex);
+            return newList;
         });
-    
-        setTotalVolume(prevTotalVolume => {
-            const newTotalVolume = [...prevTotalVolume];
-            newTotalVolume[condenserIndex] = newTotalVolume[condenserIndex].filter((_, i) => i !== fcuIndex);
-            return newTotalVolume;
+        setAreas(prevAreas => {
+            const newAreas = [...prevAreas];
+            newAreas[condenserIndex] = prevAreas[condenserIndex].filter((_, index) => index !== fcuIndex);
+            return newAreas;
+        });
+        setHeights(prevHeights => {
+            const newHeights = [...prevHeights];
+            newHeights[condenserIndex] = prevHeights[condenserIndex].filter((_, index) => index !== fcuIndex);
+            return newHeights;
+        });
+        setTotalVolumes(prevVolumes => {
+            const newVolumes = [...prevVolumes];
+            newVolumes[condenserIndex] = prevVolumes[condenserIndex].filter((_, index) => index !== fcuIndex);
+            return newVolumes;
+        });
+        setChargeLimits(prevLimits => {
+            const newLimits = [...prevLimits];
+            newLimits[condenserIndex] = prevLimits[condenserIndex].filter((_, index) => index !== fcuIndex);
+            return newLimits;
+        });
+        setRemark(prevRemarks => {
+            const newRemarks = [...prevRemarks];
+            newRemarks[condenserIndex] = prevRemarks[condenserIndex].filter((_, index) => index !== fcuIndex);
+            return newRemarks;
         });
     };
-    
-    
-    const handleDeleteCondenser = (condenserIndex: number) => {
-        const newCondenserList = [...condenserList];
-        newCondenserList.splice(condenserIndex, 1);
-        setCondenserList(newCondenserList);
 
-        const newFcuList = [...fcuList];
-        newFcuList.splice(condenserIndex, 1);
-        setFcuList(newFcuList);
+    const handleAdditionalRefrigerantCharge = (condenserIndex: number, value: number) => {
+        if (!isNaN(value)) {
+            setAdditionalRefrigerantCharges(prevCharges => {
+                const newCharges = [...prevCharges];
+                newCharges[condenserIndex] = value;
+                return newCharges;
+            });
+        } else {
+            setAdditionalRefrigerantCharges(prevCharges => {
+                const newCharges = [...prevCharges];
+                newCharges[condenserIndex] = 0;
+                return newCharges;
+            });
+        }
     };
-
-
+    
+    const handlePrechargedRefrigerantCharge = (condenserIndex: number, value: number) => {
+        if (!isNaN(value)) {
+            setPrechargedRefrigerantCharges(prevCharges => {
+                const newCharges = [...prevCharges];
+                newCharges[condenserIndex] = value;
+                return newCharges;
+            });
+        } else {
+            setPrechargedRefrigerantCharges(prevCharges => {
+                const newCharges = [...prevCharges];
+                newCharges[condenserIndex] = 0;
+                return newCharges;
+            });
+        }
+    };
+    
     const refrigerantChargeCalculation = () => {    
-        const totalCharge = additionalRefrigerantCharge + prechargedRefrigerantCharge;
-        setTotalRefrigerantCharge(Number(totalCharge.toFixed(2)));
-        return Number(totalCharge.toFixed(2));
+        const newTotalCharges = additionalRefrigerantCharges.map((additionalCharge, index) => {
+            return additionalCharge + prechargedRefrigerantCharges[index];
+        });
+        setTotalRefrigerantCharges(newTotalCharges);
+        return newTotalCharges;
     };
-    
+
     const handleArea = (condenserIndex: number, fcuIndex: number, value: number) => {
-        const newAreas = [...areas];
-        newAreas[condenserIndex][fcuIndex] = value;
-        setAreas(newAreas);
+        setAreas(prevAreas => {
+            const newAreas = [...prevAreas];
+            newAreas[condenserIndex][fcuIndex] = value;
+            return newAreas;
+        });
     };
 
     const handleHeight = (condenserIndex: number, fcuIndex: number, value: number) => {
-        const newHeights = [...heights];
-        newHeights[condenserIndex][fcuIndex] = value;
-        setHeights(newHeights);
+        setHeights(prevHeights => {
+            const newHeights = [...prevHeights];
+            newHeights[condenserIndex][fcuIndex] = value;
+            return newHeights;
+        });
     };
 
-
-     const calculateTotalVolume = () => {
+    const calculateTotalVolume = () => {
         const newTotalVolume = areas.map((rowAreas, condenserIndex) => {
             return rowAreas.map((area, fcuIndex) => {
-                const height = heights[condenserIndex][fcuIndex];
-                return area * height;
+                if (heights[condenserIndex] && heights[condenserIndex][fcuIndex] !== undefined) {
+                    const height = heights[condenserIndex][fcuIndex];
+                    return area * height;
+                } else {
+                    return 0;
+                }
             });
         });
-        setTotalVolume(newTotalVolume);
-        return newTotalVolume
+        setTotalVolumes(newTotalVolume);
+        return newTotalVolume;
     };
 
-    // const calculateChargeLimit = () => {
-    //     const T = parseFloat(selectRefrigerantType);
-    //     console.log(T, 't value');
-        
-    //     const V = calculateTotalVolume(); 
-    //     console.log(totalVolume, 'total vol');
-        
-    //     const chargeLimit = T * V;
-    //     console.log(chargeLimit,'charge');
-        
-    // };
+    const calculateChargeLimit = (condenserIndex: number, fcuIndex: number): number | undefined => {
+        const T = parseFloat(selectRefrigerantTypes[condenserIndex]);
+        const V = totalVolumes[condenserIndex][fcuIndex];
+        const result = isNaN(T) || isNaN(V) ? undefined : T * V;
+        return result !== undefined ? parseFloat(result.toFixed(1)) : undefined;
+    };
 
+    const calculateRemarks = () => {
+        const newRemarks = fcuList.map((condenser, condenserIndex) => {
+            return condenser.map((_, fcuIndex) => {
+                const chargeLimit = calculateChargeLimit(condenserIndex, fcuIndex);
+                if (chargeLimit === undefined) {
+                    return 'Result'; 
+                } else if (chargeLimit >= totalRefrigerantCharges[condenserIndex]) {
+                    return "OK";
+                } else {
+                    return "NOT OK";
+                }
+            });
+        });
+        setRemark(newRemarks);
+    };
+    
 
     useEffect(() => {
         refrigerantChargeCalculation();
-            calculateTotalVolume();
-            // calculateChargeLimit()
-    }, [additionalRefrigerantCharge, prechargedRefrigerantCharge, areas, heights]);
-
+        calculateTotalVolume();
+        const newChargeLimits = fcuList.map((condenser, condenserIndex) => {
+            return condenser.map((_, fcuIndex) => {
+                return calculateChargeLimit(condenserIndex, fcuIndex);
+            }).filter(limit => limit !== undefined) as number[]; 
+        });
+        setChargeLimits(newChargeLimits);
+        calculateRemarks();
+    }, [additionalRefrigerantCharges, prechargedRefrigerantCharges, areas, heights, fcuList, selectRefrigerantTypes, totalVolumes]);
+    
 
     return (
         <RefrigerantForm
@@ -124,15 +237,17 @@ const RefrigerantProp = () => {
             onAddCondenser={handleAddCondenser}
             condenserList={condenserList}
             onDeleteCondenser={handleDeleteCondenser}
-            totalRefrigerantCharge = {totalRefrigerantCharge}
-            handleAdditionalRefrigerantCharge = {setAdditionalRefrigerantCharge}
-            handlePrechargedRefrigerantCharge = {setPrechargedRefrigerantCharge}
-            totalVolume = {totalVolume}
-            handleArea = {handleArea}
-            handleHeight = {handleHeight}
-            refrigerantOptions = {refrigerantOptions}
-            selectRefrigerantType = {selectRefrigerantType}
-            handleRefrigerantType = {handleRefrigerantType}
+            totalRefrigerantCharges={totalRefrigerantCharges}
+            handleAdditionalRefrigerantCharge={handleAdditionalRefrigerantCharge}
+            handlePrechargedRefrigerantCharge={handlePrechargedRefrigerantCharge}
+            totalVolumes={totalVolumes}
+            handleArea={handleArea}
+            handleHeight={handleHeight}
+            refrigerantOptions={refrigerantOptions}
+            selectRefrigerantTypes={selectRefrigerantTypes}
+            handleRefrigerantType={handleRefrigerantType}
+            chargeLimits={chargeLimits} 
+            remark={remark}
         />
     );
 };
