@@ -241,10 +241,6 @@ const DuctForm: React.FC<DuctFormProps> = ({
                 <div className="pt-2">
                   Raynould Number: {raynouldNumber()}
                 </div>
-                <div className="pt-2">
-                  Fluid Velocity: result
-                  {selectedUnit === "Metric" ? " m/s" : " ft/min"}
-                </div>
                 <div className="pt-2">Friction Factor: {calculateF}</div>
                 <div className="pt-2">
                   Velocuty Pressure: {calculateVelocityPressure()}
