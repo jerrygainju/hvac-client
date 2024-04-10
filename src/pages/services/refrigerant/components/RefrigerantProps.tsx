@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import RefrigerantForm from './RefrigerantForm'; 
 import { RefrigerantType } from './Inputs';
 
@@ -8,14 +8,30 @@ const RefrigerantProp = () => {
     const [additionalRefrigerantCharges, setAdditionalRefrigerantCharges] = useState<number[]>([0]);
     const [prechargedRefrigerantCharges, setPrechargedRefrigerantCharges] = useState<number[]>([0]);
     const [totalRefrigerantCharges, setTotalRefrigerantCharges] = useState<number[]>([0]);
-
     const [areas, setAreas] = useState<number[][]>([[0]]); 
     const [heights, setHeights] = useState<number[][]>([[0]]); 
     const [totalVolumes, setTotalVolumes] = useState<number[][]>([[0]]);
     const [selectRefrigerantTypes, setRefrigerantTypes] = useState<string[]>([""]);
     const [chargeLimits, setChargeLimits] = useState<(number)[][]>([[0]]);
     const [remark, setRemark] = useState<(string)[][]>([[""]])
-   
+    const [condenserHoverStates, setCondenserHoverStates] = useState<boolean[]>([false]);
+
+const handleMouseOver = (condenserIndex:number) => {
+    setCondenserHoverStates(prevStates => {
+        const newStates = [...prevStates];
+        newStates[condenserIndex] = true;
+        return newStates;
+    });
+};
+
+const handleMouseOut = (condenserIndex: number) => {
+    setCondenserHoverStates(prevStates => {
+        const newStates = [...prevStates];
+        newStates[condenserIndex] = false;
+        return newStates;
+    });
+};
+
     const handleRefrigerantType = (event: any, condenserIndex: number) => {
         const selectedValue = event.target.value;
         setRefrigerantTypes(prevTypes => {
@@ -39,6 +55,7 @@ const RefrigerantProp = () => {
         setRefrigerantTypes(prevTypes => [...prevTypes, ""]);
         setChargeLimits(prevLimits => [...prevLimits, [0]]); 
         setRemark(prevRemarks => [...prevRemarks, [""]])
+        setCondenserHoverStates(prevStates => [...prevStates, false]);
     };
     
     const handleDeleteCondenser = (condenserIndex: number) => {
@@ -52,9 +69,10 @@ const RefrigerantProp = () => {
         setTotalVolumes(prevVolumes => prevVolumes.filter((_, index) => index !== condenserIndex));
         setRefrigerantTypes(prevTypes => prevTypes.filter((_, index) => index !== condenserIndex));
         setChargeLimits(prevLimits => prevLimits.filter((_, index) => index !== condenserIndex)); 
-        setRemark(prevRemarks => prevRemarks.filter((_, index) => index !== condenserIndex))
+        setRemark(prevRemarks => prevRemarks.filter((_, index) => index !== condenserIndex));
+        setCondenserHoverStates(prevHover => prevHover.filter((_, index) => index !== condenserIndex))
     };
-
+    
     const handleAddFcu = (condenserIndex: number) => {
         setFcuList(prevList => {
             const newList = [...prevList];
@@ -177,8 +195,8 @@ const RefrigerantProp = () => {
         });
     };
 
-    const calculateTotalVolume = () => {
-        const newTotalVolume = areas.map((rowAreas, condenserIndex) => {
+    const newTotalVolume = useMemo(() => {
+        return areas.map((rowAreas, condenserIndex) => {
             return rowAreas.map((area, fcuIndex) => {
                 if (heights[condenserIndex] && heights[condenserIndex][fcuIndex] !== undefined) {
                     const height = heights[condenserIndex][fcuIndex];
@@ -188,9 +206,7 @@ const RefrigerantProp = () => {
                 }
             });
         });
-        setTotalVolumes(newTotalVolume);
-        return newTotalVolume;
-    };
+    }, [areas, heights]);
 
     const calculateChargeLimit = (condenserIndex: number, fcuIndex: number): number | undefined => {
         const T = parseFloat(selectRefrigerantTypes[condenserIndex]);
@@ -218,7 +234,7 @@ const RefrigerantProp = () => {
 
     useEffect(() => {
         refrigerantChargeCalculation();
-        calculateTotalVolume();
+        setTotalVolumes(newTotalVolume);
         const newChargeLimits = fcuList.map((condenser, condenserIndex) => {
             return condenser.map((_, fcuIndex) => {
                 return calculateChargeLimit(condenserIndex, fcuIndex);
@@ -226,7 +242,7 @@ const RefrigerantProp = () => {
         });
         setChargeLimits(newChargeLimits);
         calculateRemarks();
-    }, [additionalRefrigerantCharges, prechargedRefrigerantCharges, areas, heights, fcuList, selectRefrigerantTypes, totalVolumes]);
+    }, [additionalRefrigerantCharges, prechargedRefrigerantCharges, newTotalVolume, fcuList, selectRefrigerantTypes, totalVolumes]);
     
 
     return (
@@ -248,6 +264,9 @@ const RefrigerantProp = () => {
             handleRefrigerantType={handleRefrigerantType}
             chargeLimits={chargeLimits} 
             remark={remark}
+            handleMouseOver={handleMouseOver}
+            handleMouseOut={handleMouseOut}
+            condenserHoverStates={condenserHoverStates}
         />
     );
 };
