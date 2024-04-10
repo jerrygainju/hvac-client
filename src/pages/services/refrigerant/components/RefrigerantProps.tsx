@@ -8,7 +8,6 @@ const RefrigerantProp = () => {
     const [additionalRefrigerantCharges, setAdditionalRefrigerantCharges] = useState<number[]>([0]);
     const [prechargedRefrigerantCharges, setPrechargedRefrigerantCharges] = useState<number[]>([0]);
     const [totalRefrigerantCharges, setTotalRefrigerantCharges] = useState<number[]>([0]);
-
     const [areas, setAreas] = useState<number[][]>([[0]]); 
     const [heights, setHeights] = useState<number[][]>([[0]]); 
     const [totalVolumes, setTotalVolumes] = useState<number[][]>([[0]]);
@@ -32,7 +31,6 @@ const handleMouseOut = (condenserIndex: number) => {
         return newStates;
     });
 };
-
 
     const handleRefrigerantType = (event: any, condenserIndex: number) => {
         const selectedValue = event.target.value;

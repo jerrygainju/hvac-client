@@ -48,15 +48,6 @@ const RefrigerantForm: React.FC<RefrigerantFormProps> = ({
     condenserHoverStates
 
 }) => {
-    // const [isHovered, setIsHovered] = useState(false);
-
-    // const handleMouseOver = () => {
-    //     setIsHovered(true);
-    // };
-
-    // const handleMouseOut = () => {
-    //     setIsHovered(false);
-    // };
     return (
         <div className="lg:pt-12 sm:pt-6">
             <div className="font-mono text-3xl text-gray-500 text-center">
@@ -115,27 +106,27 @@ const RefrigerantForm: React.FC<RefrigerantFormProps> = ({
                                 <div> Refrigerant Charge(kg) </div>
                                 <div><Input placeholder="Additional Refrigerant" className="text-center w-32" type="number" onChange={(e) => handleAdditionalRefrigerantCharge(condenserIndex, parseFloat(e.target.value))} /> </div>
                                 <div><Input placeholder="Precharged Refrigerant" className="text-center w-32" type="number" onChange={(e) => handlePrechargedRefrigerantCharge(condenserIndex, parseFloat(e.target.value))} /> </div>
-                                <div className="text-gray-400"> Result: {totalRefrigerantCharges[condenserIndex]} kg </div>
+                                <div className="text-gray-400 text-base"> Result: {totalRefrigerantCharges[condenserIndex]} kg </div>
                             </div>
-                            <div className="flex flex-col items-center font-mono gap-1 text-gray-600 pl-4">
+                            <div className="flex flex-col items-center font-mono gap-2 text-gray-600 pl-4">
                                 <div> Area Served </div>
                                 {fcuList[condenserIndex].map((_fcu, fcuIndex) => (
                                     <div key={fcuIndex}><Input placeholder="Enter Area Served" className="text-center w-24" /> </div>
                                 ))}
                             </div>
-                            <div className="flex flex-col items-center font-mono gap-1 text-gray-600 pl-4">
+                            <div className="flex flex-col items-center font-mono gap-2 text-gray-600 pl-4">
                                 <div> Area m<sup>2</sup></div>
                                 {fcuList[condenserIndex].map((_fcu, fcuIndex) => (
                                     <div key={fcuIndex}><Input placeholder="Enter Area" className="text-center w-24" type="number" onChange={(e) => handleArea(condenserIndex, fcuIndex, parseFloat(e.target.value))} /> </div>
                                 ))}
                             </div>
-                            <div className="flex flex-col items-center font-mono gap-1 text-gray-600 pl-4">
+                            <div className="flex flex-col items-center font-mono gap-2 text-gray-600 pl-4">
                                 <div> Height m</div>
                                 {fcuList[condenserIndex].map((_fcu, fcuIndex) => (
                                     <div key={fcuIndex}><Input placeholder="Enter height" className="text-center w-24" type="number" onChange={(e) => handleHeight(condenserIndex, fcuIndex, parseFloat(e.target.value))} /> </div>
                                 ))}
                             </div>
-                            <div className="flex flex-col items-center  font-mono gap-2 text-gray-600 pl-4">
+                            <div className="flex flex-col items-center font-mono gap-[15.5px] text-gray-600 pl-4">
                                 <div>Volume m<sup>3</sup></div>
                                 {fcuList[condenserIndex].map((_fcu, fcuIndex) => (
                                     <div key={fcuIndex} className="text-base text-gray-400">
@@ -146,8 +137,8 @@ const RefrigerantForm: React.FC<RefrigerantFormProps> = ({
                                 ))}
                             </div>
 
-                            <div className="flex flex-col items-center font-mono gap-2 text-gray-600 pl-4">
-                                <div className="w-40 text-center"> Maximum charge limit for room(kg)</div>
+                            <div className="flex flex-col items-center font-mono gap-[15.5px] text-gray-600 pl-4">
+                                <div className="w-40 text-center"> Max charge limit(kg)</div>
                                 {fcuList[condenserIndex].map((_fcu, fcuIndex) => (
                                     <div key={fcuIndex} className="text-base text-gray-400">
                                         {chargeLimits[condenserIndex] && chargeLimits[condenserIndex][fcuIndex] !== undefined ?
@@ -156,7 +147,7 @@ const RefrigerantForm: React.FC<RefrigerantFormProps> = ({
                                     </div>
                                 ))}
                             </div>
-                            <div className="flex flex-col items-center font-mono gap-2 text-gray-600 pl-4">
+                            <div className="flex flex-col items-center font-mono gap-[15.5px] text-gray-600 pl-4">
                                 <div> Remarks</div>
                                 {fcuList[condenserIndex].map((_fcu, fcuIndex) => (
                                     <div key={fcuIndex} className="text-base text-gray-400">{remark[condenserIndex] && remark[condenserIndex][fcuIndex] !== undefined ?
@@ -184,9 +175,6 @@ const RefrigerantForm: React.FC<RefrigerantFormProps> = ({
                                         <InfoCircleOutlined />
                                     </span>
                                 </Tooltip></div>
-                                {/* {fcuList[condenserIndex].map((_fcu, fcuIndex) => (
-                                    <div key={fcuIndex} className="text-base text-gray-400">Result</div>
-                                ))} */}
                             </div>
                         </div>
                     ))}
