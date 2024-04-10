@@ -1,6 +1,5 @@
 import { Input, Tooltip } from "antd";
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
-import { useState } from "react";
 import { InfoCircleOutlined } from "@ant-design/icons";
 
 interface RefrigerantFormProps {
@@ -20,7 +19,10 @@ interface RefrigerantFormProps {
     selectRefrigerantTypes: string[];
     handleRefrigerantType: (event: any, condenserIndex: number) => void;
     chargeLimits: (number | undefined)[][];
-    remark: string[][]
+    remark: string[][];
+    handleMouseOver: (condenserIndex: number) => void
+    handleMouseOut: (condenserIndex: number) => void
+    condenserHoverStates: boolean[]
 }
 
 const RefrigerantForm: React.FC<RefrigerantFormProps> = ({
@@ -40,18 +42,21 @@ const RefrigerantForm: React.FC<RefrigerantFormProps> = ({
     selectRefrigerantTypes,
     handleRefrigerantType,
     chargeLimits,
-    remark
+    remark,
+    handleMouseOut,
+    handleMouseOver,
+    condenserHoverStates
 
 }) => {
-    const [isHovered, setIsHovered] = useState(false);
+    // const [isHovered, setIsHovered] = useState(false);
 
-    const handleMouseOver = () => {
-        setIsHovered(true);
-    };
+    // const handleMouseOver = () => {
+    //     setIsHovered(true);
+    // };
 
-    const handleMouseOut = () => {
-        setIsHovered(false);
-    };
+    // const handleMouseOut = () => {
+    //     setIsHovered(false);
+    // };
     return (
         <div className="lg:pt-12 sm:pt-6">
             <div className="font-mono text-3xl text-gray-500 text-center">
@@ -163,17 +168,17 @@ const RefrigerantForm: React.FC<RefrigerantFormProps> = ({
                                 <div> <Tooltip
                                     title="Additional information"
                                     overlay={
-                                        isHovered
+                                        condenserHoverStates
                                             ? `Conditions: Space combined with 15mm UC and High Level Transfer Grille.
                                             High Level and Low Level Grille provided in the door towards walkway`
                                             : ""
                                     }
-                                    visible={isHovered}
+                                    open={condenserHoverStates[condenserIndex]}
                                     placement="top"
                                 >
                                     <span
-                                        onMouseEnter={handleMouseOver}
-                                        onMouseLeave={handleMouseOut}
+                                        onMouseEnter={() => handleMouseOver(condenserIndex)}
+                                        onMouseLeave={() => handleMouseOut(condenserIndex)}
                                         style={{ marginLeft: "4px", cursor: "pointer" }}
                                     >
                                         <InfoCircleOutlined />
