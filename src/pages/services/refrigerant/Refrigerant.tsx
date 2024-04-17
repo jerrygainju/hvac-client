@@ -4,7 +4,7 @@ import RefrigerantProp from "./components/RefrigerantProps"
 
 const Refrigerant = () => {
     return (
-        <div className="flex flex-col min-h-screen">
+        <div className="flex flex-col min-h-screen w-screen">
             <Navigation />
             <div className="flex-grow">
                 <RefrigerantProp />

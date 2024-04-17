@@ -59,7 +59,7 @@ const Signup: React.FC = () => {
 
 
   return (
-    <div>
+    <div className='w-screen'>
       <Navigation />
       <form className="mt-8 space-y-6">
         <Header
@@ -73,14 +73,14 @@ const Signup: React.FC = () => {
             type="text"
             value={username}
             placeholder="Username"
-            className={`${fixedInputStyles}`}
+            className={`${fixedInputStyles} max-w-[300px]`}
             prefix={<UserOutlined style={iconColorStyle} />}
             onChange={(e) => setUsername(e.target.value)}
           />
           <Input
             type="email"
             placeholder="Email Address"
-            className={`${fixedInputStyles}`}
+            className={`${fixedInputStyles} max-w-[300px]`}
             value={email}
             prefix={<MailOutlined style={iconColorStyle} />}
             onChange={(e) => setEmail(e.target.value)}
@@ -88,7 +88,7 @@ const Signup: React.FC = () => {
           <Input.Password
             placeholder="Password"
             value={password}
-            className={`${fixedInputStyles}`}
+            className={`${fixedInputStyles} max-w-[300px]`}
             prefix={<LockOutlined style={iconColorStyle} />}
             iconRender={(visible) =>
               visible ? (
@@ -101,7 +101,7 @@ const Signup: React.FC = () => {
           />
           <Input.Password
             placeholder="Confirm Password"
-            className={`${fixedInputStyles}`}
+            className={`${fixedInputStyles} max-w-[300px]`}
             prefix={<LockOutlined style={iconColorStyle} />}
             value={confirmPassword}
             iconRender={(visible) =>

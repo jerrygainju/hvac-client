@@ -10,7 +10,8 @@ export default {
 ],
 darkMode: "class",
   theme: {
-    extend: {},
+    extend: {
+    },
   },
   plugins: [addVariablesForColors],
   

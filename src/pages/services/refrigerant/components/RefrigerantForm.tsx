@@ -53,18 +53,18 @@ const RefrigerantForm: React.FC<RefrigerantFormProps> = ({
         setIsHovered(false);
     };
     return (
-        <div className="lg:pt-12 sm:pt-6">
+        <div className="lg:pt-12 pt-6 sm:pt-6">
             <div className="font-mono text-3xl text-gray-500 text-center">
                 Refrigerant Charge Calculation
             </div>
-            <div className="flex flex-col gap-2 px-12 pt-12">
+            <div className="flex flex-col gap-2 items-center px-12 pt-12">
                 <Input placeholder="Enter Project Name" className="w-40" id="prj1" />
                 <button onClick={onAddCondenser} className="text-sm border rounded p-2 bg-gray-500 text-white hover:bg-gray-700 focus:outline-none focus:shadow-outline-blue active:bg-gray-800 w-40">Add Condenser</button>
             </div>
             <div className="flex flex-row gap-2 px-12 pt-6">
                 <div className="flex flex-col items-center">
                     {condenserList.map((_, condenserIndex) => (
-                        <div className="flex flex-row pt-6 text-sm" key={condenserIndex}>
+                        <div className="lg:flex flex-row pt-6 text-sm" key={condenserIndex}>
                             <div className="flex flex-col items-center font-mono text-gray-600">
                                 <div>Condenser {condenserIndex + 1}</div>
                                 <div className="flex flex-row gap-1">
