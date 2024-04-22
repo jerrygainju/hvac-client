@@ -9,7 +9,7 @@ import  SignInPage  from './pages/user/SignIn';
 import Car from './pages/services/carparkventilation/Car';
 import Duct from './pages/services/ductsize/duct';
 import Home from './pages/homepage/home/home'
-import About from "./pages/about/About";
+import About from "./pages/about/components/About";
 import ContactUs from "./pages/contact-us/ContactUs";
 import Refrigerant from "./pages/services/refrigerant/Refrigerant";
 function App() {
