@@ -30,8 +30,8 @@ const About = () => {
       </div>
       {/**First component */}
       <div className="pt-16 md:pt-20">
-        <div className="md:flex justify-center  xl:gap-5 lg:p-7 2xl:w-7/12 lg:w-full md:w-full mx-auto border bg-gray-100 shadow-xl rounded-lg">
-          <div className="p-5 md:p-0 md:w-1/2">
+        <div className="md:flex justify-center  xl:gap-5 lg:p-7 2xl:w-7/12 lg:w-full md:w-full mx-auto border bg-gray-200 shadow-xl rounded-lg">
+          <div className="p-5 md:p-0 md:w-1/2 md:pb-5">
             <h2 className="text-gray-400 lg:text-xl font-medium pb-8">
               Welcome to HVAC Design
             </h2>
@@ -54,7 +54,7 @@ const About = () => {
                 eius neque illum asperiores unde odit.
               </p>
             </div>
-            <div className="border-2 border-yellow-500 rounded-full md:w-2/5 w-1/2 ">
+            <div className="border-2 border-yellow-500 rounded-full md:w-2/5 w-1/2">
               <button className="flex items-center font-medium mx-auto md:p-3 p-2 text-yellow-500">
                 Learn More
               </button>
@@ -71,7 +71,7 @@ const About = () => {
       </div>
       {/**----------video-playback-----progress-bar----*/}
       <div className="my-10">
-      <div className="flex lg:justify-center md:justify-evenly md:gap-4 lg:gap-7 py-16 border shadow-2xl">
+      <div className="flex lg:justify-center md:justify-evenly md:gap-4 lg:gap-7 py-16 border bg-gray-200 shadow-2xl">
         <div className="hidden md:block ">
           <ModalVideo />
         </div>
@@ -118,7 +118,7 @@ const About = () => {
       </div>
       </div>
       {/**card-components */}
-      <div className="flex flex-col justify-center 2xl:w-3/5 mx-auto gap-16 lg:p-9 p-6 bg-gray-100 border shadow-2xl rounded-lg">
+      <div className="flex flex-col justify-center 2xl:w-3/5 mx-auto gap-16 lg:p-9 p-6 bg-gray-200 border shadow-2xl rounded-lg">
         <div className="md:flex justify-between xl:gap-0 md:gap-20 lg:gap-0">
           <div className="flex flex-col justify-center gap-5 ">
             <h2 className="uppercase text-gray-600 text-lg font-medium">Our Company</h2>
