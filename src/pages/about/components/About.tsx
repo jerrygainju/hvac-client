@@ -30,7 +30,7 @@ const About = () => {
       </div>
       {/**First component */}
       <div className="pt-16 md:pt-20">
-        <div className="md:flex justify-center  xl:gap-5 lg:p-7 2xl:w-7/12 lg:w-full md:w-full mx-auto border bg-gray-200 shadow-xl rounded-lg">
+        <div className="md:flex justify-center  xl:gap-5 lg:p-7 2xl:w-7/12 lg:w-full md:w-full mx-auto border bg-gray-200 shadow-xl rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300">
           <div className="p-5 md:p-0 md:w-1/2 md:pb-5">
             <h2 className="text-gray-400 lg:text-xl font-medium pb-8">
               Welcome to HVAC Design
@@ -141,14 +141,14 @@ const About = () => {
         <div className="lg:flex justify-center md:gap-10 lg:gap-2 xl:gap-6">
           {cards.map((card) => (
             <div className="pb-6">
-              <div className="flex justify-center p-5 md:gap-5 lg:gap-0 border rounded-lg">
+              <div className="flex justify-center p-5 lg:p-3 md:gap-5 lg:gap-0 border border-blue-300 shadow-lg rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 xl:hover:scale-110 hover:scale-100 duration-300">
               <div className="p-2 lg:p-3 -my-1 object-contain h-28 w-44 md:h-10 md:w-20 lg:w-32">
                 <img
                   src={card.icon}
                   alt="card-icon"
                 />
               </div>
-              <div className="flex flex-col justify-center gap-4 ">
+              <div className="flex flex-col justify-center gap-4">
                 <h1 className="md:text-3xl text-xl font-medium ">{card.title}</h1>
                 <p className="text-gray-600 text-justified md:text-xl w-11/12">
                   {card.desc}
@@ -172,8 +172,8 @@ const About = () => {
   "
           style={{ backgroundImage: `url(${newBg})`, opacity: "0.9" }}
         >
-          <div className="flex flex-col justify-center gap-8 text-center relative text-white pt-40">
-            <h1 className="lg:text-5xl text-2xl">Call us and get it done</h1>
+          <div className="flex flex-col justify-center gap-8 text-center relative text-white sm:py-20 md:py-40 lg:py-32 py-20">
+            <h1 className="xl:text-5xl text-2xl">Call us and get it done</h1>
             <p className="lg:text-2xl w-4/5 mx-auto">
               Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dicta,
               earum saepe sapiente rerum et modi. Nobis ut deserunt tempore
