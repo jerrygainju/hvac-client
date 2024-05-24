@@ -76,11 +76,11 @@ const RefrigerantForm: React.FC<RefrigerantFormProps> = ({
                                 <div> Refrigerant Type </div>
                                 <div>
                                     <select
-                                        className="text-center w-32 py-2 border border-gray rounded-lg"
+                                        className="text-center w-32 py-2 border rounded-lg"
                                         value={selectRefrigerantTypes[condenserIndex]}
                                         onChange={(e) => handleRefrigerantType(e, condenserIndex)}
                                     >
-                                        <option value="">Type</option>
+                                        <option className="text-gray-200">Type</option>
                                         {refrigerantOptions.map((option) => (
                                             <option key={option.value} value={option.value}>{option.label}</option>
                                         ))}
