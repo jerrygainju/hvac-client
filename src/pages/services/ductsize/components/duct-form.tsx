@@ -66,13 +66,13 @@ const DuctForm: React.FC<DuctFormProps> = ({
     <div className="flex justify-center">
       <div className="flex flex-col items-center">
         <Layout>
-          <div className="flex pt-10 justify-center text-3xl font-bold mb-4 font-serif text-gray-600">
+          <div className="flex pt-10 justify-center lg:text-3xl text-2xl font-bold mb-4 font-serif text-gray-600">
             Duct Size Calculation
           </div>
           <div className="flex justify-center">
-            <div className="bg-gray-200 xl:h-max w-full lg:w-[35%] lg:h-auto pb-6 rounded shadow-2xl">
-              <div className="flex flex-row flex-wrap gap-4 pt-4 pl-6">
-                <div className="w-full sm:w-1/2 lg:w-1/3 text-gray-600">
+            <div className="bg-gray-200 xl:h-max w-full lg:w-[50%] lg:h-auto pb-6 rounded shadow-2xl">
+              <div className="flex flex-row flex-wrap xl:gap-20 gap-4 pt-4 pl-6">
+                <div className="w-full sm:w-1/2 xl:w-1/2 text-gray-600">
                   <b>Units</b>
                   <SelectInput
                     options={ductOptions}

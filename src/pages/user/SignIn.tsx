@@ -53,20 +53,20 @@ const Signin = () => {
   };
 
   return (
-    <div>
+    <div className='w-screen'>
       <Navigation />
       <form className="mt-8 space-y-6">
         <Header
-          heading="Signin to your account"
+          heading="Sign in to your account"
           paragraph="Don't have an account yet? "
           linkName="Signup"
           linkUrl="/signup"
         />
-        <div className='flex flex-col items-center'>
+        <div className='flex flex-col items-center w-screen'>
           <Input
             type="email"
             placeholder="Email Address"
-            className={`${fixedInputStyles}`}
+            className={`${fixedInputStyles} max-w-[300px]`}
             value={email}
             prefix={<MailOutlined style={iconColorStyle} />}
             onChange={(e) => setEmail(e.target.value)}
@@ -75,7 +75,7 @@ const Signin = () => {
             placeholder="Password"
             value={password}
             prefix={<LockOutlined style={iconColorStyle} />}
-            className={`${fixedInputStyles}`}
+            className={`${fixedInputStyles} max-w-[300px]`}
             iconRender={(visible) =>
               visible ? (
                 <EyeOutlined onClick={toggleShowPassword} />

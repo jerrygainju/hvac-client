@@ -19,8 +19,7 @@ const MapComponent = () => {
           map.remove();
         };
       }, []);
-
-  return <div id="map" style={{ height: '450px', width:'400px', borderRadius: '12px', border: '1px solid #ddd', }} />;
+  return <div id="map" className='md:mx-auto mx-auto lg:mx-auto md:my-10 my-10 lg:my-0' style={{ minHeight: '350px',maxHeight:"450px",maxWidth:"300px", minWidth:'250px', borderRadius: '12px', border: '1px solid #ddd', }} />;
 };
 
 export default MapComponent;

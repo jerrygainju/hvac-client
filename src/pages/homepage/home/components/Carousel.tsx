@@ -31,7 +31,7 @@ export const Carousel = () => {
             {slides.map((slide, index) => (
                 <div
                     key={index}
-                    className={`w-[1450px] h-[450px] rounded-2xl shadow-2xl bg-center bg-cover absolute ${currentIndex === index ? 'opacity-100' : 'opacity-0'} `}
+                    className={`w-screen h-[450px] rounded-2xl shadow-2xl bg-center bg-cover absolute ${currentIndex === index ? 'opacity-100' : 'opacity-0'} `}
                     style={{ backgroundImage: `url(${slide.url})` }}
                 >
                     <div className={`text-gray-600 text-4xl font-mono flex items-center justify-center pt-52 ${currentIndex === index ? 'slide-from-top' : ''}`}>

@@ -11,7 +11,7 @@ import NewFooter from '../footer/Footer';
 
 const Home = () => {
     return (
-        <div>
+        <div className='w-screen'>
             <Navigation />
             <Carousel />
             <HomeCard />
