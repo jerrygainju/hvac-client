@@ -5,6 +5,9 @@ import User from '../../../public/user.jpg';
 import Construct from '../../../public/const.jpg';
 import Call from '../../../public/call.jpg';
 import Company from '../../../public/company.jpg';
+import icon1 from '../../../public/icon1.png';
+import icon2 from '../../../public/icon2.png';
+import icon3 from '../../../public/icon3.png';
 
 export const slides = [
     {
@@ -54,4 +57,37 @@ export const  experience = [
         subTitle: 'Company Experience',
         description: ' With a wealth of expertise in HVAC calculation, our company excels in crafting tailored heating, ventilation, and air conditioning solutions. Adhering to industry standards and regulations, we meticulously calculate heating and cooling loads, optimize duct sizing, and analyze airflow for superior system performance. Our proficiency spans diverse sectors, from residential to commercial and industrial projects, ensuring customized solutions to meet every need. Leveraging innovative technologies and methodologies, we deliver energy-efficient HVAC designs.'
     }
+]
+
+export const progress:any = [
+    {
+        title: "Architecture",
+        completion: "80%",
+    },
+    {
+        title: "Building",
+        completion: "70%",
+    },
+    {
+        title: "Construction",
+        completion: "90%",
+    },
+]
+
+export const cards = [
+    {
+        title: "Construction Management",
+        desc: "This area delivers the control you want over all critical aspects of your project",
+        icon: icon1,
+    },
+    {
+        title: "Owner's Representation",
+        desc: "A good owner's rep saves their client time, money and a lot of headaches.",
+        icon: icon2,
+    },
+    {
+        title: "General Contractor",
+        desc: "Clients hire SG Design Group because we deliver great value, without question.",
+        icon: icon3,
+    },
 ]
