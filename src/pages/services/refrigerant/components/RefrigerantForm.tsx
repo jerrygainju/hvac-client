@@ -1,6 +1,6 @@
-import { Input, Tooltip } from "antd";
-import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
-import { InfoCircleOutlined } from "@ant-design/icons";
+import React from 'react';
+import { Input, Tooltip } from 'antd';
+import { DeleteOutlined, PlusOutlined, InfoCircleOutlined } from '@ant-design/icons';
 
 interface RefrigerantFormProps {
     onAddFcu: (condenserIndex: number) => void;
@@ -15,14 +15,14 @@ interface RefrigerantFormProps {
     totalVolumes: number[][];
     handleArea: (condenserIndex: number, fcuIndex: number, value: number) => void;
     handleHeight: (condenserIndex: number, fcuIndex: number, value: number) => void;
-    refrigerantOptions: any[];
+    refrigerantOptions: { value: string, label: string }[];
     selectRefrigerantTypes: string[];
-    handleRefrigerantType: (event: any, condenserIndex: number) => void;
+    handleRefrigerantType: (event: React.ChangeEvent<HTMLSelectElement>, condenserIndex: number) => void;
     chargeLimits: (number | undefined)[][];
     remark: string[][];
-    handleMouseOver: (condenserIndex: number) => void
-    handleMouseOut: (condenserIndex: number) => void
-    condenserHoverStates: boolean[]
+    handleMouseOver: (condenserIndex: number) => void;
+    handleMouseOut: (condenserIndex: number) => void;
+    condenserHoverStates: boolean[];
 }
 
 const RefrigerantForm: React.FC<RefrigerantFormProps> = ({
@@ -46,14 +46,13 @@ const RefrigerantForm: React.FC<RefrigerantFormProps> = ({
     handleMouseOut,
     handleMouseOver,
     condenserHoverStates
-
 }) => {
     return (
         <div className="lg:pt-12 pt-6 sm:pt-6">
             <div className="font-mono text-3xl text-gray-500 text-center">
                 Refrigerant Charge Calculation
             </div>
-            <div className="flex flex-col gap-2 items-center px-12 pt-12">
+            <div className="flex flex-col gap-2 px-12 pt-12">
                 <Input placeholder="Enter Project Name" className="w-40" id="prj1" />
                 <button onClick={onAddCondenser} className="text-sm border rounded p-2 bg-gray-500 text-white hover:bg-gray-700 focus:outline-none focus:shadow-outline-blue active:bg-gray-800 w-40">Add Condenser</button>
             </div>
@@ -65,7 +64,7 @@ const RefrigerantForm: React.FC<RefrigerantFormProps> = ({
                                 <div>Condenser {condenserIndex + 1}</div>
                                 <div className="flex flex-row gap-1">
                                     {condenserIndex !== 0 && (
-                                        <button onClick={() => onDeleteCondenser(condenserIndex)}>
+                                        <button onClick={() => {onDeleteCondenser(condenserIndex); console.log('Deleted Condenser: ',condenserIndex)}}>
                                             <DeleteOutlined className="text-red-500 hover:text-red-700" />
                                         </button>
                                     )}

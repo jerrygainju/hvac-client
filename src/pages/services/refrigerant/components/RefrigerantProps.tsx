@@ -59,8 +59,10 @@ const handleMouseOut = (condenserIndex: number) => {
     };
     
     const handleDeleteCondenser = (condenserIndex: number) => {
+        console.log('Deleting condeser at index: ',condenserIndex);
         setCondenserList(prevList => prevList.filter((_, index) => index !== condenserIndex));
         setFcuList(prevList => prevList.filter((_, index) => index !== condenserIndex));
+        console.log('FcuList deleted at index: ',condenserIndex,fcuList);
         setAdditionalRefrigerantCharges(prevCharges => prevCharges.filter((_, index) => index !== condenserIndex));
         setPrechargedRefrigerantCharges(prevCharges => prevCharges.filter((_, index) => index !== condenserIndex));
         setTotalRefrigerantCharges(prevCharges => prevCharges.filter((_, index) => index !== condenserIndex));
@@ -110,11 +112,13 @@ const handleMouseOut = (condenserIndex: number) => {
         setFcuList(prevList => {
             const newList = [...prevList];
             newList[condenserIndex] = prevList[condenserIndex].filter((_, index) => index !== fcuIndex);
+            console.log("Deleted Fcu Unit: ",fcuIndex);
             return newList;
         });
         setAreas(prevAreas => {
             const newAreas = [...prevAreas];
             newAreas[condenserIndex] = prevAreas[condenserIndex].filter((_, index) => index !== fcuIndex);
+            console.log("Deleted areas : ",fcuIndex);
             return newAreas;
         });
         setHeights(prevHeights => {

@@ -17,6 +17,7 @@ import {
   WalletOutlined,
   MenuOutlined,
   CloseOutlined,
+  HighlightOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Menu } from "antd";
@@ -51,6 +52,11 @@ const items: MenuProps["items"] = [
         key: "refrigerant",
         icon: <WalletOutlined />,
       },
+      {
+        label: "Pipe Sizer",
+        key: "pipesizer",
+        icon:<HighlightOutlined />,
+      }
     ],
   },
   {
@@ -103,6 +109,9 @@ const Navigation: React.FC = () => {
     }
     if (e.key === "refrigerant") {
       navigate("/refrigerant-charge-calculation");
+    }
+    if (e.key === "pipesizer"){
+      navigate("/pipe-size-calculation");
     }
     if (e.key === "aboutus") {
       navigate("/about-us");
