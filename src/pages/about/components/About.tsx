@@ -118,7 +118,7 @@ const About = () => {
       </div>
       </div>
       {/**card-components */}
-      <div className="flex flex-col justify-center 2xl:w-3/5 mx-auto gap-16 lg:p-9 p-6 bg-gray-200 border shadow-2xl rounded-lg">
+      <div className="flex flex-col justify-center 2xl:w-4/5 mx-auto gap-16 lg:p-9 p-6 bg-gray-200 border shadow-2xl rounded-lg">
         <div className="md:flex justify-between xl:gap-0 md:gap-20 lg:gap-0">
           <div className="flex flex-col justify-center gap-5 ">
             <h2 className="uppercase text-gray-600 text-lg font-medium">Our Company</h2>
@@ -141,7 +141,7 @@ const About = () => {
         <div className="lg:flex justify-center md:gap-10 lg:gap-2 xl:gap-6">
           {cards.map((card) => (
             <div className="pb-6">
-              <div className="flex justify-center p-5 lg:p-3 md:gap-5 lg:gap-0 border border-blue-300 shadow-lg rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 xl:hover:scale-110 hover:scale-100 duration-300">
+              <div className="flex justify-center p-5 lg:p-3 md:gap-5 lg:gap-0 xl:gap-4 border border-blue-300 shadow-lg rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 xl:hover:scale-110 hover:scale-100 duration-300">
               <div className="p-2 lg:p-3 -my-1 object-contain h-28 w-44 md:h-10 md:w-20 lg:w-32">
                 <img
                   src={card.icon}

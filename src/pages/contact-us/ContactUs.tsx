@@ -74,7 +74,7 @@ const ContactUs = () => {
             </div>
           </form>
         </div>
-        <div className="shadow-2xl overflow-none">
+        <div className="shadow-2xl overflow-hidden">
           <MapComponent />
         </div>
         <div className="flex flex-col lg:mx-10 mx-auto border rounded-xl px-12 pt-12 shadow-2xl gap-10 bg-gray-200 text-gray-600 lg:w-96 md:w-96 card">
