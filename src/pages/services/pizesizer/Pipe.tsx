@@ -20,6 +20,7 @@ const Pipe = () => {
     { value: number; label: string }[]
   >([]);
   const [isHovered, setIsHovered] = useState(false);
+  console.log(material, '');
 const handleMouseOver = () => {
   setIsHovered(true);
 };
