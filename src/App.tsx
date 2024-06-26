@@ -12,7 +12,7 @@ import Home from './pages/homepage/home/home'
 import About from "./pages/about/components/About";
 import ContactUs from "./pages/contact-us/ContactUs";
 import Refrigerant from "./pages/services/refrigerant/Refrigerant";
-import Pipe from "./pages/services/pipesizer/Pipe";
+import Pipe from "./pages/services/pizesizer/Pipe";
 function App() {
   return (
 

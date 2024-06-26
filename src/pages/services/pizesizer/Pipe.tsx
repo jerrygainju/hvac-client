@@ -1,8 +1,58 @@
 import { Select } from "antd";
 import Navigation from "../../homepage/navigation/navigation";
 import NewFooter from "../../homepage/footer/Footer";
+import { useState } from "react";
+import {
+  copperValues,
+  pvcValues,
+  lightSteelValues,
+  mediumSteelValues,
+  swsValues,
+  materials,
+  heavySteelValues,
+} from "./pipeData";
+import { InfoCircleOutlined } from "@ant-design/icons";
+import { Tooltip } from "antd";
 
 const Pipe = () => {
+  const [material, setMaterial] = useState<string>("");
+  const [diameterOptions, setDiameterOptions] = useState<
+    { value: number; label: string }[]
+  >([]);
+  const [isHovered, setIsHovered] = useState(false);
+const handleMouseOver = () => {
+  setIsHovered(true);
+};
+
+const handleMouseOut = () => {
+  setIsHovered(false);
+};
+  const handleMaterialChange = (value: string) => {
+    setMaterial(value);
+    switch (value) {
+      case "Copper":
+        setDiameterOptions(copperValues);
+        break;
+      case "PVC":
+        setDiameterOptions(pvcValues);
+        break;
+      case "LightSteel":
+        setDiameterOptions(lightSteelValues);
+        break;
+      case "MediumSteel":
+        setDiameterOptions(mediumSteelValues);
+        break;
+      case "HeavySteel":
+        setDiameterOptions(heavySteelValues);
+        break;
+      case "SWS":
+        setDiameterOptions(swsValues);
+        break;
+      default:
+        setDiameterOptions([]);
+    }
+  };
+
   return (
     <div className="w-screen">
       <Navigation />
@@ -14,7 +64,7 @@ const Pipe = () => {
           <div className="flex justify-center items-center my-4">
             <div className="bg-gray-200 p-8 rounded shadow-2xl">
               <div className="border-b border-black">
-                <div className="flex gap-32 my-4">
+                <div className="flex md:flex-row flex-col md:gap-32 gap-4 my-4">
                   <div className="text-gray-600 w-1/5 p-1">
                     <b>Unit</b>
                     <Select
@@ -29,23 +79,21 @@ const Pipe = () => {
                   <div className="text-gray-600 w-1/5">
                     <b>Material</b>
                     <Select
-                    className="w-36"
+                      className="w-48"
                       defaultValue={"Select material"}
-                      options={[
-                        { value: "Copper", label: "Copper" },
-                        { value: "Steel", label: "Steel" },
-                      ]}
+                      options={materials}
+                      onChange={(value) => handleMaterialChange(value)}
                     />
                   </div>
                 </div>
               </div>
               <div className="border-b border-black">
                 <h1 className="font-bold text-gray-600 my-4">NCC Parameters</h1>
-                <div className="grid grid-cols-2 gap-4 my-6">
+                <div className="grid md:grid-cols-2 gap-4 my-6">
                   <div className="text-gray-600 flex items-center gap-2">
                     <p className="font-semibold">System Type :</p>
                     <Select
-                    className="w-32"
+                      className="w-32"
                       defaultValue={"Select type"}
                       options={[
                         { value: "CHW", label: "CHW" },
@@ -69,8 +117,8 @@ const Pipe = () => {
                       ]}
                     />
                   </div>
-                  <div className="text-gray-600 flex items-center gap-2">
-                    <p className="w-30 font-semibold">Hours of Operation :</p>
+                  <div className="text-gray-600 flex items-center md:gap-2">
+                    <p className="md:w-30 w-24 font-semibold">Hours of Operation :</p>
                     <Select
                       defaultValue={"Select hours"}
                       className="w-36"
@@ -97,32 +145,38 @@ const Pipe = () => {
                 <div className="my-4">
                   <b className="text-gray-600">Input Parameters</b>
                 </div>
-                <div className="flex gap-12 my-6">
+                <div className="flex md:flex-row flex-col gap-12 my-6">
                   <div className="text-gray-600 flex items-center gap-1">
                     <p className="font-semibold">Water Flow Rate :</p>
-                    <input type="number" className="w-16 h-6" />{" "}
+                    <input type="number" className="w-16 h-6" />
                     <p className="text-gray-500">l/s</p>
                   </div>
                   <div className="text-gray-600 flex items-center gap-1">
                     <p className="w-full font-semibold">Pipe Diameter :</p>
+
                     <Select
                       defaultValue={"Select diameter"}
-                      className="36"
-                      options={[
-                        { value: 15, label: "15" },
-                        { value: 20, label: "20" },
-                        { value: 25, label: "25" },
-                        { value: 32, label: "32" },
-                        { value: 40, label: "40" },
-                        { value: 50, label: "50" },
-                        { value: 65, label: "65" },
-                        { value: 80, label: "80" },
-                        { value: 100, label: "100" },
-                        { value: 125, label: "125" },
-                        { value: 150, label: "150" },
-                        { value: 200, label: "200" },
-                      ]}
+                      className="w-36"
+                      options={diameterOptions}
                     />
+                    <Tooltip
+                    title="Additional information"
+                    overlay={
+                      isHovered
+                        ? `Select any material to view the diameters`
+                        : ""
+                    }
+                    visible={isHovered}
+                    placement="top"
+                  >
+                    <span
+                      onMouseEnter={handleMouseOver}
+                      onMouseLeave={handleMouseOut}
+                      style={{ marginLeft: "4px", cursor: "pointer" }}
+                    >
+                      <InfoCircleOutlined />
+                    </span>
+                  </Tooltip>
                   </div>
                 </div>
               </div>
