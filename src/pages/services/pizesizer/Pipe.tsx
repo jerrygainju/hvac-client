@@ -216,7 +216,7 @@ const Pipe = () => {
                     <p className="font-semibold">System Type :</p>
                     <Select
                       className="w-32"
-                      defaultValue={{ value: "", label: "Select type" }}
+                      defaultValue={{ value: 1, label: "Select type" }}
                       labelInValue
                       options={[
                         { value: 0.00131, label: "CHW" },
