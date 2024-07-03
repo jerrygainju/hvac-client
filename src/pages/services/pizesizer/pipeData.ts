@@ -100,6 +100,51 @@ export const swsValues = [
   { value: 590.9, label: "600" },
 ];
 
+export const sch40Values = [
+  { value: 15.8, label: "15" },
+  { value: 20.9, label: "20" },
+  { value: 26.6, label: "25" },
+  { value: 35.1, label: "32" },
+  { value: 40.9, label: "40" },
+  { value: 52.5, label: "50" },
+  { value: 62.7, label: "65" },
+  { value: 77.9, label: "80" },
+  { value: 90.1, label: "90" },
+  { value: 102.3, label: "100" },
+  { value: 128.2, label: "125" },
+  { value: 154.1, label: "150" },
+  { value: 202.7, label:"200"},
+  { value: 254.5, label:"250"},
+  { value: 303.2, label:"300"},
+  { value: 381.0, label:"400"},
+  { value: 428.7, label:"450"},
+  { value: 477.8, label:"500"},
+  { value: 574.6, label:"600"},
+];
+
+export const sch20Values = [
+  { value: 15.8, label: "15" },
+  { value: 20.9, label: "20" },
+  { value: 26.6, label: "25" },
+  { value: 35.1, label: "32" },
+  { value: 40.9, label: "40" },
+  { value: 52.5, label: "50" },
+  { value: 62.7, label: "65" },
+  { value: 77.9, label: "80" },
+  { value: 90.1, label: "90" },
+  { value: 102.3, label: "100" },
+  { value: 128.2, label: "125" },
+  { value: 154.1, label: "150" },
+  { value: 206.4, label:"200"},
+  { value: 260.3, label:"250"},
+  { value: 311.1, label:"300"},
+  { value: 390.6, label:"400"},
+  { value: 441.4, label:"450"},
+  { value: 489.0, label:"500"},
+  { value: 546.1, label:"550"},
+  { value: 590.6, label:"600"},
+];
+
 export const materials = [
   { value: "Copper", label: "Copper" },
   { value: "PVC", label: "PVC" },
@@ -107,4 +152,6 @@ export const materials = [
   { value: "MediumSteel", label: "Medium Steel" },
   { value: "HeavySteel", label: "Heavy Steel" },
   { value: "SWS", label: "Standard Weight Steel" },
+  { value: "Sch40", label:"Sch 40"},
+  { value: "Sch20", label: "Sch 20"},
 ];
