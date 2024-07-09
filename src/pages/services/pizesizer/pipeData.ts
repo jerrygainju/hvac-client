@@ -155,3 +155,19 @@ export const materials = [
   { value: "Sch40", label:"Sch 40"},
   { value: "Sch20", label: "Sch 20"},
 ];
+
+export const systemFlowType = [
+  { value: "Variable", label:"Variable"},
+  { value: "Constant", label:"Constant"}
+];
+
+export const dType = [
+  { value:"Distributive", label:"Distributive"},
+  { value:"Non-Distributive", label:"Non-Distributive"},
+];
+
+export const hoursOfOperation = [
+  {value :"<=2000", label: '<=2000hrs'},
+  {value :"2000-5000", label: '2000-5000hrs'},
+  {value :">5000", label: '>5000hrs'},
+]
