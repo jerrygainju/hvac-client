@@ -1,5 +1,8 @@
 import { Select, Tooltip } from "antd";
-import { InfoCircleOutlined } from "@ant-design/icons";
+import {
+  InfoCircleOutlined,
+  ExclamationCircleOutlined,
+} from "@ant-design/icons";
 import Navigation from "../../homepage/navigation/navigation";
 import NewFooter from "../../homepage/footer/Footer";
 import { useState, useEffect } from "react";
@@ -13,10 +16,14 @@ import {
   heavySteelValues,
   sch40Values,
   sch20Values,
+  dType,
+  hoursOfOperation,
+  systemFlowType,
 } from "./pipeData";
 
 const Pipe = () => {
   const [material, setMaterial] = useState<string>("");
+  const [unit, setUnit] = useState<string>("");
   const [diameterOptions, setDiameterOptions] = useState<
     { value: number; label: string }[]
   >([]);
@@ -26,7 +33,35 @@ const Pipe = () => {
   const [waterFlowRate, setWaterFlowRate] = useState<number | null>(null);
   const [pipeDiameter, setPipeDiameter] = useState<number | null>(null);
   const [velocity, setVelocity] = useState<number | null>(null);
-  const [pressureDropResult, setPressureDropResult] = useState<number | null>(null);
+  const [pressureDropResult, setPressureDropResult] = useState<number | null>(
+    null
+  );
+  const [flowType, setFlowType] = useState<string>("");
+  const [typeD, setTypeD] = useState<string>("");
+  const [hour, setHour] = useState<number | null>(null);
+  const [error, setError] = useState<boolean>(false);
+  const [velocityUnit, setVelocityUnit] = useState<string>("");
+
+  const selectFlowType = (value: string) => {
+    setFlowType(value === "Variable" ? "Variable" : "Constant");
+    console.log(flowType);
+  };
+
+  const selectHour = (value: string) => {
+    if (value === "<=2000") {
+      setHour(2000);
+    } else if (value === "2000-5000") {
+      setHour(3000);
+    } else {
+      setHour(5000);
+    }
+    console.log(hour);
+  };
+
+  const selectDType = (value: string) => {
+    setTypeD(value === "Distributive" ? "Distributive" : "Non-Distributive");
+    console.log(typeD);
+  };
 
   const handleMouseOver = () => {
     setIsHovered(true);
@@ -34,6 +69,17 @@ const Pipe = () => {
 
   const handleMouseOut = () => {
     setIsHovered(false);
+  };
+
+  const selectedUnit = (value: String) => {
+    //Change the unit for waterflow rate
+    if (value == "Imperial") {
+      setUnit("cfm");
+      setVelocityUnit("fpm");
+    } else {
+      setUnit("l/s");
+      setVelocityUnit("m/s");
+    }
   };
 
   const selectedMaterial = (value: string) => {
@@ -85,14 +131,6 @@ const Pipe = () => {
     }
   };
 
-  const calRaynouldsNumber = (velocity: number, diameter: number) => {
-    if (systemType === null) return null;
-    const materialFactor = getMaterialFactor(material);
-    const dh = diameter / 1000;
-    const reynoldsNum = (materialFactor * velocity * dh) / systemType;
-    return Number(reynoldsNum.toFixed(2));
-  };
-
   const getMaterialFactor = (material: string) => {
     switch (material) {
       case "Copper":
@@ -112,7 +150,7 @@ const Pipe = () => {
       case "Sch20":
         return 0.046;
       default:
-        return 1;
+        return 0;
     }
   };
 
@@ -125,40 +163,71 @@ const Pipe = () => {
       case "CHW":
         return 999.6;
       default:
-        return 1000;
+        return 0;
     }
   };
 
+  const calRaynouldsNumber = (velocity: number, diameter: number) => {
+    if (systemType === null) return null;
+    console.log(systemType)
+    const E = getMaterialFactor(material);
+    console.log(material);
+    console.log(E);
+    const dh = diameter / 1000;
+    console.log(dh)
+    console.log(velocity)
+    const reynoldsNum = (E * velocity * dh) / systemType;
+    console.log(reynoldsNum)
+    return Number(reynoldsNum.toFixed(2));
+  };
+
   const calculateF = (diameter: number) => {
-    const materialFactor = getMaterialFactor(material);
+    const E = getMaterialFactor(material);
+    console.log(E);
     const Dh = diameter / 1000;
+    console.log(Dh);
     if (velocity === null) return null;
     const Re = calRaynouldsNumber(velocity, diameter);
+    console.log(velocity);
+    console.log(Re);
     if (Re === null) return null;
     let f = 0.02;
     const tolerance = 1e-6;
     let iterations = 0;
     while (iterations < 100) {
       const lhs = 1 / Math.sqrt(f);
-      const rhs =
-        1.74 -
-        2 * Math.log10((2 * materialFactor) / Dh + 18.7 / (Re * Math.sqrt(f)));
+      const rhs = Math.abs(
+        1.74 - 2 * Math.log10((2 * E) / Dh + 18.7 / (Re * Math.sqrt(f)))
+      );
+      console.log(lhs);
+      console.log(rhs);
       const diff = lhs - rhs;
+      console.log(diff);
       if (Math.abs(diff) < tolerance) {
         break;
       }
       f = Math.pow(1 / rhs, 2);
       iterations++;
     }
+    console.log(f.toFixed(3));
     return Number(f.toFixed(5));
   };
 
-  const pressureDrop = (diameter: number, velocity: number, systemRho: string) => {
+  const pressureDrop = (
+    diameter: number,
+    velocity: number,
+    systemRho: string
+  ) => {
     const f = calculateF(diameter);
+    console.log(diameter);
     if (f === null) return null;
+    console.log(f);
     const dh = diameter / 1000;
+    console.log(dh);
     const Rho = getRho(systemRho);
-    const delP = (f / dh) * (Rho * velocity * velocity) / 2;
+    console.log(Rho);
+    const delP = ((f / dh) * (Rho * velocity * velocity)) / 2;
+    console.log(delP);
     return Number(delP.toFixed(2));
   };
 
@@ -170,10 +239,243 @@ const Pipe = () => {
     if (pipeDiameter !== null && velocity !== null) {
       const drop = pressureDrop(pipeDiameter, velocity, systemRho);
       setPressureDropResult(drop);
+
+      // Error conditions
+
+      /** Error condition for non-distributive constant speed */
+      // Case operating hours greater than 5000
+      if (
+        hour !== null &&
+        hour >= 5000 &&
+        flowType === "Constant" &&
+        typeD === "Non-Distributive" &&
+        pipeDiameter <= 40 &&
+        drop !== null &&
+        drop > 400
+      ) {
+        setError(true);
+      }
+      // Case operating hours <5000
+      else if (
+        hour !== null &&
+        hour < 5000 &&
+        flowType === "Constant" &&
+        typeD === "Non-Distributive" &&
+        pipeDiameter >= 20 &&
+        drop !== null &&
+        drop > 400
+      ) {
+        setError(true);
+      }
+      // Case operating hours more than 5000
+      else if (
+        hour !== null &&
+        hour >= 5000 &&
+        flowType === "Constant" &&
+        typeD === "Non-Distributive" &&
+        pipeDiameter >= 50 &&
+        pipeDiameter <= 80 &&
+        drop !== null &&
+        drop > 350
+      ) {
+        setError(true);
+      }
+      // Case operating hours greater than 5000
+      else if (
+        hour !== null &&
+        hour >= 5000 &&
+        flowType === "Constant" &&
+        typeD === "Non-Distributive" &&
+        pipeDiameter >= 100 &&
+        drop !== null &&
+        drop > 200
+      ) {
+        setError(true);
+      }
+      /** Non-distributive variable speed systems */
+      // for diameter ranging from 20-80
+      else if (
+        hour !== null &&
+        hour >= 5000 &&
+        flowType === "Variable" &&
+        typeD === "Non-Distributive" &&
+        pipeDiameter >= 20 &&
+        pipeDiameter <= 80 &&
+        drop !== null &&
+        drop > 400
+      ) {
+        setError(true);
+      }
+      //For diameter greater than 80
+      else if (
+        hour !== null &&
+        hour >= 5000 &&
+        flowType === "Variable" &&
+        typeD === "Non-Distributive" &&
+        pipeDiameter > 80 &&
+        drop !== null &&
+        drop > 300
+      ) {
+        setError(true);
+      }
+      // Operating hours less than 5000
+      else if (
+        hour !== null &&
+        hour < 5000 &&
+        flowType === "Variable" &&
+        typeD === "Non-Distributive" &&
+        pipeDiameter >= 20 &&
+        drop !== null &&
+        drop > 400
+      ) {
+        setError(true);
+      }
+      /** Distributive constant speed system */
+      // operation hours <= 2000
+      else if (
+        hour !== null &&
+        hour <= 2000 &&
+        flowType === "Constant" &&
+        typeD === "Distributive" &&
+        pipeDiameter >= 20 &&
+        drop !== null &&
+        drop > 400
+      ) {
+        setError(true);
+      }
+      // Operation hours ranging from 2000 - 5000
+      else if (
+        hour !== null &&
+        hour > 2000 &&
+        hour < 5000 &&
+        flowType === "Constant" &&
+        typeD === "Distributive" &&
+        pipeDiameter == 20 &&
+        drop !== null &&
+        drop > 300
+      ) {
+        setError(true);
+      }
+      // for diameter ranging from 25-50
+      else if (
+        hour !== null &&
+        hour > 2000 &&
+        hour < 5000 &&
+        flowType === "Constant" &&
+        typeD === "Distributive" &&
+        pipeDiameter > 20 &&
+        pipeDiameter <= 50 &&
+        drop !== null &&
+        drop > 220
+      ) {
+        setError(true);
+      }
+      // for diameter greater than 65
+      else if (
+        hour !== null &&
+        hour > 2000 &&
+        hour < 5000 &&
+        flowType === "Constant" &&
+        typeD === "Distributive" &&
+        pipeDiameter >= 65 &&
+        drop !== null &&
+        drop > 400
+      ) {
+        setError(true);
+      }
+      // for operating hours greater than 5000
+      else if (
+        hour !== null &&
+        hour >= 50000 &&
+        flowType === "Constant" &&
+        typeD === "Distributive" &&
+        pipeDiameter == 20 &&
+        drop !== null &&
+        drop > 150
+      ) {
+        setError(true);
+      }
+      // for diameter ranging from 25 - 50
+      else if (
+        hour !== null &&
+        hour >= 5000 &&
+        flowType === "Constant" &&
+        typeD === "Distributive" &&
+        pipeDiameter > 20 &&
+        pipeDiameter <= 50 &&
+        drop !== null &&
+        drop > 100
+      ) {
+        setError(true);
+      }
+      // for diameter greater than and equal to 65
+      else if (
+        hour !== null &&
+        hour >= 5000 &&
+        flowType === "Constant" &&
+        typeD === "Distributive" &&
+        pipeDiameter >= 65 &&
+        drop !== null &&
+        drop > 170
+      ) {
+        setError(true);
+      }
+      /** Distributive varaible speed systems */
+      // when diameter = 20
+      else if (
+        hour !== null &&
+        hour >= 5000 &&
+        flowType === "Variable" &&
+        typeD === "Distributive" &&
+        pipeDiameter <= 20 &&
+        drop !== null &&
+        drop > 250
+      ) {
+        setError(true);
+      }
+      // diameter ranging from 25 - 50
+      else if (
+        hour !== null &&
+        hour >= 5000 &&
+        flowType === "Variable" &&
+        typeD === "Distributive" &&
+        pipeDiameter > 20 &&
+        pipeDiameter <= 50 &&
+        drop !== null &&
+        drop > 180
+      ) {
+        setError(true);
+      }
+      // diameter greater than equal to 65
+      else if (
+        hour !== null &&
+        hour >= 5000 &&
+        flowType === "Variable" &&
+        typeD === "Distributive" &&
+        pipeDiameter >= 65 &&
+        drop !== null &&
+        drop > 300
+      ) {
+        setError(true);
+      }
+      // operating hours less than 5000
+      else if (
+        hour !== null &&
+        hour < 5000 &&
+        flowType === "Variable" &&
+        typeD === "Distributive" &&
+        pipeDiameter >= 65 &&
+        drop !== null &&
+        drop > 300
+      ) {
+        setError(true);
+      } else {
+        setError(false);
+      }
     } else {
       setPressureDropResult(null);
     }
-  }, [pipeDiameter, velocity, systemRho]);
+  }, [pipeDiameter, velocity, systemRho, hour, flowType, typeD, material]);
 
   return (
     <div className="w-screen">
@@ -194,8 +496,9 @@ const Pipe = () => {
                       defaultValue={"Select Unit"}
                       options={[
                         { value: "SI", label: "SI" },
-                        { value: "Metric", label: "Metric" },
+                        { value: "Imperial", label: "Imperial" },
                       ]}
+                      onChange={selectedUnit}
                     />
                   </div>
                   <div className="text-gray-600 w-1/5">
@@ -233,15 +536,10 @@ const Pipe = () => {
                   <div className="text-gray-600 flex items-center gap-3">
                     <p className="font-semibold">D/ND :</p>
                     <Select
-                      className="w-36"
+                      className="w-40"
                       defaultValue={"Select D/ND"}
-                      options={[
-                        { value: "Distributive", label: "Distributive" },
-                        {
-                          value: "Non-Distributive",
-                          label: "Non Distributive",
-                        },
-                      ]}
+                      options={dType}
+                      onChange={selectDType}
                     />
                   </div>
                   <div className="text-gray-600 flex items-center md:gap-2">
@@ -251,21 +549,16 @@ const Pipe = () => {
                     <Select
                       defaultValue={"Select hours"}
                       className="w-36"
-                      options={[
-                        { value: "<=2000", label: "<=2000 hrs" },
-                        { value: "2000-5000", label: "2000 - 5000 hrs" },
-                        { value: ">5000", label: ">5000 hrs" },
-                      ]}
+                      options={hoursOfOperation}
+                      onChange={selectHour}
                     />
                   </div>
                   <div className="text-gray-600 flex items-center gap-4">
                     <p className="font-semibold">Flow Type :</p>
                     <Select
                       defaultValue={"Select Flow Type"}
-                      options={[
-                        { value: "Variable", label: "Variable" },
-                        { value: "Constant", label: "Constant" },
-                      ]}
+                      options={systemFlowType}
+                      onChange={selectFlowType}
                     />
                   </div>
                 </div>
@@ -283,7 +576,7 @@ const Pipe = () => {
                       className="w-16 h-6"
                       onChange={(e) => setWaterFlowRate(Number(e.target.value))}
                     />
-                    <p className="text-gray-500">l/s</p>
+                    <p className="text-gray-500 w-6"> {unit}</p>
                   </div>
                   <div className="text-gray-600 flex items-center gap-1">
                     <p className="w-full font-semibold">Pipe Diameter :</p>
@@ -322,20 +615,34 @@ const Pipe = () => {
                     <p className="font-semibold">Pa/m :</p>
                     <input
                       type="text"
-                      className="w-24 rounded-sm"
-                      value={pressureDropResult !== null ? pressureDropResult.toFixed(2) : ""}
+                      className={`w-24  rounded-sm bg-gray-100 pl-4 ${
+                        error ? "bg-red-300 font-bold" : ""
+                      }`}
+                      value={
+                        pressureDropResult !== null
+                          ? pressureDropResult.toFixed(2)
+                          : ""
+                      }
                       readOnly
                     />
+                     {error && (
+                      <Tooltip
+                        title="Pa/m value is too high!"
+                        placement="right"
+                      >
+                        <ExclamationCircleOutlined style={{ color: "red", cursor:"pointer"}} />
+                      </Tooltip>
+                    )}
                   </div>
                   <div className="text-gray-600 flex gap-2">
                     <p className="font-semibold">Velocity :</p>
                     <input
                       type="text"
-                      className="w-24 rounded-sm"
+                      className="w-24 rounded-sm bg-gray-100 pl-4"
                       value={velocity !== null ? velocity.toFixed(2) : ""}
                       readOnly
                     />
-                    m/s
+                    {velocityUnit}
                   </div>
                 </div>
               </div>
