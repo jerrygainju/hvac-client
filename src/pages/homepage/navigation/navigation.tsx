@@ -18,6 +18,7 @@ import {
   MenuOutlined,
   CloseOutlined,
   HighlightOutlined,
+  CalculatorOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Menu } from "antd";
@@ -56,7 +57,12 @@ const items: MenuProps["items"] = [
         label: "Pipe Sizer",
         key: "pipesizer",
         icon:<HighlightOutlined />,
-      }
+      },
+      {
+        label: "Converter",
+        key: "converter",
+        icon:<CalculatorOutlined />,
+      },
     ],
   },
   {
@@ -112,6 +118,9 @@ const Navigation: React.FC = () => {
     }
     if (e.key === "pipesizer"){
       navigate("/pipe-size-calculation");
+    }
+    if(e.key === "converter"){
+      navigate("/converter");
     }
     if (e.key === "aboutus") {
       navigate("/about-us");

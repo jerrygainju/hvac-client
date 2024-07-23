@@ -13,6 +13,7 @@ import About from "./pages/about/components/About";
 import ContactUs from "./pages/contact-us/ContactUs";
 import Refrigerant from "./pages/services/refrigerant/Refrigerant";
 import Pipe from "./pages/services/pizesizer/Pipe";
+import Converter from "./pages/services/converter/Converter";
 function App() {
   return (
 
@@ -23,6 +24,7 @@ function App() {
             <Route path="/duct-size-calculation" element={<Duct />} />
             <Route path="/refrigerant-charge-calculation" element = {<Refrigerant/>} />
             <Route path="/pipe-size-calculation" element={<Pipe/>}/>
+            <Route path="/converter" element={<Converter/>}/>
             <Route path="/contact-us" element={<ContactUs/>} />
             <Route path="/about-us" element={<About/>} />
             <Route path="/signin" element={<SignInPage/>} />
