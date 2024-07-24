@@ -153,7 +153,7 @@ const Converter = () => {
             <div>
               <Select
                 className="w-32"
-                defaultValue={"Select Input"}
+                defaultValue={"Select Unit"}
                 onChange={handleUnitTypeChange}
                 options={[
                   { label: "Flow", value: "Flow" },
