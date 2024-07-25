@@ -4,8 +4,8 @@ import 'leaflet/dist/leaflet.css';
 
 const MapComponent = () => {
     useEffect(() => {
-        const latitude = 27.6792;
-        const longitude = 85.3464;
+        const latitude = 27.679164;
+        const longitude = 85.346262;
     
         const map = L.map('map').setView([latitude, longitude], 13);
     

@@ -74,10 +74,10 @@ const ContactUs = () => {
             </div>
           </form>
         </div>
-        <div className="shadow-2xl overflow-hidden">
+        <div className="lg:shadow-2xl overflow-hidden">
           <MapComponent />
         </div>
-        <div className="flex flex-col lg:mx-10 mx-auto border rounded-xl px-12 pt-12 shadow-2xl gap-10 bg-gray-200 text-gray-600 lg:w-96 md:w-96 card">
+        <div className="flex flex-col lg:mx-10 mx-auto border rounded-xl px-12 p-10 shadow-2xl gap-10 bg-gray-200 text-gray-600 lg:w-96 md:w-96 card">
           <div className="flex flex-col font-semibold text-2xl border rounded-xl p-2 bg-gray-50 text-center shadow-xl ">
             <div>
               <EnvironmentOutlined /> Location

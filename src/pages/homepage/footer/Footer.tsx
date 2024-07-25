@@ -87,12 +87,36 @@ const NewFooter: React.FC = () => {
                         Car Park Ventilation
                       </a>
                     </li>
-                    <li>
+                    <li className="pb-2">
                       <a
                         href="/duct-size-calculation"
                         className="hover:text-blue-500"
                       >
                         Duct Size Calculation
+                      </a>
+                    </li>
+                    <li className="pb-2">
+                      <a
+                        href="/refrigerant-charge-calculation"
+                        className="hover:text-blue-500"
+                      >
+                        Refrigerant Charge Calculation
+                      </a>
+                    </li>
+                    <li className="pb-2">
+                      <a
+                        href="/pipe-size-calculation"
+                        className="hover:text-blue-500"
+                      >
+                        Pipe Sizer
+                      </a>
+                    </li>
+                    <li className="">
+                      <a
+                        href="/converter"
+                        className="hover:text-blue-500"
+                      >
+                        Converter
                       </a>
                     </li>
                   </ul>

@@ -5,8 +5,15 @@ import newBg from "../../../public/cons.jpg";
 import sideImg from "../../../public/const.jpg";
 import ModalVideo from "./ModalVideo";
 import NewFooter from "../../homepage/footer/Footer";
+import { useNavigate } from "react-router-dom";
 
 const About = () => {
+  const navigate = useNavigate();
+
+  const onClick = () => {
+    navigate("/contact-us");
+  };
+
   return (
     <div className=" w-screen">
       <Navigation />
@@ -41,17 +48,20 @@ const About = () => {
                 innovation and professionalism
               </span>
             </h1>
-            <div className="">
-              <p className="text-xl pb-8">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                Distinctio corporis non, incidunt aliquam cupiditate est error
-                quibusdam quam, itaque, quasi ratione adipisci? Vero possimus
+            <div className="md:w-11/12 w-full">
+              <p className="text-xl pb-8 text-justify">
+                At SG Design, we believe success comes from blending innovation
+                with professionalism. Our team pushes HVAC technology
+                boundaries, always seeking efficient ways to keep your
+                environments comfortable and energy-efficient.
               </p>
-              <p className="text-gray-500 lg:text-lg pb-6">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Beatae
-                totam rerum obcaecati culpa doloremque voluptatum, laudantium
-                illo delectus, sed corporis voluptates molestiae amet accusamus
-                eius neque illum asperiores unde odit.
+              <p className="text-gray-500 lg:text-lg pb-6 text-justify">
+                Coupled with our unwavering commitment to professional service,
+                we ensure that every project is executed with the highest
+                standards of quality and reliability. Whether it's through
+                cutting-edge products or exceptional customer care, we strive to
+                set new benchmarks in the HVAC industry, delivering solutions
+                that are both forward-thinking and meticulously crafted.
               </p>
             </div>
             <div className="border-2 border-yellow-500 rounded-full md:w-2/5 w-1/2">
@@ -60,7 +70,7 @@ const About = () => {
               </button>
             </div>
           </div>
-          <div className="pt-6 md:pt-0 md:w-[40%] md:-translate-y-24 2xl:translate-y-2">
+          <div className="pt-6 md:pt-0 md:w-[40%] md:-translate-y-0">
             <img
               src={sideImg}
               className="object-contain mx-auto h-full w-[500px] "
@@ -71,57 +81,59 @@ const About = () => {
       </div>
       {/**----------video-playback-----progress-bar----*/}
       <div className="my-10">
-      <div className="flex lg:justify-center md:justify-evenly md:gap-4 lg:gap-7 py-16 border bg-gray-200 shadow-2xl">
-        <div className="hidden md:block ">
-          <ModalVideo />
-        </div>
-        <div className="md:w-2/5 p-4 md:p-0">
-          <div className="flex flex-col gap-8">
-            <h2 className="uppercase lg:text-lg font-medium text-gray-500">
-              Our Skill and Expertise
-            </h2>
-            <h1 className="text-5xl">
-              <span className="font-medium">Expertise</span>, discipline and
-              precision
-            </h1>
-            <p className="lg:text-xl text-gray-500">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex minima
-              veniam officia quaerat quas. Eveniet nihil rerum iure error.
-              Similique, reprehenderit necessitatibus sunt commodi nam hic
-              temporibus ipsam? Praesentium, sint.
-            </p>
+        <div className="flex lg:justify-center md:justify-evenly md:gap-4 lg:gap-7 py-16 border bg-gray-200 shadow-2xl">
+          <div className="hidden md:block ">
+            <ModalVideo />
           </div>
-          <div className="container pt-7 ">
-            {progress.map((item: any) => (
-              <div className="pb-6">
-                <div className="flex justify-between pb-2">
-                  <span className="lg:text-lg font-medium text-black dark:text-white">
-                    {item.title}
-                  </span>
-                  <span
-                    className="text-md font-medium text-yellow-500 dark:text-white"
-                    style={{ width: `calc(100% - ${item.completion})` }}
-                  >
-                    {item.completion}
-                  </span>
+          <div className="md:w-2/5 p-4 md:p-0">
+            <div className="flex flex-col gap-8">
+              <h2 className="uppercase lg:text-lg font-medium text-gray-500">
+                Our Skill and Expertise
+              </h2>
+              <h1 className="text-5xl">
+                <span className="font-medium">Expertise</span>, discipline and
+                precision
+              </h1>
+              <p className="lg:text-xl text-gray-500">
+                Expertise, discipline and precision are the cornerstones of our
+                approach. Our skilled team brings deep knowledge and unwavering
+                commitment, ensuring every project is executed with meticulous
+                attention to detail and exceptional accuracy.
+              </p>
+            </div>
+            <div className="container pt-7 ">
+              {progress.map((item: any) => (
+                <div className="pb-6">
+                  <div className="flex justify-between pb-2">
+                    <span className="lg:text-lg font-medium text-black dark:text-white">
+                      {item.title}
+                    </span>
+                    <span
+                      className="text-md font-medium text-yellow-500 dark:text-white"
+                      style={{ width: `calc(100% - ${item.completion})` }}
+                    >
+                      {item.completion}
+                    </span>
+                  </div>
+                  <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+                    <div
+                      className="bg-yellow-500 h-2.5 rounded-full"
+                      style={{ width: item.completion }}
+                    ></div>
+                  </div>
                 </div>
-                <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
-                  <div
-                    className="bg-yellow-500 h-2.5 rounded-full"
-                    style={{ width: item.completion }}
-                  ></div>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
-      </div>
       </div>
       {/**card-components */}
       <div className="flex flex-col justify-center 2xl:w-4/5 mx-auto gap-16 lg:p-9 p-6 bg-gray-200 border shadow-2xl rounded-lg">
         <div className="md:flex justify-between xl:gap-0 md:gap-20 lg:gap-0">
           <div className="flex flex-col justify-center gap-5 ">
-            <h2 className="uppercase text-gray-600 text-lg font-medium">Our Company</h2>
+            <h2 className="uppercase text-gray-600 text-lg font-medium">
+              Our Company
+            </h2>
             <h2 className="text-5xl font-light text-justified">
               We stay current with the latest{" "}
               <span className="font-medium">applications</span> and{" "}
@@ -141,20 +153,26 @@ const About = () => {
         <div className="lg:flex justify-center md:gap-10 lg:gap-2 xl:gap-6">
           {cards.map((card) => (
             <div className="pb-6">
-              <div className="flex justify-center p-5 lg:p-3 md:gap-5 lg:gap-0 xl:gap-4 border border-blue-300 shadow-lg rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 xl:hover:scale-110 hover:scale-100 duration-300">
-              <div className="p-2 lg:p-3 -my-1 object-contain h-28 w-44 md:h-10 md:w-20 lg:w-32">
-                <img
-                  src={card.icon}
-                  alt="card-icon"
-                />
+              <div
+                className="flex justify-center p-5
+                lg:p-3 md:gap-5 lg:gap-0 xl:gap-4 border
+                border-blue-300 shadow-lg rounded-lg 
+                transition ease-in-out delay-150 
+                hover:-translate-y-1 xl:hover:scale-110
+                 hover:scale-100 duration-300"
+              >
+                <div className="p-2 lg:p-3 -my-1 object-contain h-28 w-44 md:h-10 md:w-20 lg:w-32">
+                  <img src={card.icon} alt="card-icon" />
+                </div>
+                <div className="flex flex-col justify-center gap-4">
+                  <h1 className="md:text-3xl text-xl font-medium ">
+                    {card.title}
+                  </h1>
+                  <p className="text-gray-600 text-justified md:text-xl w-11/12">
+                    {card.desc}
+                  </p>
+                </div>
               </div>
-              <div className="flex flex-col justify-center gap-4">
-                <h1 className="md:text-3xl text-xl font-medium ">{card.title}</h1>
-                <p className="text-gray-600 text-justified md:text-xl w-11/12">
-                  {card.desc}
-                </p>
-              </div>
-            </div>
             </div>
           ))}
         </div>
@@ -175,16 +193,20 @@ const About = () => {
           <div className="flex flex-col justify-center gap-8 text-center relative text-white sm:py-20 md:py-40 lg:py-32 py-20">
             <h1 className="xl:text-5xl text-2xl">Call us and get it done</h1>
             <p className="lg:text-2xl w-4/5 mx-auto">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dicta,
-              earum saepe sapiente rerum et modi. Nobis ut deserunt tempore
-              sapiente? Facilis, id voluptatum quod ad fuga atque aspernatur.
-              Nam, nostrum.
+              "Ready to elevate your comfort with unmatched expertise and
+              precision? Contact us today and let's create the perfect HVAC
+              solution for you!"
             </p>
-            <button className="p-4 lg:text-lg text-black w-40 mx-auto bg-yellow-500 hover:bg-gray-300 hover:text-black rounded-full">Get a Quote</button>
+            <button
+              onClick={() => onClick()}
+              className="p-4 lg:text-lg text-black w-40 mx-auto bg-yellow-500 hover:bg-gray-300 hover:text-black rounded-full"
+            >
+              Get in touch
+            </button>
           </div>
         </div>
       </div>
-     <NewFooter />
+      <NewFooter />
     </div>
   );
 };
