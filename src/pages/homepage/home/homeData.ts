@@ -66,11 +66,11 @@ export const progress:any = [
     },
     {
         title: "Building",
-        completion: "70%",
+        completion: "88%",
     },
     {
         title: "Construction",
-        completion: "90%",
+        completion: "86%",
     },
 ]
 

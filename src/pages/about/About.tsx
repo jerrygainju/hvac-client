@@ -1,10 +1,10 @@
-import { cards, progress } from "../../homepage/home/homeData";
-import Navigation from "../../homepage/navigation/navigation";
-import background from "../../../public/cons2.jpg";
-import newBg from "../../../public/cons.jpg";
-import sideImg from "../../../public/const.jpg";
-import ModalVideo from "./ModalVideo";
-import NewFooter from "../../homepage/footer/Footer";
+import { cards, progress } from "../homepage/home/homeData";
+import Navigation from "../homepage/navigation/navigation";
+import background from "../../public/cons2.jpg";
+import newBg from "../../public/cons.jpg";
+import sideImg from "../../public/const.jpg";
+import ModalVideo from "./components/ModalVideo";
+import NewFooter from "../homepage/footer/Footer";
 import { useNavigate } from "react-router-dom";
 
 const About = () => {
@@ -28,7 +28,7 @@ const About = () => {
           before:opacity-60"
           style={{ backgroundImage: `url(${background})`, opacity: "0.9" }}
         >
-          <h1 className="md:text-4xl text-3xl lg:text-5xl font-medium text-center relative z-10 text-white pt-40 ">
+          <h1 className="font-mono md:text-4xl text-3xl lg:text-5xl font-semibold text-center relative z-10 text-white pt-40 ">
             About O
             <span className="border-b-4 border-yellow-500 pb-1">ur C</span>
             ompany
@@ -37,25 +37,25 @@ const About = () => {
       </div>
       {/**First component */}
       <div className="pt-16 md:pt-20">
-        <div className="md:flex justify-center  xl:gap-5 lg:p-7 2xl:w-7/12 lg:w-full md:w-full mx-auto border bg-gray-200 shadow-xl rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300">
+        <div className="md:flex justify-center  xl:gap-5 lg:p-7 2xl:w-7/12 lg:w-full md:w-full mx-auto border bg-gray-200 shadow-xl rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 lg:hover:scale-110 duration-300">
           <div className="p-5 md:p-0 md:w-1/2 md:pb-5">
-            <h2 className="text-gray-400 lg:text-xl font-medium pb-8">
+            <h2 className="text-yellow-500 lg:text-2xl font-mono pb-8 my-2 slide-from-top">
               Welcome to HVAC Design
             </h2>
-            <h1 className="lg:text-5xl text-4xl pb-9">
+            <h1 className="font-mono text-4xl text-gray-600 pb-9">
               We understand the importance of{" "}
-              <span className="font-medium">
+              <span className="font-semibold">
                 innovation and professionalism
               </span>
             </h1>
             <div className="md:w-11/12 w-full">
-              <p className="text-xl pb-8 text-justify">
+              <p className="font-mono text-xl pb-8 text-justify text-yellow-500">
                 At SG Design, we believe success comes from blending innovation
                 with professionalism. Our team pushes HVAC technology
                 boundaries, always seeking efficient ways to keep your
                 environments comfortable and energy-efficient.
               </p>
-              <p className="text-gray-500 lg:text-lg pb-6 text-justify">
+              <p className="font-mono text-gray-600 lg:text-lg pb-6 text-justify">
                 Coupled with our unwavering commitment to professional service,
                 we ensure that every project is executed with the highest
                 standards of quality and reliability. Whether it's through
@@ -87,14 +87,14 @@ const About = () => {
           </div>
           <div className="md:w-2/5 p-4 md:p-0">
             <div className="flex flex-col gap-8">
-              <h2 className="uppercase lg:text-lg font-medium text-gray-500">
+              <h2 className="font-mono uppercase lg:text-xl font-medium text-yellow-500 text-justify">
                 Our Skill and Expertise
               </h2>
-              <h1 className="text-5xl">
-                <span className="font-medium">Expertise</span>, discipline and
+              <h1 className="lg:text-4xl font-mono justify-center text-gray-600 items-center slide-from-left">
+                <span className="font-semibold">Expertise</span>, discipline and
                 precision
               </h1>
-              <p className="lg:text-xl text-gray-500">
+              <p className="font-mono lg:text-lg text-gray-600">
                 Expertise, discipline and precision are the cornerstones of our
                 approach. Our skilled team brings deep knowledge and unwavering
                 commitment, ensuring every project is executed with meticulous
@@ -105,11 +105,11 @@ const About = () => {
               {progress.map((item: any) => (
                 <div className="pb-6">
                   <div className="flex justify-between pb-2">
-                    <span className="lg:text-lg font-medium text-black dark:text-white">
+                    <span className="font-mono lg:text-lg font-semibold text-gray-600 dark:text-white">
                       {item.title}
                     </span>
                     <span
-                      className="text-md font-medium text-yellow-500 dark:text-white"
+                      className="font-mono text-md font-semibold text-yellow-500 dark:text-white"
                       style={{ width: `calc(100% - ${item.completion})` }}
                     >
                       {item.completion}
@@ -129,30 +129,33 @@ const About = () => {
       </div>
       {/**card-components */}
       <div className="flex flex-col justify-center 2xl:w-4/5 mx-auto gap-16 lg:p-9 p-6 bg-gray-200 border shadow-2xl rounded-lg">
-        <div className="md:flex justify-between xl:gap-0 md:gap-20 lg:gap-0">
+        <div className="md:flex xl:gap-0 md:gap-20 lg:gap-0">
           <div className="flex flex-col justify-center gap-5 ">
-            <h2 className="uppercase text-gray-600 text-lg font-medium">
+            <h2 className="font-mono uppercase text-gray-600 text-xl text-yellow-500 font-semibold">
               Our Company
             </h2>
-            <h2 className="text-5xl font-light text-justified">
+            <h2 className="font-mono lg:text-4xl text-gray-600">
               We stay current with the latest{" "}
-              <span className="font-medium">applications</span> and{" "}
-              <span className="font-medium">building technologies</span>
+              <span className="font-semibold">applications</span> and{" "}
+              <span className="font-semibold">building technologies</span>
             </h2>
           </div>
-          <div className="lg:flex justify-end text-xl text-gray-700 md:pt-6 pt-8">
-            <p className="lg:text-2xl lg:w-4/5 ">
-              We build the finest homes and structures within our client's
-              budgets and time frame without sacrificing quality and
-              workmanship. We work with you on all of your green energy ideas.
-              We keep you up to date on the latest greenest building practices
-              and materials.
+          <div className="lg:flex justify-end lg:text-lg text-gray-600 text-justify md:pt-6 pt-8 xl:mr-10 mr-0">
+            <p className="font-mono lg:w-4/5 ">
+              We are dedicated to crafting exceptional homes and structures that
+              perfectly align with our clients' vision, budget, and timeline
+              without compromising quality or workmanship. Our expertise extends
+              to incorporating green energy solutions and sustainable practices
+              into every project. By staying at the forefront of eco-friendly
+              building technologies and materials, we empower our clients to
+              create not just house, but sustainable living spaces that reflect
+              their values and aspirations.
             </p>
           </div>
         </div>
         <div className="lg:flex justify-center md:gap-10 lg:gap-2 xl:gap-6">
           {cards.map((card) => (
-            <div className="pb-6">
+            <div className="pb-6 text-gray-600">
               <div
                 className="flex justify-center p-5
                 lg:p-3 md:gap-5 lg:gap-0 xl:gap-4 border
@@ -164,11 +167,11 @@ const About = () => {
                 <div className="p-2 lg:p-3 -my-1 object-contain h-28 w-44 md:h-10 md:w-20 lg:w-32">
                   <img src={card.icon} alt="card-icon" />
                 </div>
-                <div className="flex flex-col justify-center gap-4">
-                  <h1 className="md:text-3xl text-xl font-medium ">
+                <div className="flex flex-col justify-center gap-4 font-mono text-gray-600">
+                  <h1 className="md:text-3xl lg:text-2xl xl:text-4xl text-lg font-semibold">
                     {card.title}
                   </h1>
-                  <p className="text-gray-600 text-justified md:text-xl w-11/12">
+                  <p className="text-justify lg:text-lg w-11/12 slide-from-left">
                     {card.desc}
                   </p>
                 </div>
@@ -191,15 +194,15 @@ const About = () => {
           style={{ backgroundImage: `url(${newBg})`, opacity: "0.9" }}
         >
           <div className="flex flex-col justify-center gap-8 text-center relative text-white sm:py-20 md:py-40 lg:py-32 py-20">
-            <h1 className="xl:text-5xl text-2xl">Call us and get it done</h1>
-            <p className="lg:text-2xl w-4/5 mx-auto">
+            <h1 className="font-mono lg:text-4xl text-2xl">Call us and get it done</h1>
+            <p className="font-mono lg:text-2xl w-4/5 mx-auto">
               "Ready to elevate your comfort with unmatched expertise and
               precision? Contact us today and let's create the perfect HVAC
               solution for you!"
             </p>
             <button
               onClick={() => onClick()}
-              className="p-4 lg:text-lg text-black w-40 mx-auto bg-yellow-500 hover:bg-gray-300 hover:text-black rounded-full"
+              className="p-3 lg:text-lg text-white w-36 mx-auto bg-yellow-500 hover:bg-gray-300 hover:text-black rounded-lg"
             >
               Get in touch
             </button>
