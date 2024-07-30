@@ -116,7 +116,7 @@ const DuctMeasurement = () => {
     updateEditableState(levelKey, rowKey, value);
   };
 
-  const updateEditableState = (levelKey: number, rowKey: number, description: string) => {
+  const updateEditableState = (_levelKey: number, rowKey: number, description: string) => {
     const newEditable: EditableState = { ...editable };
     switch (description) {
       case "Straight duct":
@@ -168,8 +168,8 @@ const DuctMeasurement = () => {
   };
 
   const handleInputChange = (levelKey: number, rowKey: number, field: keyof RowData, value: number) => {
-    setLevels(
-      levels.map((lvl) =>
+    setLevels((prevLevels) =>
+      prevLevels.map((lvl) =>
         lvl.key === levelKey
           ? {
               ...lvl,
@@ -178,8 +178,22 @@ const DuctMeasurement = () => {
                   ? {
                       ...row,
                       [field]: value,
-                      perimeter: 2 * (row.width + row.height),
-                      area: row.duct_pieces * row.width * row.height * row.length,
+                      perimeter:
+                        field === "width" || field === "height"
+                          ? 2 * (field === "width" ? value + row.height : row.width + value)
+                          : row.perimeter,
+                      area:
+                        field === "width" ||
+                        field === "height" ||
+                        field === "duct_pieces" ||
+                        field === "length"
+                          ? (field === "width"
+                              ? value * row.height * row.length
+                              : row.width *
+                                (field === "height" ? value : row.height) *
+                                (field === "length" ? value : row.length)) *
+                            (field === "duct_pieces" ? value : row.duct_pieces)
+                          : row.area,
                     }
                   : row
               ),
@@ -197,23 +211,28 @@ const DuctMeasurement = () => {
     );
   };
 
-  const calculateTotalArea = (rows: RowData[]) => rows.reduce((total, row) => total + row.area, 0);
+  const calculateTotalArea = (rows: RowData[]) =>
+    rows.reduce((total, row) => total + row.area, 0);
 
   const columns = (levelKey: number) => [
     {
       title: "S.N",
       dataIndex: "sn",
-      render: (text: any) => <span>{text}</span>,
     },
     {
       title: "Description",
       dataIndex: "description",
-      render: (text: string, record: RowData) => (
+      render: (_text: string, record: RowData) => (
         <Select
           className="w-48"
-          options={ductDescription}
+          options={ductDescription.map((desc) => ({
+            label: desc.label,
+            value: desc.value,
+          }))}
           value={record.description}
-          onChange={(value) => handleDescriptionChange(levelKey, record.key, value)}
+          onChange={(value) =>
+            handleDescriptionChange(levelKey, record.key, value)
+          }
         />
       ),
     },
@@ -230,7 +249,12 @@ const DuctMeasurement = () => {
               value={text}
               disabled={!editable[record.key]?.width}
               onChange={(e) =>
-                handleInputChange(levelKey, record.key, "width", parseFloat(e.target.value))
+                handleInputChange(
+                  levelKey,
+                  record.key,
+                  "width",
+                  parseFloat(e.target.value)
+                )
               }
             />
           ),
@@ -245,7 +269,12 @@ const DuctMeasurement = () => {
               value={text}
               disabled={!editable[record.key]?.height}
               onChange={(e) =>
-                handleInputChange(levelKey, record.key, "height", parseFloat(e.target.value))
+                handleInputChange(
+                  levelKey,
+                  record.key,
+                  "height",
+                  parseFloat(e.target.value)
+                )
               }
             />
           ),
@@ -260,7 +289,12 @@ const DuctMeasurement = () => {
               value={text}
               disabled={!editable[record.key]?.radius}
               onChange={(e) =>
-                handleInputChange(levelKey, record.key, "radius", parseFloat(e.target.value))
+                handleInputChange(
+                  levelKey,
+                  record.key,
+                  "radius",
+                  parseFloat(e.target.value)
+                )
               }
             />
           ),
@@ -280,7 +314,12 @@ const DuctMeasurement = () => {
               value={text}
               disabled={!editable[record.key]?.reducer_width}
               onChange={(e) =>
-                handleInputChange(levelKey, record.key, "reducer_width", parseFloat(e.target.value))
+                handleInputChange(
+                  levelKey,
+                  record.key,
+                  "reducer_width",
+                  parseFloat(e.target.value)
+                )
               }
             />
           ),
@@ -295,7 +334,12 @@ const DuctMeasurement = () => {
               value={text}
               disabled={!editable[record.key]?.reducer_height}
               onChange={(e) =>
-                handleInputChange(levelKey, record.key, "reducer_height", parseFloat(e.target.value))
+                handleInputChange(
+                  levelKey,
+                  record.key,
+                  "reducer_height",
+                  parseFloat(e.target.value)
+                )
               }
             />
           ),
@@ -311,13 +355,18 @@ const DuctMeasurement = () => {
           type="number"
           value={text}
           onChange={(e) =>
-            handleInputChange(levelKey, record.key, "length", parseFloat(e.target.value))
+            handleInputChange(
+              levelKey,
+              record.key,
+              "length",
+              parseFloat(e.target.value)
+            )
           }
         />
       ),
     },
     {
-      title: "Quantity",
+      title: "Duct Pieces",
       dataIndex: "duct_pieces",
       render: (text: number, record: RowData) => (
         <Input
@@ -325,11 +374,21 @@ const DuctMeasurement = () => {
           type="number"
           value={text}
           onChange={(e) =>
-            handleInputChange(levelKey, record.key, "duct_pieces", parseFloat(e.target.value))
+            handleInputChange(
+              levelKey,
+              record.key,
+              "duct_pieces",
+              parseFloat(e.target.value)
+            )
           }
         />
       ),
     },
+    // {
+    //   title: "Perimeter (m)",
+    //   dataIndex: "perimeter",
+    //   render: (text: number) => <span>{text.toFixed(2)}</span>,
+    // },
     {
       title: "Area (m²)",
       dataIndex: "area",
@@ -338,53 +397,40 @@ const DuctMeasurement = () => {
   ];
 
   return (
-    <div className="w-screen">
+    <div>
       <Navigation />
-      <section className="flex-col my-10">
-        <div className="flex justify-center text-2xl font-bold">
-          <h2>Duct Area Measurement</h2>
-        </div>
-        <div className="flex justify-center my-10">
-          <div className="flex-col">
-            <div className="my-2">
-              <Input className="w-40 text-center" placeholder="Enter Project Name" />
-            </div>
-            <div className="flex justify-center">
-              <Button onClick={handleAddLevel} className="bg-gray-600 text-white">
-                Add Level
-              </Button>
-            </div>
+      <div className="p-4">
+        <div className="flex justify-center my-6 text-3xl font-bold font-mono">Duct Area Measurement</div>
+        {levels.map((level) => (
+          <div key={level.key} className="mb-8">
+            <Input
+              className="mb-2 w-64"
+              value={level.title}
+              onChange={(e) => handleTitleChange(level.key, e.target.value)}
+            />
+            <Table
+              columns={columns(level.key)}
+              dataSource={level.rows}
+              pagination={false}
+              footer={() => (
+                <div className="flex justify-between">
+                  <span>Total Area: {calculateTotalArea(level.rows).toFixed(2)} m²</span>
+                  <Button
+                    type="dashed"
+                    icon={<PlusOutlined />}
+                    onClick={() => handleAddRow(level.key)}
+                  >
+                    Add Row
+                  </Button>
+                </div>
+              )}
+            />
           </div>
-        </div>
-        <div className="my-10 w-full">
-          {levels.map((lvl) => (
-            <div key={lvl.key} className="flex-col my-10">
-              <div className="flex gap-6 items-center my-4 translate-x-80">
-                <Input
-                  className="text-xl font-bold w-40"
-                  value={lvl.title}
-                  onChange={(e) => handleTitleChange(lvl.key, e.target.value)}
-                />
-                <Button onClick={() => handleAddRow(lvl.key)} className="bg-blue-600 text-white">
-                  <PlusOutlined />
-                </Button>
-              </div>
-              <Table
-                className="flex justify-center"
-                bordered
-                columns={columns(lvl.key)}
-                dataSource={lvl.rows}
-                pagination={false}
-              />
-              <div className="flex justify-end my-4 w-10/12">
-                <span className="text-lg font-semibold">
-                  Total Area: {calculateTotalArea(lvl.rows).toFixed(2)} m²
-                </span>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
+        ))}
+        <Button type="dashed" icon={<PlusOutlined />} onClick={handleAddLevel}>
+          Add Level
+        </Button>
+      </div>
       <NewFooter />
     </div>
   );
