@@ -20,7 +20,7 @@ export const HomeCard = () => {
                                 <div ref={ref} className={`text-3xl text-center start font-mono text-yellow-500 ${inView ? 'slide-from-top' : ''}`}>
                                     <b>{item.title}</b>
                                 </div>
-                                <div className='lg:text-xl lg:text-center text-justify pt-4 text-gray-600'>
+                                <div className='font-mono lg:text-xl lg:text-center text-justify pt-4 text-gray-600'>
                                     {item.description}
                                 </div>
                             </div>

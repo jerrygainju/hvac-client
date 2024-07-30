@@ -19,6 +19,7 @@ import {
   CloseOutlined,
   HighlightOutlined,
   CalculatorOutlined,
+  BoxPlotOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Menu } from "antd";
@@ -42,26 +43,37 @@ const items: MenuProps["items"] = [
         label: "Car Park Ventilation",
         key: "car",
         icon: <CarOutlined />,
+        className:"font-mono",
       },
       {
         label: "Duct Size Calculation",
         key: "duct",
         icon: <CodeSandboxOutlined />,
+        className:"font-mono",
       },
       {
         label: "Refrigerant Charge Calculation",
         key: "refrigerant",
         icon: <WalletOutlined />,
+        className:"font-mono",
       },
       {
         label: "Pipe Sizer",
         key: "pipesizer",
         icon:<HighlightOutlined />,
+        className:"font-mono",
       },
       {
         label: "Converter",
         key: "converter",
         icon:<CalculatorOutlined />,
+        className:"font-mono",
+      },
+      {
+        label: "Duct Measurement",
+        key: "duct-measurement",
+        icon:<BoxPlotOutlined />,
+        className:"font-mono",
       },
     ],
   },
@@ -84,11 +96,13 @@ const items: MenuProps["items"] = [
         label: "Sign In",
         key: "signin",
         icon: <UserSwitchOutlined />,
+        className:"font-mono",
       },
       {
         label: "Sign Up",
         key: "signup",
         icon: <UserAddOutlined />,
+        className:"font-mono",
       },
     ],
   },
@@ -121,6 +135,9 @@ const Navigation: React.FC = () => {
     }
     if(e.key === "converter"){
       navigate("/converter");
+    }
+    if(e.key === "duct-measurement"){
+      navigate("/duct-measurement")
     }
     if (e.key === "aboutus") {
       navigate("/about-us");
@@ -207,7 +224,7 @@ const Navigation: React.FC = () => {
               selectedKeys={[current]}
               mode="vertical"
               items={items}
-              className="flex flex-col items-start w-full font-serif bg-gray-200"
+              className="flex flex-col items-start w-full font-semibold font-mono bg-gray-200"
             />
           </div>
           <div
@@ -224,7 +241,7 @@ const Navigation: React.FC = () => {
           selectedKeys={[current]}
           mode="vertical"
           items={items}
-          className="lg:flex flex-row xl:gap-28 lg:gap-12 2xl:gap-[9%] md:hidden sm:hidden hidden w-screen font-serif bg-gray-200 rounded "
+          className="lg:flex flex-row xl:gap-28 lg:gap-12 2xl:gap-[9%] md:hidden sm:hidden hidden w-screen font-semibold  font-mono bg-gray-200 rounded "
         />
       </div>
     </div>

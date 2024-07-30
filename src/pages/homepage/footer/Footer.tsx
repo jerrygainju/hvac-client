@@ -39,9 +39,9 @@ const NewFooter: React.FC = () => {
           <div className="max-w-7xl mx-auto">
             <Row justify={"space-between"} gutter={[15,15]}>
               <Col xs={24} sm={24} md={12} lg={6}>
-                <div>
-                  <h4 className="text-xl pb-2">Company</h4>
-                  <p className="text-gray-500">
+                <div className="font-mono">
+                  <h4 className="text-xl pb-2 font-semibold">Company</h4>
+                  <p className="text-gray-600">
                     16B/2-4 Cross St <br />
                     Hurstville, NSW 2220 <br />
                     <br />
@@ -54,9 +54,9 @@ const NewFooter: React.FC = () => {
                 </div>
               </Col>
               <Col xs={24} sm={24} md={12} lg={6}>
-                <div>
-                  <h4 className="pb-2 text-lg">Pages</h4>
-                  <ul className="text-gray-500">
+                <div className="font-mono">
+                  <h4 className="pb-2 font-semibold text-lg">Pages</h4>
+                  <ul className="text-gray-600">
                     <li className="pb-2">
                       <a href="/" className="hover:text-blue-500">
                         Home
@@ -76,10 +76,10 @@ const NewFooter: React.FC = () => {
                 </div>
               </Col>
               <Col xs={24} sm={24} md={12} lg={6}>
-                <div>
-                  <h4 className="pb-2 text-lg">Our Services</h4>
-                  <ul className="text-gray-500">
-                    <li className="pb-2">
+                <div className="font-mono">
+                  <h4 className="pb-2 text-lg font-semibold text-center">Our Services</h4>
+                  <ul className="text-gray-600">
+                    <li className="pb-1">
                       <a
                         href="/car-park-ventilation"
                         className="hover:text-blue-500"
@@ -87,7 +87,7 @@ const NewFooter: React.FC = () => {
                         Car Park Ventilation
                       </a>
                     </li>
-                    <li>
+                    <li className="pb-1">
                       <a
                         href="/duct-size-calculation"
                         className="hover:text-blue-500"
@@ -95,16 +95,48 @@ const NewFooter: React.FC = () => {
                         Duct Size Calculation
                       </a>
                     </li>
+                    <li className="pb-1">
+                      <a
+                        href="/refrigerant-charge-calculation"
+                        className="hover:text-blue-500"
+                      >
+                        Refrigerant Charge Calculation
+                      </a>
+                    </li>
+                    <li className="pb-1">
+                      <a
+                        href="/pipe-size-calculation"
+                        className="hover:text-blue-500"
+                      >
+                        Pipe Sizer
+                      </a>
+                    </li>
+                    <li className="pb-1">
+                      <a
+                        href="/converter"
+                        className="hover:text-blue-500"
+                      >
+                        Converter
+                      </a>
+                    </li>
+                    <li className="">
+                      <a
+                        href="/duct-measurement"
+                        className="hover:text-blue-500"
+                      >
+                        Duct Measurement
+                      </a>
+                    </li>
                   </ul>
                 </div>
               </Col>
               <Col xs={24} sm={24} md={12} lg={6}>
-                <div className="lg:px-5 md:px-20 px-20">
-                  <h4 className="pb-2 text-lg">Ask for your Designs</h4>
+                <div className="lg:px-5 md:px-20 px-20 font-mono">
+                  <h4 className="pb-2 text-lg font-semibold">Ask for your Designs</h4>
                   <Input
                     placeholder="Enter your email"
                     prefix={
-                      <MailOutlined className="text-gray-400 pt-[1px] " />
+                      <MailOutlined className="text-gray-600 pt-[1px] " />
                     }
                     style={{ marginBottom: "10px" }}
                     value={email}
@@ -119,7 +151,7 @@ const NewFooter: React.FC = () => {
                   <div className="pb-6">
                     <Button
                       type="primary"
-                      className="bg-blue-500"
+                      className="bg-blue-500 font-mono"
                       onClick={handleSubmit}
                       loading={submitting}
                     >
@@ -132,10 +164,10 @@ const NewFooter: React.FC = () => {
           </div>
         </div>
         {/**-----Copyright----- */}
-        <div className="bg-gray-500 py-6 text-center">
+        <div className="bg-gray-500 py-6 text-center font-mono">
           <div>
             Copyright &copy; {currentYear}
-            <strong>
+            <strong className="font-semibold">
               <span> by SG Design Group</span>
             </strong>
           </div>

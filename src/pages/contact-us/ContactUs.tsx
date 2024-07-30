@@ -47,7 +47,7 @@ const ContactUs = () => {
       <div className="pt-[8px]">
         <div className="flex justify-center">
         <div style={containerStyles} className="w-[1452px]"> 
-          <div className="text-5xl font-serif pb-40 slide-from-top text-gray-600">
+          <div className="text-5xl font-mono pb-40 slide-from-top text-gray-600">
             Contact Us
           </div>
         </div>
@@ -55,18 +55,18 @@ const ContactUs = () => {
       </div>
       <div className="lg:flex flex-row lg:gap-1 gap-12 mt-12 justify-center">
         <div className="flex flex-col lg:mx-10 mx-auto lg:w-96 md:w-96 px-6 pt-2  bg-gray-200 border rounded-xl shadow-2xl text-gray-600 card">
-          <h2 className="text-2xl font-semibold mb-4">Get in Touch</h2>
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <h2 className="text-2xl font-semibold mb-4 font-mono">Get in Touch</h2>
+          <form onSubmit={handleSubmit} className="space-y-4 font-mono">
             <div>
-              <label htmlFor="name" className="block text-gray-600 font-medium">Your Name</label>
+              <label htmlFor="name" className="block text-gray-600 font-semibold">Your Name</label>
               <Input type="text" id="name" name="name" value={formData.name} onChange={handleChange} className="mt-1 p-2 w-full border bg-gray-50 rounded-md shadow-lg focus:outline-none focus:border-blue-500" />
             </div>
             <div>
-              <label htmlFor="email" className="block text-gray-600 font-medium">Your Email</label>
+              <label htmlFor="email" className="block text-gray-600 font-semibold">Your Email</label>
               <Input type="email" id="email" name="email" value={formData.email} onChange={handleChange} className="mt-1 p-2 w-full border bg-gray-50 rounded-md shadow-lg focus:outline-none focus:border-blue-500" />
             </div>
             <div>
-              <label htmlFor="message" className="block text-gray-600 font-medium">Your Message</label>
+              <label htmlFor="message" className="block text-gray-600 font-semibold">Your Message</label>
               <TextArea id="message" name="message" value={formData.message} onChange={handleChange} className="mt-1 p-2 w-full border bg-gray-50 rounded-md shadow-lg focus:outline-none focus:border-blue-500"></TextArea>
             </div>
             <div className="pb-2">
@@ -74,11 +74,11 @@ const ContactUs = () => {
             </div>
           </form>
         </div>
-        <div className="shadow-2xl overflow-hidden">
+        <div className="lg:shadow-2xl overflow-hidden">
           <MapComponent />
         </div>
-        <div className="flex flex-col lg:mx-10 mx-auto border rounded-xl px-12 pt-12 shadow-2xl gap-10 bg-gray-200 text-gray-600 lg:w-96 md:w-96 card">
-          <div className="flex flex-col font-semibold text-2xl border rounded-xl p-2 bg-gray-50 text-center shadow-xl ">
+        <div className="flex flex-col lg:mx-10 mx-auto border rounded-xl px-12 p-10 shadow-2xl gap-10 bg-gray-200 text-gray-600 lg:w-96 md:w-96 card">
+          <div className="flex flex-col font-semibold text-2xl border rounded-xl p-2 bg-gray-50 text-center shadow-xl font-mono">
             <div>
               <EnvironmentOutlined /> Location
             </div>
@@ -86,7 +86,7 @@ const ContactUs = () => {
               Koteshwor, Kathmandu
             </div>
           </div>
-          <div className="flex flex-col font-semibold text-2xl border rounded-xl p-2 bg-gray-50 text-center shadow-xl ">
+          <div className="flex flex-col font-semibold text-2xl border rounded-xl p-2 bg-gray-50 text-center shadow-xl font-mono">
             <div>
               <PhoneOutlined style={{ transform: 'rotate(90deg)' }} /> Phone
             </div>
@@ -94,7 +94,7 @@ const ContactUs = () => {
               +01 6698634
             </div>
           </div>
-          <div className="flex flex-col font-semibold text-2xl border rounded-xl p-2 bg-gray-50 text-center shadow-xl ">
+          <div className="flex flex-col font-semibold text-2xl border rounded-xl p-2 bg-gray-50 text-center shadow-xl font-mono">
             <div>
               <MailOutlined /> Email
             </div>
