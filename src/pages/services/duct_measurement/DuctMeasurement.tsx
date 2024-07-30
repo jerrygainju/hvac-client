@@ -95,7 +95,11 @@ const DuctMeasurement = () => {
     );
   };
 
-  const handleDescriptionChange = (levelKey: number, rowKey: number, value: string) => {
+  const handleDescriptionChange = (
+    levelKey: number,
+    rowKey: number,
+    value: string
+  ) => {
     setLevels(
       levels.map((lvl) =>
         lvl.key === levelKey
@@ -116,7 +120,11 @@ const DuctMeasurement = () => {
     updateEditableState(levelKey, rowKey, value);
   };
 
-  const updateEditableState = (_levelKey: number, rowKey: number, description: string) => {
+  const updateEditableState = (
+    _levelKey: number,
+    rowKey: number,
+    description: string
+  ) => {
     const newEditable: EditableState = { ...editable };
     switch (description) {
       case "Straight duct":
@@ -167,7 +175,12 @@ const DuctMeasurement = () => {
     setEditable(newEditable);
   };
 
-  const handleInputChange = (levelKey: number, rowKey: number, field: keyof RowData, value: number) => {
+  const handleInputChange = (
+    levelKey: number,
+    rowKey: number,
+    field: keyof RowData,
+    value: number
+  ) => {
     setLevels((prevLevels) =>
       prevLevels.map((lvl) =>
         lvl.key === levelKey
@@ -180,7 +193,10 @@ const DuctMeasurement = () => {
                       [field]: value,
                       perimeter:
                         field === "width" || field === "height"
-                          ? 2 * (field === "width" ? value + row.height : row.width + value)
+                          ? 2 *
+                            (field === "width"
+                              ? value + row.height
+                              : row.width + value)
                           : row.perimeter,
                       area:
                         field === "width" ||
@@ -400,7 +416,9 @@ const DuctMeasurement = () => {
     <div>
       <Navigation />
       <div className="p-4">
-        <div className="flex justify-center my-6 text-3xl font-bold font-mono">Duct Area Measurement</div>
+        <div className="flex justify-center my-6 text-3xl font-bold font-mono">
+          Duct Area Measurement
+        </div>
         {levels.map((level) => (
           <div key={level.key} className="mb-8">
             <Input
@@ -409,12 +427,15 @@ const DuctMeasurement = () => {
               onChange={(e) => handleTitleChange(level.key, e.target.value)}
             />
             <Table
+              bordered
               columns={columns(level.key)}
               dataSource={level.rows}
               pagination={false}
               footer={() => (
                 <div className="flex justify-between">
-                  <span>Total Area: {calculateTotalArea(level.rows).toFixed(2)} m²</span>
+                  <span>
+                    Total Area: {calculateTotalArea(level.rows).toFixed(2)} m²
+                  </span>
                   <Button
                     type="dashed"
                     icon={<PlusOutlined />}
