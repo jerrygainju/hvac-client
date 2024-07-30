@@ -416,7 +416,7 @@ const DuctMeasurement = () => {
     <div>
       <Navigation />
       <div className="p-4">
-        <div className="flex justify-center my-6 text-3xl font-bold font-mono">
+        <div className="flex justify-center my-10 text-4xl font-bold font-mono text-gray-600">
           Duct Area Measurement
         </div>
         {levels.map((level) => (
