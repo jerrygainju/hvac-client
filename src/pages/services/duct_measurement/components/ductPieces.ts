@@ -1,4 +1,4 @@
-export const columns = [
+export const ductColumns = [
     {
         title: "S.N",
         dataIndex:"sn",
@@ -23,7 +23,7 @@ export const columns = [
     },
     {
         title:"Duct Pieces",
-        index:"duct-pieces",
+        index:"duct_pieces",
     },
     {
         title:"Perimeter",
@@ -32,8 +32,19 @@ export const columns = [
         title:"Area",
         index:"area",
     },
-]
+];
 
 export const ductDescription = [
-    {}
-]
+    {
+        label:"Straight duct", value:"Straight duct"
+    },
+    {
+        label:"Radius bend", value:"Radius bend"
+    },
+    {
+        label:"Reducer", value:"Reducer"
+    },
+    {
+        label:"Mitered bend", value:"Mitered bend"
+    }
+];
