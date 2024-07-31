@@ -218,6 +218,7 @@ const DuctMeasurement = () => {
                 const widthInMeters = isStraightDuct ? (row.width / 1000) : row.width;
                 const heightInMeters = isStraightDuct ? (row.height / 1000) : row.height;
                 const lengthInMeters = row.length; 
+  
                 const updatedRow = {
                   ...row,
                   [field]: value,
@@ -230,7 +231,6 @@ const DuctMeasurement = () => {
                       ? 2 * (widthInMeters + heightInMeters) * lengthInMeters * (field === "duct_pieces" ? value : row.duct_pieces)
                       : row.area,
                 };
-  
                 return row.key === rowKey ? updatedRow : row;
               }),
             }
@@ -238,6 +238,7 @@ const DuctMeasurement = () => {
       )
     );
   };
+  
   
 
   const handleTitleChange = (levelKey: number, value: string) => {
