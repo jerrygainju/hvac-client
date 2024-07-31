@@ -167,41 +167,78 @@ const DuctMeasurement = () => {
     setEditable(newEditable);
   };
 
-  const handleInputChange = (levelKey: number, rowKey: number, field: keyof RowData, value: number) => {
+  // const handleInputChange = (levelKey: number, rowKey: number, field: keyof RowData, value: number) => {
+  //   setLevels((prevLevels) =>
+  //     prevLevels.map((lvl) =>
+  //       lvl.key === levelKey
+  //         ? {
+  //             ...lvl,
+  //             rows: lvl.rows.map((row) =>
+  //               row.key === rowKey
+  //                 ? {
+  //                     ...row,
+  //                     [field]: value,
+  //                     perimeter:
+  //                       field === "width" || field === "height"
+  //                         ? 2 * (field === "width" ? value + row.height : row.width + value)
+  //                         : row.perimeter,
+  //                     area:
+  //                       field === "width" ||
+  //                       field === "height" ||
+  //                       field === "duct_pieces" ||
+  //                       field === "length"
+  //                         ? (field === "width"
+  //                             ? value * row.height * row.length
+  //                             : row.width *
+  //                               (field === "height" ? value : row.height) *
+  //                               (field === "length" ? value : row.length)) *
+  //                           (field === "duct_pieces" ? value : row.duct_pieces)
+  //                         : row.area,
+  //                   }
+  //                 : row
+  //             ),
+  //           }
+  //         : lvl
+  //     )
+  //   );
+  // };
+  const handleInputChange = (
+    levelKey: number,
+    rowKey: number,
+    field: keyof RowData,
+    value: number
+  ) => {
     setLevels((prevLevels) =>
       prevLevels.map((lvl) =>
         lvl.key === levelKey
           ? {
               ...lvl,
-              rows: lvl.rows.map((row) =>
-                row.key === rowKey
-                  ? {
-                      ...row,
-                      [field]: value,
-                      perimeter:
-                        field === "width" || field === "height"
-                          ? 2 * (field === "width" ? value + row.height : row.width + value)
-                          : row.perimeter,
-                      area:
-                        field === "width" ||
-                        field === "height" ||
-                        field === "duct_pieces" ||
-                        field === "length"
-                          ? (field === "width"
-                              ? value * row.height * row.length
-                              : row.width *
-                                (field === "height" ? value : row.height) *
-                                (field === "length" ? value : row.length)) *
-                            (field === "duct_pieces" ? value : row.duct_pieces)
-                          : row.area,
-                    }
-                  : row
-              ),
+              rows: lvl.rows.map((row) => {
+                const isStraightDuct = row.description === "Straight duct";
+                const widthInMeters = isStraightDuct ? (row.width / 1000) : row.width;
+                const heightInMeters = isStraightDuct ? (row.height / 1000) : row.height;
+                const lengthInMeters = row.length; 
+                const updatedRow = {
+                  ...row,
+                  [field]: value,
+                  perimeter:
+                    (field === "width" || field === "height") && isStraightDuct
+                      ? 2 * ((field === "width" ? value / 1000 : widthInMeters) + (field === "height" ? value / 1000 : heightInMeters))
+                      : row.perimeter,
+                  area:
+                    isStraightDuct
+                      ? 2 * (widthInMeters + heightInMeters) * lengthInMeters * (field === "duct_pieces" ? value : row.duct_pieces)
+                      : row.area,
+                };
+  
+                return row.key === rowKey ? updatedRow : row;
+              }),
             }
           : lvl
       )
     );
   };
+  
 
   const handleTitleChange = (levelKey: number, value: string) => {
     setLevels(
