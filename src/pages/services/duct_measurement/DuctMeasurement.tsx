@@ -231,6 +231,23 @@ const DuctMeasurement = () => {
                       ? 2 * (widthInMeters + heightInMeters) * lengthInMeters * (field === "duct_pieces" ? value : row.duct_pieces)
                       : row.area,
                 };
+  
+                if (field === "width" && isStraightDuct) {
+                  updatedRow.area = 2 * ((value / 1000) + heightInMeters) * lengthInMeters * row.duct_pieces;
+                }
+  
+                if (field === "height" && isStraightDuct) {
+                  updatedRow.area = 2 * (widthInMeters + (value / 1000)) * lengthInMeters * row.duct_pieces;
+                }
+  
+                if (field === "length" && isStraightDuct) {
+                  updatedRow.area = 2 * (widthInMeters + heightInMeters) * value * row.duct_pieces;
+                }
+  
+                if (field === "duct_pieces" && isStraightDuct) {
+                  updatedRow.area = 2 * (widthInMeters + heightInMeters) * lengthInMeters * value;
+                }
+  
                 return row.key === rowKey ? updatedRow : row;
               }),
             }
@@ -238,6 +255,7 @@ const DuctMeasurement = () => {
       )
     );
   };
+  
   
   
 
