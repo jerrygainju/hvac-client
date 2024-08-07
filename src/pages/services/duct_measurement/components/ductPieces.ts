@@ -28,12 +28,12 @@ export const ductDescription = [
 
 export const insulationTypes = [
     {
-        label:"Uninsulated", value:"Unisulated"
+        label:"Uninsulated", value:"Uninsulated"
     },
     {
-        label:"Externally Insulated", value:"Externally Insulated"
+        label:"Externally Insulated", value:"Externally_Insulated"
     },
     {
-        label:"Internally Insulated", value:"Internally Insulated"
+        label:"Internally Insulated", value:"Internally_Insulated"
     },
 ];

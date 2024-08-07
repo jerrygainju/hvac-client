@@ -3,7 +3,7 @@ import NewFooter from "../../homepage/footer/Footer";
 import Navigation from "../../homepage/navigation/navigation";
 import { ductDescription, insulationTypes } from "./components/ductPieces";
 import { useEffect, useState } from "react";
-import { PlusOutlined } from "@ant-design/icons";
+import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import * as ExcelJS from "exceljs";
 import { getElementStringValue } from "../carparkventilation/components/Extra ";
 
@@ -162,6 +162,9 @@ const DuctMeasurement = () => {
     );
   };
 
+  const handleDeleteLevel = (levelKey: number) => {
+    setLevels(levels.filter((level) => level.key !== levelKey));
+  };
   const handleDescriptionChange = (
     levelKey: number,
     rowKey: number,
@@ -323,7 +326,7 @@ const DuctMeasurement = () => {
           duct_pieces: true,
         };
         break;
-      case "Offset" :
+      case "Offset":
         newEditable[rowKey] = {
           width1: true,
           width2: false,
@@ -388,28 +391,66 @@ const DuctMeasurement = () => {
                 // Recalculate area based on duct type
                 switch (updatedRow.description) {
                   case "Straight duct":
-                    updatedRow.area = 2 * (widthInMeters + heightInMeters) * lengthInMeters * ductPieces;
+                    updatedRow.area =
+                      2 *
+                      (widthInMeters + heightInMeters) *
+                      lengthInMeters *
+                      ductPieces;
                     break;
                   case "Reducer":
-                    updatedRow.area = (widthInMeters + heightInMeters + width2InMeters + height2InMeters)  * lengthInMeters * ductPieces;
+                    updatedRow.area =
+                      (widthInMeters +
+                        heightInMeters +
+                        width2InMeters +
+                        height2InMeters) *
+                      lengthInMeters *
+                      ductPieces;
                     break;
                   case "End cap":
-                    updatedRow.area = widthInMeters * heightInMeters * ductPieces;
+                    updatedRow.area =
+                      widthInMeters * heightInMeters * ductPieces;
                     break;
                   case "Radius bend":
-                    updatedRow.area = (widthInMeters + heightInMeters) * 2 * (2 * Math.PI * (radiusInMeters + widthInMeters / 2) / 4 ) * ductPieces;
+                    updatedRow.area =
+                      (widthInMeters + heightInMeters) *
+                      2 *
+                      ((2 * Math.PI * (radiusInMeters + widthInMeters / 2)) /
+                        4) *
+                      ductPieces;
                     break;
                   case "Mitered bend":
-                    updatedRow.area = (2 * (widthInMeters + heightInMeters) * lengthInMeters + 2 * (width2InMeters + height2InMeters) * length2InMeters) * ductPieces;
+                    updatedRow.area =
+                      (2 * (widthInMeters + heightInMeters) * lengthInMeters +
+                        2 *
+                          (width2InMeters + height2InMeters) *
+                          length2InMeters) *
+                      ductPieces;
                     break;
                   case "Transition":
-                    updatedRow.area = (widthInMeters + heightInMeters + (Math.PI * radiusInMeters)) * lengthInMeters * ductPieces;
+                    updatedRow.area =
+                      (widthInMeters +
+                        heightInMeters +
+                        Math.PI * radiusInMeters) *
+                      lengthInMeters *
+                      ductPieces;
                     break;
                   case "Equal tee":
-                    updatedRow.area = ((2 * (widthInMeters + heightInMeters) * lengthInMeters) + (2 * (width2InMeters + height2InMeters) * length2InMeters) + (2 * (width3InMeters + height3InMeters) * length3InMeters)) * ductPieces;
+                    updatedRow.area =
+                      (2 * (widthInMeters + heightInMeters) * lengthInMeters +
+                        2 *
+                          (width2InMeters + height2InMeters) *
+                          length2InMeters +
+                        2 *
+                          (width3InMeters + height3InMeters) *
+                          length3InMeters) *
+                      ductPieces;
                     break;
                   case "Offset":
-                    updatedRow.area = 2*(widthInMeters + heightInMeters) * (lengthInMeters + length2InMeters) * ductPieces;
+                    updatedRow.area =
+                      2 *
+                      (widthInMeters + heightInMeters) *
+                      (lengthInMeters + length2InMeters) *
+                      ductPieces;
                     break;
                   default:
                     updatedRow.area = 0;
@@ -432,11 +473,11 @@ const DuctMeasurement = () => {
 
     // Center the project title
     const projectRow = sheet.addRow([`Project: ${projectName}`]);
-    projectRow.fill = {
-      type: "pattern",
-      pattern: "solid",
-      fgColor: { argb: "A9A9A9" },
-    };
+    // projectRow.fill = {
+    //   type: "pattern",
+    //   pattern: "solid",
+    //   fgColor: { argb: "A9A9A9" },
+    // };
     projectRow.font = { bold: true };
     sheet.mergeCells(`A1:O3`);
     projectRow.alignment = { horizontal: "center", vertical: "middle" };
@@ -539,11 +580,12 @@ const DuctMeasurement = () => {
           row.area.toFixed(2),
         ]);
       });
-
+      // total area on the basis of the insulation types and total area
       const totalArea = calculateTotalArea(level.rows);
+      const areaByInsulation = calculateTotalAreaByInsulation(level.rows);
       const totalRow = sheet.addRow([
-        "Total Area",
         "",
+        "Total Area",
         "",
         "",
         "",
@@ -564,20 +606,94 @@ const DuctMeasurement = () => {
         fgColor: { argb: "F0F0F0" },
       };
       totalRow.font = { bold: true };
+
+      const totalUninsulatedRow = sheet.addRow([
+        "",
+        "Uninsulated Area:",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        areaByInsulation.Uninsulated.toFixed(2),
+      ]);
+      totalUninsulatedRow.fill = {
+        type: "pattern",
+        pattern: "solid",
+        fgColor: { argb: "F0F0F0" },
+      };
+      totalUninsulatedRow.font = { bold: true };
+      const totalExternalRow = sheet.addRow([
+        "",
+        "Externally Insulated Area:",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        areaByInsulation.Externally_Insulated.toFixed(2),
+      ]);
+      totalExternalRow.fill = {
+        type: "pattern",
+        pattern: "solid",
+        fgColor: { argb: "F0F0F0" },
+      };
+      totalExternalRow.font = { bold: true };
+      const totalInternalRow = sheet.addRow([
+        "",
+        "Internally Insulated Area:",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        areaByInsulation.Internally_Insulated.toFixed(2),
+      ]);
+      totalInternalRow.fill = {
+        type: "pattern",
+        pattern: "solid",
+        fgColor: { argb: "F0F0F0" },
+      };
+      totalInternalRow.font = { bold: true };
       sheet.addRow([]);
     });
 
-    sheet.columns.forEach((column) => {
-      column.width = 18;
-    });
+    const columnWidths = [
+      4, 35,25, 13, 13, 20, 13, 13, 13, 13, 13, 13, 15, 15, 15, 15,
+    ];
+    sheet.columns = sheet.columns.map((col, index) => ({
+      ...col,
+      width: columnWidths[index] || 15,
+    }));
 
     sheet.eachRow((row) => {
       row.eachCell((cell) => {
         cell.border = {
-          top: { style: "thin" },
-          left: { style: "thin" },
-          bottom: { style: "thin" },
-          right: { style: "thin" },
+          top: { style: "medium" },
+          left: { style: "medium" },
+          bottom: { style: "medium" },
+          right: { style: "medium" },
         };
         cell.alignment = { horizontal: "center", vertical: "middle" };
       });
@@ -606,6 +722,20 @@ const DuctMeasurement = () => {
 
   const calculateTotalArea = (rows: RowData[]) =>
     rows.reduce((total, row) => total + row.area, 0);
+
+  const calculateTotalAreaByInsulation = (rows: RowData[]) => {
+    const totals = {
+      Uninsulated: 0,
+      Externally_Insulated: 0,
+      Internally_Insulated: 0,
+    };
+    rows.forEach((row) => {
+      if (row.insulation in totals) {
+        totals[row.insulation as keyof typeof totals] += row.area;
+      }
+    });
+    return totals;
+  };
 
   const columns = (levelKey: number) => [
     {
@@ -896,13 +1026,25 @@ const DuctMeasurement = () => {
         <div className="flex justify-center my-10 text-4xl font-bold font-mono text-gray-600">
           Duct Area Measurement
         </div>
-        <div className="">
-          <Input
-            id="projectName"
-            className="w-44 my-10 h-12"
-            placeholder="Enter project name"
-          />
+        <div className="flex-col mx-30 items-center my-10">
+          <div>
+            <Input
+              id="projectName"
+              className="w-44 my-10 h-12"
+              placeholder="Enter project name"
+            />
+          </div>
+          <div>
+            <Button
+              className="bg-gray-500 text-white"
+              icon={<PlusOutlined />}
+              onClick={handleAddLevel}
+            >
+              Add Level
+            </Button>
+          </div>
         </div>
+
         {levels.map((level) => (
           <div key={level.key} className="mb-8">
             <Input
@@ -910,31 +1052,56 @@ const DuctMeasurement = () => {
               value={level.title}
               onChange={(e) => handleTitleChange(level.key, e.target.value)}
             />
+            <DeleteOutlined
+              className="text-red-500 p-2"
+              onClick={() => handleDeleteLevel(level.key)}
+            />
             <Table
               bordered
               columns={columns(level.key)}
               dataSource={level.rows}
               pagination={false}
-              footer={() => (
-                <div className="flex justify-between">
-                  <span>
-                    Total Area: {calculateTotalArea(level.rows).toFixed(2)} m²
-                  </span>
-                  <Button
-                    type="dashed"
-                    icon={<PlusOutlined />}
-                    onClick={() => handleAddRow(level.key)}
-                  >
-                    Add Row
-                  </Button>
-                </div>
-              )}
+              footer={() => {
+                const totalArea = calculateTotalArea(level.rows);
+                const areaByInsulation = calculateTotalAreaByInsulation(
+                  level.rows
+                );
+                return (
+                  <div>
+                    <div className="flex justify-between">
+                      <span>Total Area: {totalArea.toFixed(2)} m²</span>
+                      <Button
+                        className="flex items-center bg-blue-500 text-white"
+                        icon={<PlusOutlined />}
+                        onClick={() => handleAddRow(level.key)}
+                      >
+                        Add Row
+                      </Button>
+                    </div>
+                    <div>
+                      <span>
+                        Total Uninsulated Area:{" "}
+                        {areaByInsulation.Uninsulated.toFixed(2)} m²
+                      </span>
+                    </div>
+                    <div>
+                      <span>
+                        Total Externally Insulated Area:{" "}
+                        {areaByInsulation.Externally_Insulated.toFixed(2)} m²
+                      </span>
+                    </div>
+                    <div>
+                      <span>
+                        Total Internally Insulated Area:{" "}
+                        {areaByInsulation.Internally_Insulated.toFixed(2)} m²
+                      </span>
+                    </div>
+                  </div>
+                );
+              }}
             />
           </div>
         ))}
-        <Button type="dashed" icon={<PlusOutlined />} onClick={handleAddLevel}>
-          Add Level
-        </Button>
         <Button
           className="flex my-10 bg-gray-600 text-white p-4 items-center"
           onClick={downloadTableData}
