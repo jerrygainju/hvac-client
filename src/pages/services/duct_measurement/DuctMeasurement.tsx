@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import * as ExcelJS from "exceljs";
 import { getElementStringValue } from "../carparkventilation/components/Extra ";
+import "./components/customTable.css";
 
 type RowData = {
   key: number;
@@ -785,6 +786,7 @@ const DuctMeasurement = () => {
     {
       title: "Description",
       dataIndex: "description",
+      width: "auto",
       render: (_text: string, record: RowData) => (
         <Select
           className="w-44"
@@ -802,6 +804,7 @@ const DuctMeasurement = () => {
     {
       title: "Insulation Type",
       dataIndex: "insulation",
+      width: "auto",
       render: (_text: string, record: RowData) => (
         <Select
           className="w-44"
@@ -823,6 +826,7 @@ const DuctMeasurement = () => {
         {
           title: "Width1(mm)",
           dataIndex: "width1",
+          width: "auto",
           render: (text: number, record: RowData) => (
             <Input
               className=""
@@ -843,6 +847,7 @@ const DuctMeasurement = () => {
         {
           title: "Height1(mm)",
           dataIndex: "height1",
+          width: "auto",
           render: (text: number, record: RowData) => (
             <Input
               className=""
@@ -863,6 +868,7 @@ const DuctMeasurement = () => {
         {
           title: "Radius of Center (mm)",
           dataIndex: "radius",
+          width: "auto",
           render: (text: number, record: RowData) => (
             <Input
               className=""
@@ -888,6 +894,7 @@ const DuctMeasurement = () => {
         {
           title: "Width2(mm)",
           dataIndex: "width2",
+          width: "auto",
           render: (text: number, record: RowData) => (
             <Input
               className=""
@@ -908,6 +915,7 @@ const DuctMeasurement = () => {
         {
           title: "Height2(mm)",
           dataIndex: "height2",
+          width: "auto",
           render: (text: number, record: RowData) => (
             <Input
               className=""
@@ -928,6 +936,7 @@ const DuctMeasurement = () => {
         {
           title: "Width3(mm)",
           dataIndex: "width3",
+          width: "auto",
           render: (text: number, record: RowData) => (
             <Input
               className=""
@@ -948,6 +957,7 @@ const DuctMeasurement = () => {
         {
           title: "Height3(mm)",
           dataIndex: "height3",
+          width: "auto",
           render: (text: number, record: RowData) => (
             <Input
               className=""
@@ -970,9 +980,10 @@ const DuctMeasurement = () => {
     {
       title: "Length1(m)",
       dataIndex: "length1",
+      width: "auto",
       render: (text: number, record: RowData) => (
         <Input
-          className=""
+          className="w-16"
           type="number"
           value={text}
           disabled={!editable[record.key]?.length1}
@@ -988,11 +999,12 @@ const DuctMeasurement = () => {
       ),
     },
     {
-      title: "Length 2(mm)",
+      title: "Length2(mm)",
       dataIndex: "length2",
+      width: "auto",
       render: (text: number, record: RowData) => (
         <Input
-          className=""
+          className="16"
           type="number"
           value={text}
           disabled={!editable[record.key]?.length2}
@@ -1010,9 +1022,10 @@ const DuctMeasurement = () => {
     {
       title: "Length3(m)",
       dataIndex: "length3",
+      width: "auto",
       render: (text: number, record: RowData) => (
         <Input
-          className=""
+          className="16"
           type="number"
           value={text}
           disabled={!editable[record.key]?.length3}
@@ -1030,6 +1043,7 @@ const DuctMeasurement = () => {
     {
       title: "Duct Pieces",
       dataIndex: "duct_pieces",
+      width: "auto",
       render: (text: number, record: RowData) => (
         <Input
           className=""
@@ -1050,16 +1064,19 @@ const DuctMeasurement = () => {
     // {
     //   title: "Perimeter (m)",
     //   dataIndex: "perimeter",
+    //    width: "auto",
     //   render: (text: number) => <span>{text.toFixed(2)}</span>,
     // },
     {
       title: "Area (m²)",
       dataIndex: "area",
-      render: (text: number) => <span>{text.toFixed(2)}</span>,
+      width: "auto",
+      render: (text: number) => <span className="w-40">{text.toFixed(2)}</span>,
     },
     {
       title: "Action",
       dataIndex: "action",
+      width: "auto",
       render: (_text: string, record: RowData) => (
         <Button
           type="primary"
@@ -1111,6 +1128,7 @@ const DuctMeasurement = () => {
             </div>
             <Table
               bordered
+              className="border-2 drop-shadow-lg custom-table"
               columns={columns(level.key)}
               dataSource={level.rows}
               rowKey="key"
