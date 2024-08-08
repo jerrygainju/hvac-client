@@ -163,6 +163,9 @@ const DuctMeasurement = () => {
   };
 
   const handleDeleteLevel = (levelKey: number) => {
+    if (levelKey === 0) {
+      return;
+    }
     setLevels(levels.filter((level) => level.key !== levelKey));
   };
   const handleDescriptionChange = (
@@ -473,11 +476,6 @@ const DuctMeasurement = () => {
 
     // Center the project title
     const projectRow = sheet.addRow([`Project: ${projectName}`]);
-    // projectRow.fill = {
-    //   type: "pattern",
-    //   pattern: "solid",
-    //   fgColor: { argb: "A9A9A9" },
-    // };
     projectRow.font = { bold: true };
     sheet.mergeCells(`A1:O3`);
     projectRow.alignment = { horizontal: "center", vertical: "middle" };
@@ -540,8 +538,8 @@ const DuctMeasurement = () => {
       pattern: "solid",
       fgColor: { argb: "D3D3D3" },
     };
-
     subheaderRow.font = { bold: true };
+
     sheet.mergeCells(`A6:A7`);
     sheet.mergeCells(`B6:B7`);
     sheet.mergeCells(`C6:C7`);
@@ -558,9 +556,10 @@ const DuctMeasurement = () => {
         pattern: "solid",
         fgColor: { argb: "72A0C1" },
       };
-      sheet.mergeCells(`A${levelRow.number}:K${levelRow.number}`);
+      sheet.mergeCells(`A${levelRow.number}:O${levelRow.number}`);
       levelRow.alignment = { horizontal: "left" };
       levelRow.font = { bold: true };
+
       level.rows.forEach((row) => {
         sheet.addRow([
           row.sn,
@@ -580,12 +579,12 @@ const DuctMeasurement = () => {
           row.area.toFixed(2),
         ]);
       });
-      // total area on the basis of the insulation types and total area
+
       const totalArea = calculateTotalArea(level.rows);
       const areaByInsulation = calculateTotalAreaByInsulation(level.rows);
       const totalRow = sheet.addRow([
         "",
-        "Total Area",
+        "Total Area:",
         "",
         "",
         "",
@@ -606,6 +605,8 @@ const DuctMeasurement = () => {
         fgColor: { argb: "F0F0F0" },
       };
       totalRow.font = { bold: true };
+      sheet.mergeCells(`B${totalRow.number}:N${totalRow.number}`);
+      totalRow.alignment = { horizontal: "center", vertical: "middle" };
 
       const totalUninsulatedRow = sheet.addRow([
         "",
@@ -630,6 +631,14 @@ const DuctMeasurement = () => {
         fgColor: { argb: "F0F0F0" },
       };
       totalUninsulatedRow.font = { bold: true };
+      sheet.mergeCells(
+        `B${totalUninsulatedRow.number}:N${totalUninsulatedRow.number}`
+      );
+      totalUninsulatedRow.alignment = {
+        horizontal: "center",
+        vertical: "middle",
+      };
+
       const totalExternalRow = sheet.addRow([
         "",
         "Externally Insulated Area:",
@@ -653,6 +662,11 @@ const DuctMeasurement = () => {
         fgColor: { argb: "F0F0F0" },
       };
       totalExternalRow.font = { bold: true };
+      sheet.mergeCells(
+        `B${totalExternalRow.number}:N${totalExternalRow.number}`
+      );
+      totalExternalRow.alignment = { horizontal: "center", vertical: "middle" };
+
       const totalInternalRow = sheet.addRow([
         "",
         "Internally Insulated Area:",
@@ -676,11 +690,16 @@ const DuctMeasurement = () => {
         fgColor: { argb: "F0F0F0" },
       };
       totalInternalRow.font = { bold: true };
+      sheet.mergeCells(
+        `B${totalInternalRow.number}:N${totalInternalRow.number}`
+      );
+      totalInternalRow.alignment = { horizontal: "center", vertical: "middle" };
+
       sheet.addRow([]);
     });
 
     const columnWidths = [
-      4, 35,25, 13, 13, 20, 13, 13, 13, 13, 13, 13, 15, 15, 15, 15,
+      4, 40, 25, 13, 13, 20, 13, 13, 13, 13, 13, 13, 15, 15, 15, 15,
     ];
     sheet.columns = sheet.columns.map((col, index) => ({
       ...col,
@@ -688,14 +707,20 @@ const DuctMeasurement = () => {
     }));
 
     sheet.eachRow((row) => {
-      row.eachCell((cell) => {
+      row.eachCell({ includeEmpty: true }, (cell, colNumber) => {
         cell.border = {
           top: { style: "medium" },
           left: { style: "medium" },
           bottom: { style: "medium" },
           right: { style: "medium" },
         };
-        cell.alignment = { horizontal: "center", vertical: "middle" };
+
+        // Apply left alignment to "Description" column
+        if (colNumber === 2) {
+          cell.alignment = { horizontal: "left", vertical: "middle" };
+        } else {
+          cell.alignment = { horizontal: "center", vertical: "middle" };
+        }
       });
     });
 
@@ -735,6 +760,21 @@ const DuctMeasurement = () => {
       }
     });
     return totals;
+  };
+
+  const handleDeleteRow = (levelKey: number, rowKey: number) => {
+    setLevels(
+      levels.map((lvl) =>
+        lvl.key === levelKey
+          ? {
+              ...lvl,
+              rows: lvl.rows.filter(
+                (row) => row.key !== rowKey || row.key === 0
+              ),
+            }
+          : lvl
+      )
+    );
   };
 
   const columns = (levelKey: number) => [
@@ -1017,6 +1057,19 @@ const DuctMeasurement = () => {
       dataIndex: "area",
       render: (text: number) => <span>{text.toFixed(2)}</span>,
     },
+    {
+      title: "Action",
+      dataIndex: "action",
+      render: (_text: string, record: RowData) => (
+        <Button
+          type="primary"
+          danger
+          icon={<DeleteOutlined />}
+          onClick={() => handleDeleteRow(levelKey, record.key)}
+          hidden={record.key === 0}
+        />
+      ),
+    },
   ];
 
   return (
@@ -1026,40 +1079,41 @@ const DuctMeasurement = () => {
         <div className="flex justify-center my-10 text-4xl font-bold font-mono text-gray-600">
           Duct Area Measurement
         </div>
-        <div className="flex-col mx-30 items-center my-10">
-          <div>
-            <Input
-              id="projectName"
-              className="w-44 my-10 h-12"
-              placeholder="Enter project name"
-            />
-          </div>
-          <div>
-            <Button
-              className="bg-gray-500 text-white"
-              icon={<PlusOutlined />}
-              onClick={handleAddLevel}
-            >
-              Add Level
-            </Button>
-          </div>
+        <div className="flex flex-col justify-start items-center my-6 w-1/5">
+          <Input
+            id="projectName"
+            className="w-44 my-4 h-12 border-2 border-gray-400 "
+            placeholder="Enter project name"
+          />
+          <Button
+            className="bg-gray-500 text-white w-44 h-10 mb-20"
+            icon={<PlusOutlined />}
+            onClick={handleAddLevel}
+          >
+            Add Level
+          </Button>
         </div>
 
         {levels.map((level) => (
           <div key={level.key} className="mb-8">
-            <Input
-              className="mb-2 w-64"
-              value={level.title}
-              onChange={(e) => handleTitleChange(level.key, e.target.value)}
-            />
-            <DeleteOutlined
-              className="text-red-500 p-2"
-              onClick={() => handleDeleteLevel(level.key)}
-            />
+            <div className="flex justify-start items-center gap-4  ">
+              <Input
+                className="mb-2 w-44 h-12 border-2 border-gray-400"
+                value={level.title}
+                onChange={(e) => handleTitleChange(level.key, e.target.value)}
+              />
+              <Button
+                className="text-red-500 rounded-lg"
+                icon={<DeleteOutlined />}
+                onClick={() => handleDeleteLevel(level.key)}
+                hidden={level.key === 0}
+              />
+            </div>
             <Table
               bordered
               columns={columns(level.key)}
               dataSource={level.rows}
+              rowKey="key"
               pagination={false}
               footer={() => {
                 const totalArea = calculateTotalArea(level.rows);
@@ -1068,10 +1122,9 @@ const DuctMeasurement = () => {
                 );
                 return (
                   <div>
-                    <div className="flex justify-between">
-                      <span>Total Area: {totalArea.toFixed(2)} m²</span>
+                    <div className="my-4">
                       <Button
-                        className="flex items-center bg-blue-500 text-white"
+                        className="flex justify-center items-center w-full"
                         icon={<PlusOutlined />}
                         onClick={() => handleAddRow(level.key)}
                       >
@@ -1079,20 +1132,23 @@ const DuctMeasurement = () => {
                       </Button>
                     </div>
                     <div>
+                      <span>Total Area: {totalArea.toFixed(2)} m²</span>
+                    </div>
+                    <div>
                       <span>
-                        Total Uninsulated Area:{" "}
+                        Uninsulated Area:{" "}
                         {areaByInsulation.Uninsulated.toFixed(2)} m²
                       </span>
                     </div>
                     <div>
                       <span>
-                        Total Externally Insulated Area:{" "}
+                        Externally Insulated Area:{" "}
                         {areaByInsulation.Externally_Insulated.toFixed(2)} m²
                       </span>
                     </div>
                     <div>
                       <span>
-                        Total Internally Insulated Area:{" "}
+                        Internally Insulated Area:{" "}
                         {areaByInsulation.Internally_Insulated.toFixed(2)} m²
                       </span>
                     </div>
@@ -1102,12 +1158,14 @@ const DuctMeasurement = () => {
             />
           </div>
         ))}
-        <Button
-          className="flex my-10 bg-gray-600 text-white p-4 items-center"
-          onClick={downloadTableData}
-        >
-          Download Excel File
-        </Button>
+        <div className="flex justify-center">
+          <Button
+            className="flex justify-center my-10 bg-gray-600 text-white p-4 items-center w-44 h-12"
+            onClick={downloadTableData}
+          >
+            Download Excel File
+          </Button>
+        </div>
       </div>
       <NewFooter />
     </div>
