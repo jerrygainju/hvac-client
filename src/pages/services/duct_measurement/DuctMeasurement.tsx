@@ -561,10 +561,9 @@ const DuctMeasurement = () => {
       levelRow.alignment = { horizontal: "left" };
       levelRow.font = { bold: true };
 
-
       const formatValue = (value: number | string): string => {
-        if(typeof value ==='number' && value === 0){
-          return '-';
+        if (typeof value === "number" && value === 0) {
+          return "-";
         }
         return value.toString();
       };
@@ -1133,54 +1132,56 @@ const DuctMeasurement = () => {
                 hidden={level.key === 0}
               />
             </div>
-            <Table
-              bordered
-              className="border-2 drop-shadow-lg custom-table"
-              columns={columns(level.key)}
-              dataSource={level.rows}
-              rowKey="key"
-              pagination={false}
-              footer={() => {
-                const totalArea = calculateTotalArea(level.rows);
-                const areaByInsulation = calculateTotalAreaByInsulation(
-                  level.rows
-                );
-                return (
-                  <div>
-                    <div className="my-4">
-                      <Button
-                        className="flex justify-center items-center w-full"
-                        icon={<PlusOutlined />}
-                        onClick={() => handleAddRow(level.key)}
-                      >
-                        Add Row
-                      </Button>
-                    </div>
+            <div className="overflow-x-auto w-full">
+              <Table
+                bordered
+                className="border-2 drop-shadow-lg custom-table w-screen"
+                columns={columns(level.key)}
+                dataSource={level.rows}
+                rowKey="key"
+                pagination={false}
+                footer={() => {
+                  const totalArea = calculateTotalArea(level.rows);
+                  const areaByInsulation = calculateTotalAreaByInsulation(
+                    level.rows
+                  );
+                  return (
                     <div>
-                      <span>Total Area: {totalArea.toFixed(2)} m²</span>
+                      <div className="my-4">
+                        <Button
+                          className="flex justify-center items-center w-full"
+                          icon={<PlusOutlined />}
+                          onClick={() => handleAddRow(level.key)}
+                        >
+                          Add Row
+                        </Button>
+                      </div>
+                      <div>
+                        <span>Total Area: {totalArea.toFixed(2)} m²</span>
+                      </div>
+                      <div>
+                        <span>
+                          Uninsulated Area:{" "}
+                          {areaByInsulation.Uninsulated.toFixed(2)} m²
+                        </span>
+                      </div>
+                      <div>
+                        <span>
+                          Externally Insulated Area:{" "}
+                          {areaByInsulation.Externally_Insulated.toFixed(2)} m²
+                        </span>
+                      </div>
+                      <div>
+                        <span>
+                          Internally Insulated Area:{" "}
+                          {areaByInsulation.Internally_Insulated.toFixed(2)} m²
+                        </span>
+                      </div>
                     </div>
-                    <div>
-                      <span>
-                        Uninsulated Area:{" "}
-                        {areaByInsulation.Uninsulated.toFixed(2)} m²
-                      </span>
-                    </div>
-                    <div>
-                      <span>
-                        Externally Insulated Area:{" "}
-                        {areaByInsulation.Externally_Insulated.toFixed(2)} m²
-                      </span>
-                    </div>
-                    <div>
-                      <span>
-                        Internally Insulated Area:{" "}
-                        {areaByInsulation.Internally_Insulated.toFixed(2)} m²
-                      </span>
-                    </div>
-                  </div>
-                );
-              }}
-            />
+                  );
+                }}
+              />
+            </div>
           </div>
         ))}
         <div className="flex justify-center">
