@@ -561,23 +561,30 @@ const DuctMeasurement = () => {
       levelRow.alignment = { horizontal: "left" };
       levelRow.font = { bold: true };
 
+
+      const formatValue = (value: number | string): string => {
+        if(typeof value ==='number' && value === 0){
+          return '-';
+        }
+        return value.toString();
+      };
       level.rows.forEach((row) => {
         sheet.addRow([
           row.sn,
           row.description,
           row.insulation,
-          row.width1,
-          row.height1,
-          row.radius,
-          row.width2,
-          row.height2,
-          row.width3,
-          row.height3,
-          row.length1,
-          row.length2,
-          row.length3,
-          row.duct_pieces,
-          row.area.toFixed(2),
+          formatValue(row.width1),
+          formatValue(row.height1),
+          formatValue(row.radius),
+          formatValue(row.width2),
+          formatValue(row.height2),
+          formatValue(row.width3),
+          formatValue(row.height3),
+          formatValue(row.length1),
+          formatValue(row.length2),
+          formatValue(row.length3),
+          formatValue(row.duct_pieces),
+          formatValue(row.area.toFixed(2)),
         ]);
       });
 
@@ -1090,7 +1097,7 @@ const DuctMeasurement = () => {
   ];
 
   return (
-    <div>
+    <div className="w-screen">
       <Navigation />
       <div className="p-4">
         <div className="flex justify-center my-10 text-4xl font-bold font-mono text-gray-600">
