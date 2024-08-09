@@ -1,39 +1,3 @@
-export const ductColumns = [
-    {
-        title: "S.N",
-        dataIndex:"sn",
-        index: "sn",
-    },
-    {
-        title:"Description",
-        dataIndex:"description",
-        index:"description",
-    },
-    {
-        title:"Width",
-        index:"width",
-    },
-    {
-        title:"Height",
-        index:"height",
-    },
-    {
-        title:"Length",
-        index:"length",
-    },
-    {
-        title:"Duct Pieces",
-        index:"duct_pieces",
-    },
-    {
-        title:"Perimeter",
-        index:"perimeter",
-    },{
-        title:"Area",
-        index:"area",
-    },
-];
-
 export const ductDescription = [
     {
         label:"Straight duct", value:"Straight duct"
@@ -42,9 +6,34 @@ export const ductDescription = [
         label:"Radius bend", value:"Radius bend"
     },
     {
-        label:"Reducer", value:"Reducer"
+        label:"Reducer (rect x rect)", value:"Reducer"
     },
     {
         label:"Mitered bend", value:"Mitered bend"
-    }
+    },
+    {
+        label:"End cap", value:"End cap"
+    },
+    {
+        label:"Transition", value:"Transition"
+    },
+    {
+        label:"Equal tee", value: "Equal tee"
+    },
+    {
+        label:"Offset", value:"Offset"
+    },
+];
+
+
+export const insulationTypes = [
+    {
+        label:"Uninsulated", value:"Uninsulated"
+    },
+    {
+        label:"Externally Insulated", value:"Externally_Insulated"
+    },
+    {
+        label:"Internally Insulated", value:"Internally_Insulated"
+    },
 ];

@@ -169,15 +169,15 @@ const Pipe = () => {
 
   const calRaynouldsNumber = (velocity: number, diameter: number) => {
     if (systemType === null) return null;
-    console.log(systemType)
+    console.log(systemType);
     const E = getMaterialFactor(material);
     console.log(material);
     console.log(E);
     const dh = diameter / 1000;
-    console.log(dh)
-    console.log(velocity)
+    console.log(dh);
+    console.log(velocity);
     const reynoldsNum = (E * velocity * dh) / systemType;
-    console.log(reynoldsNum)
+    console.log(reynoldsNum);
     return Number(reynoldsNum.toFixed(2));
   };
 
@@ -612,8 +612,13 @@ const Pipe = () => {
                 <h1 className="font-bold my-4 text-gray-600">Results</h1>
                 <div className="flex flex-col gap-6">
                   <div className="text-gray-600 flex gap-4">
-                    <p className="font-semibold">Pa/m :</p>
-                    <input
+                    <p className="font-semibold">Pa/m : </p>
+                    <p className={`text-gray-600 font-bold ${error ? "bg-red-300 font-bold":""}`}>
+                    {pressureDropResult !== null
+                      ? pressureDropResult?.toFixed(2)
+                      : ""}
+                    </p>
+                    {/* <input
                       type="text"
                       className={`w-24  rounded-sm bg-gray-100 pl-4 ${
                         error ? "bg-red-300 font-bold" : ""
@@ -624,25 +629,30 @@ const Pipe = () => {
                           : ""
                       }
                       readOnly
-                    />
-                     {error && (
+                    /> */}
+                    {error && (
                       <Tooltip
                         title="Pa/m value is too high!"
                         placement="right"
                       >
-                        <ExclamationCircleOutlined style={{ color: "red", cursor:"pointer"}} />
+                        <ExclamationCircleOutlined
+                          style={{ color: "red", cursor: "pointer" }}
+                        />
                       </Tooltip>
                     )}
                   </div>
                   <div className="text-gray-600 flex gap-2">
                     <p className="font-semibold">Velocity :</p>
-                    <input
+                    <p className="text-gray-600 font-bold">
+                      {velocity !== null ? velocity?.toFixed(2): ""}
+                    </p>
+                    {/* <input
                       type="text"
                       className="w-24 rounded-sm bg-gray-100 pl-4"
                       value={velocity !== null ? velocity.toFixed(2) : ""}
                       readOnly
-                    />
-                    {velocityUnit}
+                    /> */}
+                    <p className="font-bold">{velocityUnit}</p>
                   </div>
                 </div>
               </div>
