@@ -50,29 +50,6 @@ type EditableState = {
   };
 };
 
-interface DuctRow {
-  sn: number;
-  description: string;
-  insulation: string;
-  width1: number;
-  height1: number;
-  radius: number;
-  width2: number;
-  height2: number;
-  width3: number;
-  height3: number;
-  length1: number;
-  length2: number;
-  length3: number;
-  duct_pieces: number;
-  area: number;
-}
-
-interface Level {
-  title: string;
-  rows: DuctRow[];
-}
-
 const DuctMeasurement = () => {
   const [levels, setLevels] = useState<LevelData[]>([]);
   const [editable, setEditable] = useState<EditableState>({});
@@ -766,103 +743,6 @@ const DuctMeasurement = () => {
       document.body.removeChild(link);
     });
   };
-
-  function importExcelFile(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    const file = input.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = function (e: ProgressEvent<FileReader>) {
-        const data = new Uint8Array(e.target?.result as ArrayBuffer);
-        const workbook = new ExcelJS.Workbook();
-
-        workbook.xlsx
-          .load(data)
-          .then(function () {
-            const worksheet = workbook.getWorksheet(1);
-
-            if (!worksheet) {
-              console.error("No worksheet found in the Excel file");
-              return;
-            }
-
-            // Extract project name
-            const projectNameCell = worksheet.getCell("A1");
-            const projectName = projectNameCell.value
-              ? (projectNameCell.value as string).split(": ")[1]
-              : "Untitled Project";
-            (document.getElementById("projectName") as HTMLInputElement).value =
-              projectName;
-
-            // Extract data and populate the table
-            const levels: Level[] = [];
-            let currentLevel: Level | null = null;
-
-            worksheet.eachRow((row, rowNumber) => {
-              if (rowNumber > 7) {
-                // Skip header rows
-                const cellA = row.getCell(1).value;
-                if (
-                  cellA &&
-                  typeof cellA === "string" &&
-                  cellA.startsWith("Level:")
-                ) {
-                  if (currentLevel) {
-                    levels.push(currentLevel);
-                  }
-                  currentLevel = { title: cellA.split(": ")[1], rows: [] };
-                } else if (currentLevel && cellA) {
-                  const newRow: DuctRow = {
-                    sn: Number(cellA),
-                    description: String(row.getCell(2).value || ""),
-                    insulation: String(row.getCell(3).value || ""),
-                    width1: Number(row.getCell(4).value) || 0,
-                    height1: Number(row.getCell(5).value) || 0,
-                    radius: Number(row.getCell(6).value) || 0,
-                    width2: Number(row.getCell(7).value) || 0,
-                    height2: Number(row.getCell(8).value) || 0,
-                    width3: Number(row.getCell(9).value) || 0,
-                    height3: Number(row.getCell(10).value) || 0,
-                    length1: Number(row.getCell(11).value) || 0,
-                    length2: Number(row.getCell(12).value) || 0,
-                    length3: Number(row.getCell(13).value) || 0,
-                    duct_pieces: Number(row.getCell(14).value) || 0,
-                    area: Number(row.getCell(15).value) || 0,
-                  };
-                  currentLevel.rows.push(newRow);
-                }
-              }
-            });
-
-            if (currentLevel) {
-              levels.push(currentLevel);
-            }
-
-            // Update your application state with the imported data
-            updateApplicationState(levels);
-          })
-          .catch((error) => {
-            console.error("Error loading Excel file:", error);
-          });
-      };
-      reader.readAsArrayBuffer(file);
-    }
-  }
-
-  function updateApplicationState(levels: Level[]): void {
-    // This function should update your application's state with the imported data
-    // You'll need to implement this based on how your application manages state
-    console.log("Imported levels:", levels);
-    // TODO: Update your application's state and re-render the table
-  }
-
-  // Add event listener to the file input
-  const fileInput = document.getElementById("fileInput");
-  if (fileInput) {
-    fileInput.addEventListener("change", importExcelFile);
-  } else {
-    console.error("File input element not found");
-  }
 
   const handleSave = (editingProject: string | null = null) => {
     const projectName =
