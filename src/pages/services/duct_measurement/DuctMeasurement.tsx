@@ -1,4 +1,4 @@
-import { Button, Input, Select, Table } from "antd";
+import { Button, Input, message, Modal, Select, Table } from "antd";
 import NewFooter from "../../homepage/footer/Footer";
 import Navigation from "../../homepage/navigation/navigation";
 import { ductDescription, insulationTypes } from "./components/ductPieces";
@@ -49,6 +49,29 @@ type EditableState = {
     duct_pieces: boolean;
   };
 };
+
+interface DuctRow {
+  sn: number;
+  description: string;
+  insulation: string;
+  width1: number;
+  height1: number;
+  radius: number;
+  width2: number;
+  height2: number;
+  width3: number;
+  height3: number;
+  length1: number;
+  length2: number;
+  length3: number;
+  duct_pieces: number;
+  area: number;
+}
+
+interface Level {
+  title: string;
+  rows: DuctRow[];
+}
 
 const DuctMeasurement = () => {
   const [levels, setLevels] = useState<LevelData[]>([]);
@@ -744,6 +767,254 @@ const DuctMeasurement = () => {
     });
   };
 
+  function importExcelFile(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function (e: ProgressEvent<FileReader>) {
+        const data = new Uint8Array(e.target?.result as ArrayBuffer);
+        const workbook = new ExcelJS.Workbook();
+
+        workbook.xlsx
+          .load(data)
+          .then(function () {
+            const worksheet = workbook.getWorksheet(1);
+
+            if (!worksheet) {
+              console.error("No worksheet found in the Excel file");
+              return;
+            }
+
+            // Extract project name
+            const projectNameCell = worksheet.getCell("A1");
+            const projectName = projectNameCell.value
+              ? (projectNameCell.value as string).split(": ")[1]
+              : "Untitled Project";
+            (document.getElementById("projectName") as HTMLInputElement).value =
+              projectName;
+
+            // Extract data and populate the table
+            const levels: Level[] = [];
+            let currentLevel: Level | null = null;
+
+            worksheet.eachRow((row, rowNumber) => {
+              if (rowNumber > 7) {
+                // Skip header rows
+                const cellA = row.getCell(1).value;
+                if (
+                  cellA &&
+                  typeof cellA === "string" &&
+                  cellA.startsWith("Level:")
+                ) {
+                  if (currentLevel) {
+                    levels.push(currentLevel);
+                  }
+                  currentLevel = { title: cellA.split(": ")[1], rows: [] };
+                } else if (currentLevel && cellA) {
+                  const newRow: DuctRow = {
+                    sn: Number(cellA),
+                    description: String(row.getCell(2).value || ""),
+                    insulation: String(row.getCell(3).value || ""),
+                    width1: Number(row.getCell(4).value) || 0,
+                    height1: Number(row.getCell(5).value) || 0,
+                    radius: Number(row.getCell(6).value) || 0,
+                    width2: Number(row.getCell(7).value) || 0,
+                    height2: Number(row.getCell(8).value) || 0,
+                    width3: Number(row.getCell(9).value) || 0,
+                    height3: Number(row.getCell(10).value) || 0,
+                    length1: Number(row.getCell(11).value) || 0,
+                    length2: Number(row.getCell(12).value) || 0,
+                    length3: Number(row.getCell(13).value) || 0,
+                    duct_pieces: Number(row.getCell(14).value) || 0,
+                    area: Number(row.getCell(15).value) || 0,
+                  };
+                  currentLevel.rows.push(newRow);
+                }
+              }
+            });
+
+            if (currentLevel) {
+              levels.push(currentLevel);
+            }
+
+            // Update your application state with the imported data
+            updateApplicationState(levels);
+          })
+          .catch((error) => {
+            console.error("Error loading Excel file:", error);
+          });
+      };
+      reader.readAsArrayBuffer(file);
+    }
+  }
+
+  function updateApplicationState(levels: Level[]): void {
+    // This function should update your application's state with the imported data
+    // You'll need to implement this based on how your application manages state
+    console.log("Imported levels:", levels);
+    // TODO: Update your application's state and re-render the table
+  }
+
+  // Add event listener to the file input
+  const fileInput = document.getElementById("fileInput");
+  if (fileInput) {
+    fileInput.addEventListener("change", importExcelFile);
+  } else {
+    console.error("File input element not found");
+  }
+
+  const handleSave = (editingProject: string | null = null) => {
+    const projectName =
+      editingProject ||
+      getElementStringValue("projectName") ||
+      "Untitled Project";
+    const data = {
+      projectName: projectName,
+      lastSaved: new Date().toISOString(),
+      levels: levels.map((level) => ({
+        title: level.title,
+        rows: level.rows.map((row) => ({
+          sn: row.sn,
+          description: row.description,
+          insulation: row.insulation,
+          width1: row.width1,
+          width2: row.width2,
+          width3: row.width3,
+          height1: row.height1,
+          height2: row.height2,
+          height3: row.height3,
+          length1: row.length1,
+          length2: row.length2,
+          length3: row.length3,
+          radius: row.radius,
+          duct_pieces: row.duct_pieces,
+          area: row.area,
+        })),
+      })),
+    };
+
+    try {
+      const existingProjects = JSON.parse(
+        localStorage.getItem("ductMeasurementProjects") || "[]"
+      );
+      const existingIndex = existingProjects.findIndex(
+        (p: any) => p.projectName === projectName
+      );
+
+      if (existingIndex !== -1) {
+        existingProjects[existingIndex] = data;
+      } else {
+        existingProjects.push(data);
+      }
+
+      localStorage.setItem(
+        "ductMeasurementProjects",
+        JSON.stringify(existingProjects)
+      );
+      message.success("Project saved successfully!");
+      setProjects(existingProjects);
+    } catch (error) {
+      console.error("Failed to save project:", error);
+      message.error("Failed to save project. Please try again.");
+    }
+  };
+
+  const [projects, setProjects] = useState<any[]>([]);
+
+  const loadProject = (projectData: any) => {
+    setLevels(projectData.levels);
+    const projectNameInput = document.getElementById(
+      "projectName"
+    ) as HTMLInputElement;
+    if (projectNameInput) {
+      projectNameInput.value = projectData.projectName;
+    }
+
+    message.success("Project loaded successfully!");
+  };
+
+  useEffect(() => {
+    const savedProjects = JSON.parse(
+      localStorage.getItem("ductMeasurementProjects") || "[]"
+    );
+    setProjects(savedProjects);
+  }, []);
+
+  const handleEdit = (projectName: string) => {
+    const projectToEdit = projects.find((p) => p.projectName === projectName);
+    if (projectToEdit) {
+      loadProject(projectToEdit);
+      const projectNameInput = document.getElementById(
+        "projectName"
+      ) as HTMLInputElement;
+      if (projectNameInput) {
+        projectNameInput.value = projectName;
+      }
+      message.info(
+        'Project loaded for editing. Make your changes and click "Save Project" to update.'
+      );
+    }
+  };
+
+  const handleDelete = (projectName: string) => {
+    Modal.confirm({
+      title: "Are you sure you want to delete this project?",
+      content: "This action cannot be undone.",
+      type: "warning",
+      onOk() {
+        const updatedProjects = projects.filter(
+          (p) => p.projectName !== projectName
+        );
+        localStorage.setItem(
+          "ductMeasurementProjects",
+          JSON.stringify(updatedProjects)
+        );
+        setProjects(updatedProjects);
+        message.success("Project deleted successfully");
+      },
+    });
+  };
+  const ProjectList = () => (
+    <div className="mt-8">
+      <h2 className="text-2xl font-bold mb-4">Saved Projects</h2>
+      {projects.length === 0 ? (
+        <p>No saved projects yet.</p>
+      ) : (
+        <ul className="space-y-2">
+          {projects.map((project, index) => (
+            <li
+              key={index}
+              className="flex items-center justify-between bg-gray-100 p-4 rounded"
+            >
+              <span>{project.projectName}</span>
+              <span className="text-sm text-gray-500">
+                Last saved: {new Date(project.lastSaved).toLocaleString()}
+              </span>
+              <div>
+                <Button onClick={() => loadProject(project)} className="mr-2">
+                  Load
+                </Button>
+                <Button
+                  onClick={() => handleEdit(project.projectName)}
+                  className="mr-2"
+                >
+                  Edit
+                </Button>
+                <Button
+                  danger
+                  onClick={() => handleDelete(project.projectName)}
+                >
+                  Delete
+                </Button>
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+
   const handleTitleChange = (levelKey: number, value: string) => {
     setLevels(
       levels.map((lvl) =>
@@ -877,7 +1148,7 @@ const DuctMeasurement = () => {
           width: "auto",
           render: (text: number, record: RowData) => (
             <Input
-              className=""
+              className="w-16"
               type="number"
               value={text}
               disabled={!editable[record.key]?.radius}
@@ -1052,7 +1323,7 @@ const DuctMeasurement = () => {
       width: "auto",
       render: (text: number, record: RowData) => (
         <Input
-          className=""
+          className="w-16"
           type="number"
           value={text}
           disabled={!editable[record.key]?.duct_pieces}
@@ -1102,40 +1373,43 @@ const DuctMeasurement = () => {
         <div className="flex justify-center my-10 text-4xl font-bold font-mono text-gray-600">
           Duct Area Measurement
         </div>
-        <div className="flex flex-col justify-start items-center my-6 w-1/5">
-          <Input
-            id="projectName"
-            className="w-44 my-4 h-12 border-2 border-gray-400 "
-            placeholder="Enter project name"
-          />
-          <Button
-            className="bg-gray-500 text-white w-44 h-10 mb-20"
-            icon={<PlusOutlined />}
-            onClick={handleAddLevel}
-          >
-            Add Level
-          </Button>
+        <div className="flex justify-between items-center">
+          <div className="flex flex-col justify-start items-center my-6 w-1/5">
+            <Input
+              id="projectName"
+              className="w-44 my-4 h-12 border-2 border-gray-400 "
+              placeholder="Enter project name"
+            />
+            <Button
+              className="bg-gray-500 text-white w-44 h-10 mb-20"
+              icon={<PlusOutlined />}
+              onClick={handleAddLevel}
+            >
+              Add Level
+            </Button>
+          </div>
+          <div>{""}</div>
         </div>
 
         {levels.map((level) => (
           <div key={level.key} className="mb-8">
-            <div className="flex justify-start items-center gap-4  ">
+            <div className="flex justify-center items-center gap-4 w-1/12">
               <Input
                 className="mb-2 w-44 h-12 border-2 border-gray-400"
                 value={level.title}
                 onChange={(e) => handleTitleChange(level.key, e.target.value)}
               />
               <Button
-                className="text-red-500 rounded-lg"
+                className="flex justify-center items-center border-none text-red-500 rounded-lg p-4"
                 icon={<DeleteOutlined />}
                 onClick={() => handleDeleteLevel(level.key)}
                 hidden={level.key === 0}
               />
             </div>
-            <div className="overflow-x-auto w-full">
+            <div className="overflow-x-auto w-full table-container">
               <Table
                 bordered
-                className="border-2 drop-shadow-lg custom-table w-screen"
+                className="flex justify-center border-2 drop-shadow-lg custom-table w-screen"
                 columns={columns(level.key)}
                 dataSource={level.rows}
                 rowKey="key"
@@ -1184,14 +1458,23 @@ const DuctMeasurement = () => {
             </div>
           </div>
         ))}
-        <div className="flex justify-center">
+        <div className="flex justify-center items-center gap-20">
           <Button
             className="flex justify-center my-10 bg-gray-600 text-white p-4 items-center w-44 h-12"
             onClick={downloadTableData}
           >
             Download Excel File
           </Button>
+
+          <Button
+            type="primary"
+            className="flex justify-center items-center w-36 h-12 bg-blue-600 text-white p-4 my-10"
+            onClick={() => handleSave(null)}
+          >
+            Save Project
+          </Button>
         </div>
+        <ProjectList />
       </div>
       <NewFooter />
     </div>

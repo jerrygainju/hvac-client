@@ -6,9 +6,6 @@
 .table-container {
   overflow-x: auto;
   width: 100%;
+  padding-left: 200px;
   -webkit-overflow-scrolling: touch;
-}
-
-.ant-spin-container {
-  width: fit-content;
 }
