@@ -468,6 +468,8 @@ const DuctMeasurement = () => {
     );
   };
 
+  /*------------------------Download to Excel File--------------------------------- */
+
   const downloadTableData = () => {
     const workbook = new ExcelJS.Workbook();
     const sheet = workbook.addWorksheet("Duct Area Measurement");
@@ -744,11 +746,11 @@ const DuctMeasurement = () => {
     });
   };
 
+  /*---------------------Saving the project--------------------------------*/
+
   const handleSave = (editingProject: string | null = null) => {
     const projectName =
-      editingProject ||
-      getElementStringValue("projectName") ||
-      "Untitled Project";
+      editingProject || currentProjectName || "Untitled Project";
     const data = {
       projectName: projectName,
       lastSaved: new Date().toISOString(),
@@ -801,16 +803,17 @@ const DuctMeasurement = () => {
   };
 
   const [projects, setProjects] = useState<any[]>([]);
+  const [currentProjectName, setCurrentProjectName] = useState<string>("");
 
   const loadProject = (projectData: any) => {
     setLevels(projectData.levels);
+    setCurrentProjectName(projectData.projectName);
     const projectNameInput = document.getElementById(
       "projectName"
     ) as HTMLInputElement;
     if (projectNameInput) {
       projectNameInput.value = projectData.projectName;
     }
-
     message.success("Project loaded successfully!");
   };
 
@@ -831,16 +834,14 @@ const DuctMeasurement = () => {
       if (projectNameInput) {
         projectNameInput.value = projectName;
       }
-      message.info(
-        'Project loaded for editing. Make your changes and click "Save Project" to update.'
-      );
+      message.info("Project loaded for editing.");
     }
   };
 
   const handleDelete = (projectName: string) => {
     Modal.confirm({
       title: "Are you sure you want to delete this project?",
-      content: "This action cannot be undone.",
+      content: "This action cannot be undone!",
       type: "warning",
       onOk() {
         const updatedProjects = projects.filter(
@@ -851,7 +852,7 @@ const DuctMeasurement = () => {
           JSON.stringify(updatedProjects)
         );
         setProjects(updatedProjects);
-        message.success("Project deleted successfully");
+        message.success("Project deleted successfully!");
       },
     });
   };
@@ -1259,6 +1260,8 @@ const DuctMeasurement = () => {
               id="projectName"
               className="w-44 my-4 h-12 border-2 border-gray-400 "
               placeholder="Enter project name"
+              value={currentProjectName}
+              onChange={(e) => setCurrentProjectName(e.target.value)}
             />
             <Button
               className="bg-gray-500 text-white w-44 h-10 mb-20"
