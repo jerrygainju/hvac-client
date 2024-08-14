@@ -1,4 +1,4 @@
-import { Button, Input, Select, Table } from "antd";
+import { Button, Input, message, Modal, Select, Table } from "antd";
 import NewFooter from "../../homepage/footer/Footer";
 import Navigation from "../../homepage/navigation/navigation";
 import { ductDescription, insulationTypes } from "./components/ductPieces";
@@ -169,6 +169,7 @@ const DuctMeasurement = () => {
     }
     setLevels(levels.filter((level) => level.key !== levelKey));
   };
+
   const handleDescriptionChange = (
     levelKey: number,
     rowKey: number,
@@ -374,99 +375,16 @@ const DuctMeasurement = () => {
         lvl.key === levelKey
           ? {
               ...lvl,
-              rows: lvl.rows.map((row) => {
-                if (row.key !== rowKey) return row;
-
-                const updatedRow = { ...row, [field]: value };
-
-                // Convert dimensions to meters
-                const widthInMeters = updatedRow.width1 / 1000 || 0;
-                const heightInMeters = updatedRow.height1 / 1000 || 0;
-                const lengthInMeters = updatedRow.length1 || 0;
-                const radiusInMeters = updatedRow.radius / 1000 || 0;
-                const width2InMeters = updatedRow.width2 / 1000 || 0;
-                const height2InMeters = updatedRow.height2 / 1000 || 0;
-                const width3InMeters = updatedRow.width3 / 1000 || 0;
-                const height3InMeters = updatedRow.height3 / 1000 || 0;
-                const length2InMeters = updatedRow.length2 || 0;
-                const length3InMeters = updatedRow.length3 || 0;
-                const ductPieces = updatedRow.duct_pieces || 0;
-
-                // Recalculate area based on duct type
-                switch (updatedRow.description) {
-                  case "Straight duct":
-                    updatedRow.area =
-                      2 *
-                      (widthInMeters + heightInMeters) *
-                      lengthInMeters *
-                      ductPieces;
-                    break;
-                  case "Reducer":
-                    updatedRow.area =
-                      (widthInMeters +
-                        heightInMeters +
-                        width2InMeters +
-                        height2InMeters) *
-                      lengthInMeters *
-                      ductPieces;
-                    break;
-                  case "End cap":
-                    updatedRow.area =
-                      widthInMeters * heightInMeters * ductPieces;
-                    break;
-                  case "Radius bend":
-                    updatedRow.area =
-                      (widthInMeters + heightInMeters) *
-                      2 *
-                      ((2 * Math.PI * (radiusInMeters + widthInMeters / 2)) /
-                        4) *
-                      ductPieces;
-                    break;
-                  case "Mitered bend":
-                    updatedRow.area =
-                      (2 * (widthInMeters + heightInMeters) * lengthInMeters +
-                        2 *
-                          (width2InMeters + height2InMeters) *
-                          length2InMeters) *
-                      ductPieces;
-                    break;
-                  case "Transition":
-                    updatedRow.area =
-                      (widthInMeters +
-                        heightInMeters +
-                        Math.PI * radiusInMeters) *
-                      lengthInMeters *
-                      ductPieces;
-                    break;
-                  case "Equal tee":
-                    updatedRow.area =
-                      (2 * (widthInMeters + heightInMeters) * lengthInMeters +
-                        2 *
-                          (width2InMeters + height2InMeters) *
-                          length2InMeters +
-                        2 *
-                          (width3InMeters + height3InMeters) *
-                          length3InMeters) *
-                      ductPieces;
-                    break;
-                  case "Offset":
-                    updatedRow.area =
-                      2 *
-                      (widthInMeters + heightInMeters) *
-                      (lengthInMeters + length2InMeters) *
-                      ductPieces;
-                    break;
-                  default:
-                    updatedRow.area = 0;
-                }
-
-                return updatedRow;
-              }),
+              rows: lvl.rows.map((row) =>
+                row.key === rowKey ? { ...row, [field]: value } : row
+              ),
             }
           : lvl
       )
     );
   };
+
+  /*------------------------Download to Excel File--------------------------------- */
 
   const downloadTableData = () => {
     const workbook = new ExcelJS.Workbook();
@@ -561,10 +479,9 @@ const DuctMeasurement = () => {
       levelRow.alignment = { horizontal: "left" };
       levelRow.font = { bold: true };
 
-
       const formatValue = (value: number | string): string => {
-        if(typeof value ==='number' && value === 0){
-          return '-';
+        if (typeof value === "number" && value === 0) {
+          return "-";
         }
         return value.toString();
       };
@@ -745,6 +662,241 @@ const DuctMeasurement = () => {
     });
   };
 
+  /*---------------------Saving the project--------------------------------*/
+
+  const handleSave = (editingProject: string | null = null) => {
+    const projectName =
+      editingProject || currentProjectName || "Untitled Project";
+    const data = {
+      projectName: projectName,
+      lastSaved: new Date().toISOString(),
+      levels: levels.map((level) => ({
+        title: level.title,
+        rows: level.rows.map((row) => ({
+          sn: row.sn,
+          description: row.description,
+          insulation: row.insulation,
+          width1: row.width1,
+          width2: row.width2,
+          width3: row.width3,
+          height1: row.height1,
+          height2: row.height2,
+          height3: row.height3,
+          length1: row.length1,
+          length2: row.length2,
+          length3: row.length3,
+          radius: row.radius,
+          duct_pieces: row.duct_pieces,
+          area: row.area,
+          editable: editable[row.key],
+        })),
+      })),
+    };
+  
+    try {
+      const existingProjects = JSON.parse(
+        localStorage.getItem("ductMeasurementProjects") || "[]"
+      );
+      const existingIndex = existingProjects.findIndex(
+        (p: any) => p.projectName === projectName
+      );
+  
+      if (existingIndex !== -1) {
+        existingProjects[existingIndex] = data;
+      } else {
+        existingProjects.push(data);
+      }
+  
+      localStorage.setItem(
+        "ductMeasurementProjects",
+        JSON.stringify(existingProjects)
+      );
+      
+      setCurrentProjectName(projectName);
+      setProjects(existingProjects);
+      message.success("Project saved successfully!");
+    } catch (error) {
+      console.error("Failed to save project:", error);
+      message.error("Failed to save project. Please try again.");
+    }
+  };
+
+  const [projects, setProjects] = useState<any[]>([]);
+  const [currentProjectName, setCurrentProjectName] = useState<string>("");
+
+  const loadProject = (projectData: any) => {
+    setLevels(projectData.levels);
+    setCurrentProjectName(projectData.projectName);
+    const projectNameInput = document.getElementById(
+      "projectName"
+    ) as HTMLInputElement;
+    if (projectNameInput) {
+      projectNameInput.value = projectData.projectName;
+    }
+    message.success("Project loaded successfully!");
+  };
+
+  useEffect(() => {
+    const savedProjects = JSON.parse(
+      localStorage.getItem("ductMeasurementProjects") || "[]"
+    );
+    setProjects(savedProjects);
+  }, []);
+
+  const handleEdit = (projectName: string) => {
+    const projectToEdit = projects.find((p) => p.projectName === projectName);
+    if (projectToEdit) {
+      loadProject(projectToEdit);
+  
+      const newEditable: EditableState = {};
+      projectToEdit.levels.forEach((level: LevelData) => {
+        level.rows.forEach((row: RowData) => {
+          newEditable[row.key] = {
+            width1: false,
+            width2: false,
+            width3: false,
+            height1: false,
+            height2: false,
+            height3: false,
+            length1: false,
+            length2: false,
+            length3: false,
+            radius: false,
+            duct_pieces: false,
+          };
+          switch(row.description){
+            case "Straight duct":
+              newEditable[row.key].width1 = true;
+              newEditable[row.key].height1 = true;
+              newEditable[row.key].length1 = true;
+              newEditable[row.key].duct_pieces = true;
+              break;
+            case "Radius bend":
+              newEditable[row.key].width1 = true;
+              newEditable[row.key].height1 = true;
+              newEditable[row.key].radius = true;
+              newEditable[row.key].duct_pieces = true;
+              break;
+            case "Reducer":
+              newEditable[row.key].width1 = true;
+              newEditable[row.key].width2 = true;
+              newEditable[row.key].height1 = true;
+              newEditable[row.key].height2 = true;
+              newEditable[row.key].length1 = true;
+              newEditable[row.key].duct_pieces = true;
+              break;
+            case "Miltered bend": 
+              newEditable[row.key].width1 = true;
+              newEditable[row.key].width2 = true;
+              newEditable[row.key].height1 = true;
+              newEditable[row.key].height2 = true
+              newEditable[row.key].length1 = true;
+              newEditable[row.key].length2 = true;
+              newEditable[row.key].duct_pieces = true;
+              break;
+            case "End cap":
+              newEditable[row.key].width1 = true;
+              newEditable[row.key].height1 = true;
+              newEditable[row.key].length1 = true;
+              break;
+            case "Transition":
+              newEditable[row.key].width1 = true;
+              newEditable[row.key].height1 = true;
+              newEditable[row.key].radius = true;
+              newEditable[row.key].duct_pieces = true;
+              break;
+            case "Equal tee":
+              newEditable[row.key].width1 = true;
+              newEditable[row.key].width2 = true;
+              newEditable[row.key].width3 = true;
+              newEditable[row.key].height1 = true;
+              newEditable[row.key].height2 = true;
+              newEditable[row.key].height3 = true;
+              newEditable[row.key].length1 = true;
+              newEditable[row.key].length2 = true;
+              newEditable[row.key].length3 = true;
+              newEditable[row.key].duct_pieces = true;
+              break;
+            case "Offset":
+              newEditable[row.key].width1 = true;
+              newEditable[row.key].height1= true;
+              newEditable[row.key].length1 = true;
+              newEditable[row.key].length2 = true;
+              newEditable[row.key].duct_pieces = true;
+              break;
+
+            default: 
+              Object.keys(newEditable[row.key]).forEach(key => {
+                newEditable[row.key][key as keyof typeof newEditable[typeof row.key]] = true;
+              });
+          }
+        });
+      });
+      setEditable(newEditable);
+  
+      message.info('Project loaded for editing!');
+    }
+  };
+
+  const handleDelete = (projectName: string) => {
+    Modal.confirm({
+      title: "Are you sure you want to delete this project?",
+      content: "This action cannot be undone!",
+      type: "warning",
+      onOk() {
+        const updatedProjects = projects.filter(
+          (p) => p.projectName !== projectName
+        );
+        localStorage.setItem(
+          "ductMeasurementProjects",
+          JSON.stringify(updatedProjects)
+        );
+        setProjects(updatedProjects);
+        message.success("Project deleted successfully!");
+      },
+    });
+  };
+
+  const ProjectList = () => (
+    <div className="mt-8">
+      <h2 className="text-2xl font-bold mb-4">Saved Projects</h2>
+      {projects.length === 0 ? (
+        <p>No saved projects yet.</p>
+      ) : (
+        <ul className="space-y-2">
+          {projects.map((project, index) => (
+            <li
+              key={index}
+              className="flex items-center justify-between bg-gray-100 p-4 rounded"
+            >
+              <span>{project.projectName}</span>
+              <span className="text-sm text-gray-500">
+                Last saved: {new Date(project.lastSaved).toLocaleString()}
+              </span>
+              <div>
+                <Button onClick={() => loadProject(project)} className="mr-2">
+                  Load
+                </Button>
+                <Button
+                  onClick={() => handleEdit(project.projectName)}
+                  className="mr-2"
+                >
+                  Edit
+                </Button>
+                <Button
+                  danger
+                  onClick={() => handleDelete(project.projectName)}
+                >
+                  Delete
+                </Button>
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+
   const handleTitleChange = (levelKey: number, value: string) => {
     setLevels(
       levels.map((lvl) =>
@@ -849,7 +1001,7 @@ const DuctMeasurement = () => {
                 )
               }
             />
-          ),
+          )
         },
         {
           title: "Height1(mm)",
@@ -878,7 +1030,7 @@ const DuctMeasurement = () => {
           width: "auto",
           render: (text: number, record: RowData) => (
             <Input
-              className=""
+              className="w-16"
               type="number"
               value={text}
               disabled={!editable[record.key]?.radius}
@@ -938,7 +1090,7 @@ const DuctMeasurement = () => {
                 )
               }
             />
-          ),
+          )
         },
         {
           title: "Width3(mm)",
@@ -959,7 +1111,7 @@ const DuctMeasurement = () => {
                 )
               }
             />
-          ),
+          )
         },
         {
           title: "Height3(mm)",
@@ -990,7 +1142,7 @@ const DuctMeasurement = () => {
       width: "auto",
       render: (text: number, record: RowData) => (
         <Input
-          className="w-16"
+          className=""
           type="number"
           value={text}
           disabled={!editable[record.key]?.length1}
@@ -1011,7 +1163,7 @@ const DuctMeasurement = () => {
       width: "auto",
       render: (text: number, record: RowData) => (
         <Input
-          className="16"
+          className=""
           type="number"
           value={text}
           disabled={!editable[record.key]?.length2}
@@ -1032,7 +1184,7 @@ const DuctMeasurement = () => {
       width: "auto",
       render: (text: number, record: RowData) => (
         <Input
-          className="16"
+          className=""
           type="number"
           value={text}
           disabled={!editable[record.key]?.length3}
@@ -1103,94 +1255,110 @@ const DuctMeasurement = () => {
         <div className="flex justify-center my-10 text-4xl font-bold font-mono text-gray-600">
           Duct Area Measurement
         </div>
-        <div className="flex flex-col justify-start items-center my-6 w-1/5">
-          <Input
-            id="projectName"
-            className="w-44 my-4 h-12 border-2 border-gray-400 "
-            placeholder="Enter project name"
-          />
-          <Button
-            className="bg-gray-500 text-white w-44 h-10 mb-20"
-            icon={<PlusOutlined />}
-            onClick={handleAddLevel}
-          >
-            Add Level
-          </Button>
+        <div className="flex justify-between items-center">
+          <div className="flex flex-col justify-start items-center my-6 w-1/5">
+            <Input
+              id="projectName"
+              className="w-44 my-4 h-12 border-2 border-gray-400 "
+              placeholder="Enter project name"
+              value={currentProjectName}
+              onChange={(e) => setCurrentProjectName(e.target.value)}
+            />
+            <Button
+              className="bg-gray-500 text-white w-44 h-10 mb-20"
+              icon={<PlusOutlined />}
+              onClick={handleAddLevel}
+            >
+              Add Level
+            </Button>
+          </div>
+          <div>{""}</div>
         </div>
 
         {levels.map((level) => (
           <div key={level.key} className="mb-8">
-            <div className="flex justify-start items-center gap-4  ">
+            <div className="flex justify-center items-center gap-4 w-2/12">
               <Input
                 className="mb-2 w-44 h-12 border-2 border-gray-400"
                 value={level.title}
                 onChange={(e) => handleTitleChange(level.key, e.target.value)}
               />
               <Button
-                className="text-red-500 rounded-lg"
+                className="flex justify-center items-center border-none text-red-500 rounded-lg p-4"
                 icon={<DeleteOutlined />}
                 onClick={() => handleDeleteLevel(level.key)}
                 hidden={level.key === 0}
               />
             </div>
-            <Table
-              bordered
-              className="border-2 drop-shadow-lg custom-table"
-              columns={columns(level.key)}
-              dataSource={level.rows}
-              rowKey="key"
-              pagination={false}
-              footer={() => {
-                const totalArea = calculateTotalArea(level.rows);
-                const areaByInsulation = calculateTotalAreaByInsulation(
-                  level.rows
-                );
-                return (
-                  <div>
-                    <div className="my-4">
-                      <Button
-                        className="flex justify-center items-center w-full"
-                        icon={<PlusOutlined />}
-                        onClick={() => handleAddRow(level.key)}
-                      >
-                        Add Row
-                      </Button>
-                    </div>
+            <div className="overflow-x-auto w-full table-container">
+              <Table
+                bordered
+                className="flex justify-center border-2 drop-shadow-lg custom-table w-screen"
+                columns={columns(level.key)}
+                dataSource={level.rows}
+                rowKey="key"
+                pagination={false}
+                footer={() => {
+                  const totalArea = calculateTotalArea(level.rows);
+                  const areaByInsulation = calculateTotalAreaByInsulation(
+                    level.rows
+                  );
+                  return (
                     <div>
-                      <span>Total Area: {totalArea.toFixed(2)} m²</span>
+                      <div className="my-4">
+                        <Button
+                          className="flex justify-center items-center w-full"
+                          icon={<PlusOutlined />}
+                          onClick={() => handleAddRow(level.key)}
+                        >
+                          Add Row
+                        </Button>
+                      </div>
+                      <div>
+                        <span>Total Area: {totalArea.toFixed(2)} m²</span>
+                      </div>
+                      <div>
+                        <span>
+                          Uninsulated Area:{" "}
+                          {areaByInsulation.Uninsulated.toFixed(2)} m²
+                        </span>
+                      </div>
+                      <div>
+                        <span>
+                          Externally Insulated Area:{" "}
+                          {areaByInsulation.Externally_Insulated.toFixed(2)} m²
+                        </span>
+                      </div>
+                      <div>
+                        <span>
+                          Internally Insulated Area:{" "}
+                          {areaByInsulation.Internally_Insulated.toFixed(2)} m²
+                        </span>
+                      </div>
                     </div>
-                    <div>
-                      <span>
-                        Uninsulated Area:{" "}
-                        {areaByInsulation.Uninsulated.toFixed(2)} m²
-                      </span>
-                    </div>
-                    <div>
-                      <span>
-                        Externally Insulated Area:{" "}
-                        {areaByInsulation.Externally_Insulated.toFixed(2)} m²
-                      </span>
-                    </div>
-                    <div>
-                      <span>
-                        Internally Insulated Area:{" "}
-                        {areaByInsulation.Internally_Insulated.toFixed(2)} m²
-                      </span>
-                    </div>
-                  </div>
-                );
-              }}
-            />
+                  );
+                }}
+              />
+            </div>
           </div>
         ))}
-        <div className="flex justify-center">
+        <div className="flex justify-center items-center gap-20">
           <Button
             className="flex justify-center my-10 bg-gray-600 text-white p-4 items-center w-44 h-12"
             onClick={downloadTableData}
           >
             Download Excel File
           </Button>
+
+          <Button
+            type="primary"
+            className="flex justify-center items-center w-36 h-12 bg-blue-600 text-white p-4 my-10"
+            onClick={() => handleSave(null)}
+          >
+            Save Project
+          </Button>
         </div>
+        <ProjectList />
       </div>
       <NewFooter />
     </div>

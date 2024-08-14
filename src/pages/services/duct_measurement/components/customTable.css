@@ -2,3 +2,10 @@
   background-color: #DCDCDC !important; 
   color: #333; 
 }
+
+.table-container {
+  overflow-x: auto;
+  width: 100%;
+  padding-left: 200px;
+  -webkit-overflow-scrolling: touch;
+}
