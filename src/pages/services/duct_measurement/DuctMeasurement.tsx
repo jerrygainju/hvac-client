@@ -1309,6 +1309,7 @@ const DuctMeasurement = () => {
                 icon={<DeleteOutlined />}
                 onClick={() => handleDeleteLevel(level.key)}
                 hidden={level.key === 0}
+                disabled = {level.key=== 0}
               />
             </div>
             <div className="overflow-x-auto w-full table-container">
