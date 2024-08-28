@@ -375,9 +375,94 @@ const DuctMeasurement = () => {
         lvl.key === levelKey
           ? {
               ...lvl,
-              rows: lvl.rows.map((row) =>
-                row.key === rowKey ? { ...row, [field]: value } : row
-              ),
+              rows: lvl.rows.map((row) => {
+                if (row.key !== rowKey) return row;
+
+                const updatedRow = { ...row, [field]: value };
+
+                // Convert dimensions to meters
+                const widthInMeters = updatedRow.width1 / 1000 || 0;
+                const heightInMeters = updatedRow.height1 / 1000 || 0;
+                const lengthInMeters = updatedRow.length1 || 0;
+                const radiusInMeters = updatedRow.radius / 1000 || 0;
+                const width2InMeters = updatedRow.width2 / 1000 || 0;
+                const height2InMeters = updatedRow.height2 / 1000 || 0;
+                const width3InMeters = updatedRow.width3 / 1000 || 0;
+                const height3InMeters = updatedRow.height3 / 1000 || 0;
+                const length2InMeters = updatedRow.length2 || 0;
+                const length3InMeters = updatedRow.length3 || 0;
+                const ductPieces = updatedRow.duct_pieces || 0;
+
+                // Recalculate area based on duct type
+                switch (updatedRow.description) {
+                  case "Straight duct":
+                    updatedRow.area =
+                      2 *
+                      (widthInMeters + heightInMeters) *
+                      lengthInMeters *
+                      ductPieces;
+                    break;
+                  case "Reducer":
+                    updatedRow.area =
+                      (widthInMeters +
+                        heightInMeters +
+                        width2InMeters +
+                        height2InMeters) *
+                      lengthInMeters *
+                      ductPieces;
+                    break;
+                  case "End cap":
+                    updatedRow.area =
+                      widthInMeters * heightInMeters * ductPieces;
+                    break;
+                  case "Radius bend":
+                    updatedRow.area =
+                      (widthInMeters + heightInMeters) *
+                      2 *
+                      ((2 * Math.PI * (radiusInMeters + widthInMeters / 2)) /
+                        4) *
+                      ductPieces;
+                    break;
+                  case "Mitered bend":
+                    updatedRow.area =
+                      (2 * (widthInMeters + heightInMeters) * lengthInMeters +
+                        2 *
+                          (width2InMeters + height2InMeters) *
+                          length2InMeters) *
+                      ductPieces;
+                    break;
+                  case "Transition":
+                    updatedRow.area =
+                      (widthInMeters +
+                        heightInMeters +
+                        Math.PI * radiusInMeters) *
+                      lengthInMeters *
+                      ductPieces;
+                    break;
+                  case "Equal tee":
+                    updatedRow.area =
+                      (2 * (widthInMeters + heightInMeters) * lengthInMeters +
+                        2 *
+                          (width2InMeters + height2InMeters) *
+                          length2InMeters +
+                        2 *
+                          (width3InMeters + height3InMeters) *
+                          length3InMeters) *
+                      ductPieces;
+                    break;
+                  case "Offset":
+                    updatedRow.area =
+                      2 *
+                      (widthInMeters + heightInMeters) *
+                      (lengthInMeters + length2InMeters) *
+                      ductPieces;
+                    break;
+                  default:
+                    updatedRow.area = 0;
+                }
+
+                return updatedRow;
+              }),
             }
           : lvl
       )
@@ -747,94 +832,30 @@ const DuctMeasurement = () => {
     const projectToEdit = projects.find((p) => p.projectName === projectName);
     if (projectToEdit) {
       loadProject(projectToEdit);
-  
+
       const newEditable: EditableState = {};
       projectToEdit.levels.forEach((level: LevelData) => {
         level.rows.forEach((row: RowData) => {
           newEditable[row.key] = {
-            width1: false,
-            width2: false,
-            width3: false,
-            height1: false,
-            height2: false,
-            height3: false,
-            length1: false,
-            length2: false,
-            length3: false,
-            radius: false,
-            duct_pieces: false,
+            width1: true,
+            width2: true,
+            width3: true,
+            height1: true,
+            height2: true,
+            height3: true,
+            length1: true,
+            length2: true,
+            length3: true,
+            radius: true,
+            duct_pieces: true,
           };
-          switch(row.description){
-            case "Straight duct":
-              newEditable[row.key].width1 = true;
-              newEditable[row.key].height1 = true;
-              newEditable[row.key].length1 = true;
-              newEditable[row.key].duct_pieces = true;
-              break;
-            case "Radius bend":
-              newEditable[row.key].width1 = true;
-              newEditable[row.key].height1 = true;
-              newEditable[row.key].radius = true;
-              newEditable[row.key].duct_pieces = true;
-              break;
-            case "Reducer":
-              newEditable[row.key].width1 = true;
-              newEditable[row.key].width2 = true;
-              newEditable[row.key].height1 = true;
-              newEditable[row.key].height2 = true;
-              newEditable[row.key].length1 = true;
-              newEditable[row.key].duct_pieces = true;
-              break;
-            case "Miltered bend": 
-              newEditable[row.key].width1 = true;
-              newEditable[row.key].width2 = true;
-              newEditable[row.key].height1 = true;
-              newEditable[row.key].height2 = true
-              newEditable[row.key].length1 = true;
-              newEditable[row.key].length2 = true;
-              newEditable[row.key].duct_pieces = true;
-              break;
-            case "End cap":
-              newEditable[row.key].width1 = true;
-              newEditable[row.key].height1 = true;
-              newEditable[row.key].length1 = true;
-              break;
-            case "Transition":
-              newEditable[row.key].width1 = true;
-              newEditable[row.key].height1 = true;
-              newEditable[row.key].radius = true;
-              newEditable[row.key].duct_pieces = true;
-              break;
-            case "Equal tee":
-              newEditable[row.key].width1 = true;
-              newEditable[row.key].width2 = true;
-              newEditable[row.key].width3 = true;
-              newEditable[row.key].height1 = true;
-              newEditable[row.key].height2 = true;
-              newEditable[row.key].height3 = true;
-              newEditable[row.key].length1 = true;
-              newEditable[row.key].length2 = true;
-              newEditable[row.key].length3 = true;
-              newEditable[row.key].duct_pieces = true;
-              break;
-            case "Offset":
-              newEditable[row.key].width1 = true;
-              newEditable[row.key].height1= true;
-              newEditable[row.key].length1 = true;
-              newEditable[row.key].length2 = true;
-              newEditable[row.key].duct_pieces = true;
-              break;
-
-            default: 
-              Object.keys(newEditable[row.key]).forEach(key => {
-                newEditable[row.key][key as keyof typeof newEditable[typeof row.key]] = true;
-              });
-          }
         });
       });
       setEditable(newEditable);
-  
-      message.info('Project loaded for editing!');
+
+      message.info(
+        'Project loaded for editing!'
+      );
     }
   };
 
@@ -1001,7 +1022,7 @@ const DuctMeasurement = () => {
                 )
               }
             />
-          )
+          ),
         },
         {
           title: "Height1(mm)",
@@ -1090,7 +1111,7 @@ const DuctMeasurement = () => {
                 )
               }
             />
-          )
+          ),
         },
         {
           title: "Width3(mm)",
@@ -1111,7 +1132,7 @@ const DuctMeasurement = () => {
                 )
               }
             />
-          )
+          ),
         },
         {
           title: "Height3(mm)",
@@ -1142,7 +1163,7 @@ const DuctMeasurement = () => {
       width: "auto",
       render: (text: number, record: RowData) => (
         <Input
-          className=""
+          className="w-16"
           type="number"
           value={text}
           disabled={!editable[record.key]?.length1}
@@ -1163,7 +1184,7 @@ const DuctMeasurement = () => {
       width: "auto",
       render: (text: number, record: RowData) => (
         <Input
-          className=""
+          className="16"
           type="number"
           value={text}
           disabled={!editable[record.key]?.length2}
@@ -1184,7 +1205,7 @@ const DuctMeasurement = () => {
       width: "auto",
       render: (text: number, record: RowData) => (
         <Input
-          className=""
+          className="16"
           type="number"
           value={text}
           disabled={!editable[record.key]?.length3}
@@ -1205,7 +1226,7 @@ const DuctMeasurement = () => {
       width: "auto",
       render: (text: number, record: RowData) => (
         <Input
-          className=""
+          className="w-16"
           type="number"
           value={text}
           disabled={!editable[record.key]?.duct_pieces}
@@ -1288,6 +1309,7 @@ const DuctMeasurement = () => {
                 icon={<DeleteOutlined />}
                 onClick={() => handleDeleteLevel(level.key)}
                 hidden={level.key === 0}
+                disabled = {level.key=== 0}
               />
             </div>
             <div className="overflow-x-auto w-full table-container">
